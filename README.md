@@ -1,7 +1,7 @@
 # eventapp
 Student based social network centered around campus events and activities.
 
-#TODO
+# To Do
 
 - [ ] Finalize our main class diagram
 - [ ] Create individual diagrams for each class
