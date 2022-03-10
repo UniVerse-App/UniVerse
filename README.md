@@ -8,7 +8,7 @@ This is a living document we can use to keep track of our progress, save helpful
 
 # Folders
 
-All of our app code will be stored in the "UniVerse" folder.  
+All of our app code will be stored in the "AppFolder" folder.  
 
 increment_1 should contain our relevant star UML files (everyone please add your files if you have them).
 
