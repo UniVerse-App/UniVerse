@@ -40,7 +40,7 @@ The project `main` and `develop` branches have already been configured.
 
 Before starting or finishing a feature please make sure your develop branch is up to date.
 
-To start a new feature run `git flow feature start my-great-feature` where `my-great-feature` is the name of the feature you are working on.  
+To start a new feature run `git flow feature start my-great-feature` where `my-great-feature` is the name of the feature you are working on. This should automatically create a new branch off of `develop` with the name `feature/my-great-feature` and move you into the new branch.  You can verify this by running `git branch` and noting which branch has the `*` next to it.
 
 A feature could be be a profile page, event card, or any self-contained piece of our app you wish to work on.  We'll want to make sure that two people aren't trying to work on the same feature. 
 
