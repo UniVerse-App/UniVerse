@@ -6,6 +6,14 @@ Student based social network centered around campus events and activities.
 
 This is a living document we can use to keep track of our progress, save helpful links, etc.  Don't hesitate to add things to this or make changes as you see necesary.
 
+# Folders
+
+All of our app code will be stored in the "UniVerse" folder.  
+
+increment_1 should contain our relevant star UML files (everyone please add your files if you have them).
+
+increment_2 (SRA) will contain any files relevant to the SRA document.
+
 ---
 
 # Best Practices 
