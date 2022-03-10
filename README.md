@@ -32,6 +32,19 @@ On ubuntu you can install with `apt-get install git-flow` or on MacOS, use homeb
 
 Once the git-flow library is installed, you can reference the [git-flow docs](https://git-flow.readthedocs.io/en/latest/features.html#) for help.
 
+The project `main` and `develop` branches have already been configured.
+
+---
+
+# Working on a Feature
+
+Before starting or finishing a feature please make sure your develop branch is up to date.
+
+To start a new feature run `git flow feature start my-great-feature` where `my-great-feature` is the name of the feature you are working on.  
+
+A feature could be be a profile page, event card, or any self-contained piece of our app you wish to work on.  We'll want to make sure that two people aren't trying to work on the same feature. 
+
+
 ---
 
 # To Do
