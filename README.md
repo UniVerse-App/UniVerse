@@ -53,6 +53,8 @@ A feature could be be a profile page, event card, or any self-contained piece of
 
 [Firebase Reference](https://firebase.google.com/docs)
 
+[User Authentication via Firebase Video Tutorial](https://www.youtube.com/watch?v=Z-RE1QuUWPg)
+
 [Github Docs](https://docs.github.com/en)
 
 [Git-Flow Library Docs](git-flow docs](https://git-flow.readthedocs.io/en/latest/features.html#)
