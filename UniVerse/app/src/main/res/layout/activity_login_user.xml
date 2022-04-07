@@ -53,7 +53,7 @@
         />
 
     <EditText
-        android:id="@+id/registerEmail"
+        android:id="@+id/loginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="60dp"
@@ -68,7 +68,7 @@
         />
 
     <EditText
-        android:id="@+id/registerPassword"
+        android:id="@+id/loginPassword"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="60dp"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/registerEmail"
+        app:layout_constraintTop_toBottomOf="@id/loginEmail"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
@@ -91,7 +91,7 @@
         android:text="Login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerPassword"
+        app:layout_constraintTop_toBottomOf="@id/loginPassword"
         />
 
     <TextView
@@ -119,5 +119,17 @@
         app:layout_constraintTop_toTopOf="@id/forgotPassword"
         app:layout_constraintRight_toRightOf="@id/loginButton"
         />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@android:color/transparent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
