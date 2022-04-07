@@ -98,7 +98,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
 
-                                        //TODO: Redirect to Interests
+                                        //TODO: Redirect to Interests Quiz
 
                                     } else {
                                         Toast.makeText(
@@ -186,18 +186,17 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
 
         // Is UTA email?
-        String email_suffix = email.split("@")[1];
-        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
-
-            // All validation checks passed.
-            return true;
-
-        } else {
-            editTextEmail.setError("Currently we only support UTA emails.");
-            editTextEmail.requestFocus();
-            return false;
-        }
+//        String email_suffix = email.split("@")[1];
+//        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
+//
+//            // All validation checks passed.
+//            return true;
+//
+//        } else {
+//            editTextEmail.setError("Currently we only support UTA emails.");
+//            editTextEmail.requestFocus();
+//            return false;
+//        }
+        return true;
     }
-
-
 }
