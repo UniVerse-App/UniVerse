@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Context;
 
 public class Interests_Selection extends AppCompatActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
