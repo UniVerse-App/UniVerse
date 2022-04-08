@@ -6,8 +6,12 @@ public class User {
     public Boolean isOrganizer;
     public Integer[] interests;
     public Integer[] events;
-    
+<<<<<<< HEAD
+
+    // Integer to determine where to resume onboarding if user logs out before complete.
     public Integer onboardingStep;
+=======
+>>>>>>> f602af3 (Major selection and graduation year formatting)
 
     public User() {
 
