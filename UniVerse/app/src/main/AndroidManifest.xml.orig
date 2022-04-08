@@ -13,16 +13,18 @@
 <<<<<<< HEAD
             android:name=".ForgotPassword"
             android:exported="false" />
-=======
-            android:name=".Interests_Selection"
-            android:exported="true" />
->>>>>>> da6c9d5 (First commit attempt 2)
         <activity
             android:name=".PlaceHolderFeed"
             android:exported="false" />
         <activity
             android:name=".RegisterUser"
             android:exported="false" />
+        <activity
+            android:name=".InterestsSelection"
+=======
+            android:name=".Interests_Selection"
+>>>>>>> da6c9d5f1d19d1262a6f1a50ca073c5599d26040
+            android:exported="true" />
         <activity
             android:name=".LoginUser"
             android:exported="true">
