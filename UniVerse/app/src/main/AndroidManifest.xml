@@ -10,22 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniVerse">
         <activity
-            android:name=".RegisterStudentInfo"
+            android:name=".Feed"
             android:exported="true" />
         <activity
-            android:name=".ForgotPassword"
-            android:exported="false" />
-        <activity
-            android:name=".PlaceHolderFeed"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterUser"
-            android:exported="false" />
-        <activity
-            android:name=".InterestsSelection"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginUser"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

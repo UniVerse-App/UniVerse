@@ -1,0 +1,52 @@
+package com.example.universe;
+
+<<<<<<< HEAD
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
+
+public class Feed extends AppCompatActivity{
+
+   private BottomNavigationView bottomNavigationView;
+   private NavController navController;
+=======
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class Feed extends AppCompatActivity {
+>>>>>>> 03c949d (first commit)
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_feed);
+<<<<<<< HEAD
+        FragmentManager supportFragmentManger = getSupportFragmentManager();
+
+        NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManger.findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+    }
+=======
+    }
+
+
+>>>>>>> 03c949d (first commit)
+}

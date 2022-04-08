@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
+
+    <item
+        android:id="@+id/feedFragment"
+        android:enabled="true"
+        android:title="@string/feed"
+        android:icon="@drawable/ic_baseline_home_24" />
+
+    <item
+        android:id="@+id/secondFragment"
+        android:enabled="true"
+        android:title="@string/notifications"
+        android:icon="@drawable/ic_baseline_notifications_24"/>
+
+    <item
+        android:id="@+id/thirdFragment"
+        android:enabled="true"
+        android:title="@string/schedule"
+        android:icon="@drawable/ic_baseline_calendar_today_24" />
+
+    <item
+        android:id="@+id/fourthFragment"
+        android:enabled="true"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_baseline_settings_24" />
+=======
+    <item
+        android:id="@+id/notifications"
+        android:enabled="true"
+        android:title="@string/notifications"
+        android:icon="@drawable/ic_baseline_notifications_24"/>
+
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_baseline_settings_24" />
+
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:title="@string/home"
+        android:icon="@drawable/ic_baseline_home_24" />
+
+    <item
+        android:id="@+id/schedule"
+        android:enabled="true"
+        android:title="@string/schedule"
+        android:icon="@drawable/ic_baseline_calendar_today_24" />
+>>>>>>> 03c949d (first commit)
+</menu>
