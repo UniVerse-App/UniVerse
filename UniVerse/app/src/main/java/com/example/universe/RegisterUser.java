@@ -66,9 +66,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
+        String emailSuffix = email.split("@")[1];
 
         // If form validation is true, attempt to create user in firebase auth and realtime database
-        if (validateInput(firstName, lastName, email, password)) {
+        if (validateInput(firstName, lastName, email, password, emailSuffix)) {
             progressBar.setVisibility(View.VISIBLE);
 
             // Create user in firebase auth.
@@ -98,7 +99,16 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
 
-                                        //TODO: Redirect to Interests Quiz
+                                        if (emailSuffix.equals("uta.mavs.edu")) {
+
+                                            startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
+
+                                        } else if (emailSuffix.equals("uta.edu")) {
+
+                                            // TODO: Redirect to Organizer Registration
+
+                                        }
+
 
                                     } else {
                                         Toast.makeText(
@@ -125,7 +135,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private boolean validateInput(String firstName, String lastName, String email, String password) {
+    private boolean validateInput(String firstName, String lastName, String email, String password, String email_suffix) {
         // Field not empty
         if (firstName.isEmpty()) {
             editTextFirstName.setError("First Name is required!");
@@ -186,7 +196,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
 
         // Is UTA email?
-//        String email_suffix = email.split("@")[1];
 //        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
 //
 //            // All validation checks passed.

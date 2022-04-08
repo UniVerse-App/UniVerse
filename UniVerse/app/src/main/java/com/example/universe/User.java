@@ -2,7 +2,10 @@ package com.example.universe;
 
 public class User {
 
-    public String firstName, lastName, email;
+    public String firstName, lastName, email, major;
+    public Boolean isOrganizer;
+    public Integer[] interests;
+    public Integer[] events;
 
     public User() {
 
