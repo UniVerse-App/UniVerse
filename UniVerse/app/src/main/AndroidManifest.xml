@@ -11,7 +11,7 @@
         android:theme="@style/Theme.UniVerse">
         <activity
             android:name=".RegisterStudentInfo"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ForgotPassword"
             android:exported="false" />
