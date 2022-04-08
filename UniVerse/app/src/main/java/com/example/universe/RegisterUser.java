@@ -98,7 +98,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
 
-                                        //TODO: Redirect to Interests Quiz
+                                        // Go to select interests screen.
+                                        loadInterestSelection();
 
                                     } else {
                                         Toast.makeText(
@@ -123,6 +124,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 });
         }
 
+    }
+
+    private void loadInterestSelection() {
+        startActivity(new Intent(this, InterestsSelection.class));
     }
 
     private boolean validateInput(String firstName, String lastName, String email, String password) {
