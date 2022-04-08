@@ -4,15 +4,24 @@
     >
     <item>
         <shape android:shape="oval">
+<<<<<<< HEAD
+            <solid android:color="@color/colorPrimary"/>
+=======
             <solid
                 android:color="@color/colorPrimary"/>
 
+>>>>>>> 6a00577 (Student info activity)
             <size
                 android:width="120dp"
                 android:height="120dp"/>
         </shape>
     </item>
 
+<<<<<<< HEAD
+    <item android:drawable="@drawable/ic_baseline_person_24" />
+
+</layer-list>
+=======
     <item
         android:drawable="@drawable/ic_baseline_person_24"
         android:color="@color/colorOnPrimary">
@@ -22,3 +31,4 @@
 </layer-list>
 
 <vector
+>>>>>>> 6a00577 (Student info activity)

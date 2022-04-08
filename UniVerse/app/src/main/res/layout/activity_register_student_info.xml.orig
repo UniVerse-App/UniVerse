@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterStudentInfo">
+
+    <TextView
+        android:id="@+id/studentRegistration_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="60dp"
+        android:text="Tell us a little about yourself..."
+<<<<<<< HEAD
+        android:textSize="30sp"
+=======
+        android:textSize="40sp"
+>>>>>>> 6a00577 (Student info activity)
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        />
+
+<<<<<<< HEAD
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profilePicBackground"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginVertical="40dp"
+        android:src="@drawable/profile_pic_circle"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistration_banner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/selectProfilePic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@id/profilePicBackground"
+        app:layout_constraintRight_toRightOf="@id/profilePicBackground"
+        app:srcCompat="@drawable/camera_plus_circle"
+        />
+
+    <TextView
+        android:id="@+id/studentRegistrationMajorLabel"
+        android:layout_height="20dp"
+        android:layout_width="240dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="5dp"
+        android:text="Field of Study"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/profilePicBackground"
+        app:layout_constraintLeft_toLeftOf="@id/studentRegistrationMajor"
+        />
+
+    <Spinner
+        android:id="@+id/studentRegistrationMajor"
+        android:spinnerMode="dropdown"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistrationMajorLabel"
+=======
+    <EditText
+        android:id="@+id/studentRegistrationMajor"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:hint="Degree Major"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistration_banner"
+>>>>>>> 6a00577 (Student info activity)
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+<<<<<<< HEAD
+    <TextView
+        android:id="@+id/studentRegistrationGradLabel"
+        android:layout_height="20dp"
+        android:layout_width="240dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="5dp"
+        android:text="Graduation Year"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistrationMajor"
+        app:layout_constraintLeft_toLeftOf="@id/studentRegistrationMajor"
+        />
+
+    <NumberPicker
+        android:id="@+id/studentRegistrationGradYear"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistrationGradLabel"
+        app:layout_constraintBottom_toTopOf="@id/studentRegistrationNextButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+/>
+
+
+    <Button
+        android:id="@+id/studentRegistrationNextButton"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginBottom="30dp"
+        android:text="Next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+=======
+    <EditText
+        android:id="@+id/studentRegistrationGradYear"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Graduation Year"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistrationMajor"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/profilePicBackground"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:setBackgroundTint="@color/colorBackground"
+        app:layout_constraintTop_toBottomOf="@id/studentRegistration_banner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/profile_pic_circle" />
+>>>>>>> 6a00577 (Student info activity)
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
