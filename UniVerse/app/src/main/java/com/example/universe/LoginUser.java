@@ -58,12 +58,10 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
         }
 
         else if (view.getId() == R.id.forgotPassword) {
-            //TODO: Forgot password activity;
-            Toast.makeText(LoginUser.this, "Forgot password", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ForgotPassword.class));
         }
 
         else if (view.getId() == R.id.loginButton) {
-            // TODO: Login user;
             userLogin();
         }
     }
