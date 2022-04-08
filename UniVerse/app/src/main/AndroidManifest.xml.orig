@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.universe">
-
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,29 +11,33 @@
         android:theme="@style/Theme.UniVerse">
         <activity
 <<<<<<< HEAD
+        android:name=".ForgotPassword"
+        android:exported="false" />
+=======
+            android:name=".RegisterStudentInfo"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false" />
+>>>>>>> 6f44f8f (Student info activity)
         <activity
-            android:name=".PlaceHolderFeed"
-            android:exported="false" />
+        android:name=".PlaceHolderFeed"
+        android:exported="false" />
         <activity
-            android:name=".RegisterUser"
-            android:exported="false" />
+        android:name=".RegisterUser"
+        android:exported="false" />
         <activity
-            android:name=".InterestsSelection"
-=======
-            android:name=".Interests_Selection"
->>>>>>> da6c9d5 (First commit attempt 2)
-            android:exported="true" />
+        android:name=".InterestsSelection"
+        android:exported="true" />
         <activity
             android:name=".LoginUser"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
+    
 </manifest>

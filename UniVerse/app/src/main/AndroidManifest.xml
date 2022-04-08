@@ -10,17 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniVerse">
         <activity
-        android:name=".ForgotPassword"
-        android:exported="false" />
+            android:name=".RegisterStudentInfo"
+            android:exported="false" />
         <activity
-        android:name=".PlaceHolderFeed"
-        android:exported="false" />
+            android:name=".ForgotPassword"
+            android:exported="false" />
         <activity
-        android:name=".RegisterUser"
-        android:exported="false" />
+            android:name=".PlaceHolderFeed"
+            android:exported="false" />
         <activity
-        android:name=".InterestsSelection"
-        android:exported="true" />
+            android:name=".RegisterUser"
+            android:exported="false" />
+        <activity
+            android:name=".InterestsSelection"
+            android:exported="true" />
         <activity
             android:name=".LoginUser"
             android:exported="true">
