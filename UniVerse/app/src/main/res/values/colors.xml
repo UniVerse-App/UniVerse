@@ -20,4 +20,9 @@
     <color name="colorSecondary">#3FB1B5</color>
     <color name="colorSecondaryVariant">#258588</color>
     <color name="colorOnSecondary">@color/black</color>
+
+    <color name="accentColor100">#ffddb0</color>
+    <color name="accentColor200">#ffc77d</color>
+    <color name="accentColor300">#ffaf49</color>
+    <color name="accentColor800">#ee6002</color>
 </resources>
