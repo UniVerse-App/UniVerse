@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.example.universe;
 
 public class InterestChip {
@@ -14,4 +15,7 @@ public class InterestChip {
         this.Description = Description;
         this.Name = Name;
     }
+=======
+package com.example.universe.ui.login;public class InteresetChip {
+>>>>>>> fe5a52c (Fist commit)
 }
