@@ -98,7 +98,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
 
-                                        if (emailSuffix.equals("uta.mavs.edu")) {
+                                        if (!emailSuffix.equals("uta.mavs.edu")) {
 
                                             startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
 
