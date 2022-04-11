@@ -21,59 +21,95 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
-
+    
     private TextView banner;
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
     private Button registerUser;
     private ProgressBar progressBar;
-
+    
     private FirebaseAuth mAuth;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-
+        
         mAuth = FirebaseAuth.getInstance();
-
+        
         banner = findViewById(R.id.banner);
         banner.setOnClickListener(this);
-
+        
         registerUser = findViewById(R.id.registerButton);
         registerUser.setOnClickListener(this);
-
+        
         editTextFirstName = findViewById(R.id.registerFirstName);
         editTextLastName = findViewById(R.id.registerLastName);
         editTextEmail = findViewById(R.id.registerEmail);
         editTextPassword = findViewById(R.id.registerPassword);
-
+        
         progressBar = findViewById(R.id.progressBar);
     }
-
+    
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.registerButton) {
             registerUser();
         }
-
+        
         else if (view.getId() == R.id.banner) {
             startActivity(new Intent(this, LoginUser.class));
         }
     }
-
+    
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
-        String emailSuffix = email.split("@")[1];
-
+        
         // If form validation is true, attempt to create user in firebase auth and realtime database
         if (validateInput(firstName, lastName, email, password, emailSuffix)) {
             progressBar.setVisibility(View.VISIBLE);
-
+            
             // Create user in firebase auth.
             mAuth.createUserWithEmailAndPassword(email, password)
+<<<<<<< HEAD
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    
+                    // If create user in auth successful, proceed
+                    if (task.isSuccessful()) {
+                        
+                        // Create user object with form data.
+                        Integer onboardingStep = 1;
+                        User user = new User(firstName, lastName, email, onboardingStep);
+                        
+                        // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
+                        FirebaseDatabase.getInstance().getReference("Users")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                
+                                // If successful, proceed to interests page.
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(
+                                                   RegisterUser.this,
+                                                   "User has been registered succesfully!",
+                                                   Toast.LENGTH_LONG
+                                                   ).show();
+                                    
+                                    if (!emailSuffix.equals("uta.mavs.edu")) {
+                                        
+                                        // Redirect to RegisterStudentInfo
+                                        startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
+                                        
+                                    } else if (emailSuffix.equals("uta.edu")) {
+                                        
+                                        // TODO: Redirect to Organizer Registration
+                                        
+=======
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -82,8 +118,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
 
                             // Create user object with form data.
-                            Integer onboardingStep = 1;
-                            User user = new User(firstName, lastName, email, onboardingStep);
+                            User user = new User(firstName, lastName, email);
 
                             // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
                             FirebaseDatabase.getInstance().getReference("Users")
@@ -100,14 +135,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
 
-<<<<<<< HEAD
                                         if (!emailSuffix.equals("uta.mavs.edu")) {
 
-                                            // Redirect to RegisterStudentInfo
-=======
-                                        if (emailSuffix.equals("uta.mavs.edu")) {
-
->>>>>>> f602af3 (Major selection and graduation year formatting)
                                             startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
 
                                         } else if (emailSuffix.equals("uta.edu")) {
@@ -123,25 +152,35 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 "User registered failed! Try again...",
                                                 Toast.LENGTH_LONG
                                         ).show();
+>>>>>>> e0528df (Changes)
                                     }
-                                    progressBar.setVisibility(View.GONE);
+                                    
+                                    
+                                } else {
+                                    Toast.makeText(
+                                                   RegisterUser.this,
+                                                   "User registered failed! Try again...",
+                                                   Toast.LENGTH_LONG
+                                                   ).show();
                                 }
-                            });
-                        } else {
-                            Toast.makeText(
-                                    RegisterUser.this,
-                                    "User registered failed! Try again...",
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        Toast.makeText(
+                                       RegisterUser.this,
+                                       "User registered failed! Try again...",
+                                       Toast.LENGTH_LONG
+                                       ).show();
+                        progressBar.setVisibility(View.GONE);
                     }
-                });
+                    
+                }
+            });
         }
-
+        
     }
-
+    
     private boolean validateInput(String firstName, String lastName, String email, String password, String email_suffix) {
         // Field not empty
         if (firstName.isEmpty()) {
@@ -149,35 +188,35 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             editTextFirstName.requestFocus();
             return false;
         }
-
+        
         // Field not empty
         if (lastName.isEmpty()) {
             editTextLastName.setError("Last Name is required!");
             editTextLastName.requestFocus();
             return false;
         }
-
+        
         // Field not empty
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required!");
             editTextEmail.requestFocus();
             return false;
         }
-
+        
         // Valid email pattern
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please provide a valid email!");
             editTextEmail.requestFocus();
             return false;
         }
-
+        
         // Field not empty
         if (password.isEmpty()) {
             editTextPassword.setError("Password is required!");
             editTextPassword.requestFocus();
             return false;
         }
-
+        
         // Valid password pattern - Min 8 chars, At least one uppercase, one digit, one special character.
         if (!password.matches("^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")) {
             if (password.length() < 8) {
@@ -201,18 +240,18 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         }
-
+        
         // Is UTA email?
-//        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
-//
-//            // All validation checks passed.
-//            return true;
-//
-//        } else {
-//            editTextEmail.setError("Currently we only support UTA emails.");
-//            editTextEmail.requestFocus();
-//            return false;
-//        }
+        //        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
+        //
+        //            // All validation checks passed.
+        //            return true;
+        //
+        //        } else {
+        //            editTextEmail.setError("Currently we only support UTA emails.");
+        //            editTextEmail.requestFocus();
+        //            return false;
+        //        }
         return true;
     }
 }

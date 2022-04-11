@@ -1,9 +1,6 @@
 package com.example.universe;
 
-<<<<<<< HEAD
 import androidx.annotation.NonNull;
-=======
->>>>>>> 6a42dc9 (Select profile picture from device)
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-<<<<<<< HEAD
 import android.util.Log;
-=======
->>>>>>> 6a42dc9 (Select profile picture from device)
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +18,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-<<<<<<< HEAD
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -38,9 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-=======
-import com.google.android.material.imageview.ShapeableImageView;
->>>>>>> 6a42dc9 (Select profile picture from device)
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -54,7 +44,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
     private NumberPicker gradYear;
     private Button nextButton;
     private ShapeableImageView selectProfilePic, profilePic;
-<<<<<<< HEAD
     
     // Profile pic selection/upload variables
     private Integer PICK_IMAGE = 1;
@@ -66,10 +55,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
     private FirebaseDatabase database;
     
     
-=======
-    private Integer PICK_IMAGE = 1;
-
->>>>>>> 6a42dc9 (Select profile picture from device)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +70,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         
         nextButton = findViewById(R.id.studentRegistrationNextButton);
         nextButton.setOnClickListener(this);
-<<<<<<< HEAD
         
         profilePic = findViewById(R.id.profilePicBackground);
         
@@ -95,19 +79,14 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         
-=======
-
-        profilePic = findViewById(R.id.profilePicBackground);
-
-        selectProfilePic = findViewById(R.id.selectProfilePic);
-        selectProfilePic.setOnClickListener(this);
-
-
->>>>>>> 6a42dc9 (Select profile picture from device)
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gradArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         majorSpinner.setAdapter(adapter);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> e0528df (Changes)
     }
     
     @Override
@@ -116,22 +95,8 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             nextScreen();
         }
         else if (view.getId() == R.id.selectProfilePic) {
-<<<<<<< HEAD
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             startActivityForResult(gallery, 3);
-=======
-           Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-           startActivityForResult(gallery, 3);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            profilePic.setImageURI(selectedImage);
->>>>>>> 6a42dc9 (Select profile picture from device)
         }
     }
     
@@ -147,7 +112,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
     private void nextScreen() {
         String major = majorSpinner.getSelectedItem().toString();
         Integer year = gradYear.getValue();
-<<<<<<< HEAD
         
         if (major.equals("Choose a major...")) {
             Toast.makeText(this, "Please select a Field of Study", Toast.LENGTH_SHORT).show();
@@ -158,13 +122,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             updateUserInfo(photoKey);
             startActivity(new Intent(RegisterStudentInfo.this, InterestsSelection.class));
             
-=======
-
-        if (!major.equals("Choose a major...")) {
-            // TODO: Load Interests Activity
-        } else {
-            Toast.makeText(this, "Please select a Field of Study", Toast.LENGTH_SHORT).show();
->>>>>>> 6a42dc9 (Select profile picture from device)
         }
     }
     

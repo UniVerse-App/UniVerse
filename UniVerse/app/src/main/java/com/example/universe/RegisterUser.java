@@ -73,41 +73,48 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             
             // Create user in firebase auth.
             mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    
-                    // If create user in auth successful, proceed
-                    if (task.isSuccessful()) {
-                        
-                        // Create user object with form data.
-                        Integer onboardingStep = 1;
-                        User user = new User(firstName, lastName, email, onboardingStep);
-                        
-                        // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
-                        FirebaseDatabase.getInstance().getReference("Users")
-                        .child(FirebaseAuth.getInstance().getUid())
-                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                
-                                // If successful, proceed to interests page.
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(
-                                                   RegisterUser.this,
-                                                   "User has been registered succesfully!",
-                                                   Toast.LENGTH_LONG
-                                                   ).show();
-                                    
-                                    if (!emailSuffix.equals("uta.mavs.edu")) {
-                                        
-                                        // Redirect to RegisterStudentInfo
-                                        startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
-                                        
-                                    } else if (emailSuffix.equals("uta.edu")) {
-                                        
-                                        // TODO: Redirect to Organizer Registration
-                                        
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        // If create user in auth successful, proceed
+                        if (task.isSuccessful()) {
+
+                            // Create user object with form data.
+                            User user = new User(firstName, lastName, email);
+
+                            // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    // If successful, proceed to interests page.
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(
+                                                RegisterUser.this,
+                                                "User has been registered succesfully!",
+                                                Toast.LENGTH_LONG
+                                        ).show();
+
+                                        if (!emailSuffix.equals("uta.mavs.edu")) {
+
+                                            startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
+
+                                        } else if (emailSuffix.equals("uta.edu")) {
+
+                                            // TODO: Redirect to Organizer Registration
+
+                                        }
+
+
+                                    } else {
+                                        Toast.makeText(
+                                                RegisterUser.this,
+                                                "User registered failed! Try again...",
+                                                Toast.LENGTH_LONG
+                                        ).show();
                                     }
                                     
                                     
