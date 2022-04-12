@@ -82,7 +82,7 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gradArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         majorSpinner.setAdapter(adapter);
-
+        
     }
     
     @Override
