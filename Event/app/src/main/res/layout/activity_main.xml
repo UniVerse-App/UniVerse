@@ -49,8 +49,8 @@
             android:layout_below="@+id/event_name"
             android:layout_marginLeft="20sp"
             android:hint="Enter event name"
-            android:minLines="1"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:minLines="1" />
 
         <!--Location-->
         <TextView
@@ -74,8 +74,8 @@
             android:layout_below="@+id/location"
             android:layout_marginLeft="20sp"
             android:hint="Enter event location"
-            android:minLines="1"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:minLines="1" />
 
         <!--    Is this event public?-->
         <TextView
@@ -118,18 +118,19 @@
 
         <Button
             android:id="@+id/datePickerButton"
+            style="?android:spinnerStyle"
             android:layout_width="160sp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date_time"
             android:layout_marginLeft="20sp"
             android:onClick="openDatePicker"
             android:text="mm-dd-yyyy"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            style="?android:spinnerStyle"/>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/hourPickerButton"
+            style="?android:spinnerStyle"
             android:layout_width="130sp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date_time"
@@ -137,9 +138,8 @@
             android:layout_toRightOf="@+id/date_time"
             android:onClick="openTimePicker"
             android:text="hour-min"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            style="?android:spinnerStyle"/>
+            android:textSize="20sp" />
 
         <!--    Organizer name-->
         <TextView
@@ -163,8 +163,8 @@
             android:layout_below="@+id/organizer"
             android:layout_marginLeft="20sp"
             android:hint="Enter organizer name"
-            android:minLines="1"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:minLines="1" />
 
         <!--   Summary-->
         <TextView
@@ -238,32 +238,43 @@
             android:layout_below="@+id/num_student"
             android:layout_marginLeft="20sp"
             android:hint="Enter the quantity"
-            android:minLines="1"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:minLines="1" />
 
         <!--Button to open the image selector-->
-        <Button
-            android:id="@+id/eventPhotoPickerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/num_student"
-            android:layout_marginLeft="20sp"
-            android:layout_marginTop="45sp"
-            android:backgroundTint="@android:color/white"
-            android:text="Event Photo"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="18sp"
-            android:onClick="openEventPhotoPicker"/>
+        <!--        <com.google.android.material.imageview.ShapeableImageView-->
+        <!--            android:id="@+id/eventPhotoPickerButton"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/num_student"-->
+        <!--            android:background="@android:color/transparent"-->
+        <!--            android:layout_marginLeft="20sp"-->
+        <!--            android:layout_marginTop="45sp"-->
+
+        <!--            android:onClick="openEventPhotoPicker"/>-->
 
         <!--ImageView to preview the selected image-->
-        <ImageView
-            android:id="@+id/IVPreviewImage"
-            android:layout_width="200sp"
-            android:layout_height="200sp"
-            android:layout_below="@id/eventPhotoPickerButton"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="90sp"
-            android:layout_marginEnd="16dp" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/IVPreviewImage"-->
+        <!--            android:layout_width="200sp"-->
+        <!--            android:layout_height="200sp"-->
+        <!--            android:layout_below="@id/eventPhotoPickerButton"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginTop="90sp"-->
+        <!--            android:layout_marginEnd="16dp" />-->
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/eventPicBackground"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginVertical="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_pic_circle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/studentRegistration_banner"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
 
         <!--    Cancel Button-->
         <Button
