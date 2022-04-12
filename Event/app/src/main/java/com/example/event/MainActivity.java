@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Locale;
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button dateButton;
     private Button timeButton;
     private Button eventPhoto;
+    private ShapeableImageView shapeableImageView;
 
     //hour and min variables
     int hour, min;
@@ -92,5 +96,14 @@ public class MainActivity extends AppCompatActivity {
     public void openEventPhotoPicker(View view) {
         Intent gallery =new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, 3);
+        }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            selectedImage = data.getData();
+            eventPhoto.setImageURI(selectedImage);
+        }
     }
 }
