@@ -1,4 +1,4 @@
-package com.example.universe;
+package com.example.event;
 
 import java.util.ArrayList;
 
