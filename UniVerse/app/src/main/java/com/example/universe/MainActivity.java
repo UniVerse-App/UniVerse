@@ -1,13 +1,5 @@
 package com.example.event;
 
-<<<<<<< HEAD
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-public class MainActivity extends AppCompatActivity {
-
-=======
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -43,15 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private Integer PICK_IMAGE = 1;
     private Uri selectedImage;
     
->>>>>>> b86f5a45d4b33b333cdecb6e94c2567d1ec49de8
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
-
-
-=======
         initDatePicker();
         dateButton = findViewById(R.id.datePickerButton);
 
@@ -118,6 +105,5 @@ public class MainActivity extends AppCompatActivity {
             selectedImage = data.getData();
             eventPhoto.setImageURI(selectedImage);
         }
->>>>>>> b86f5a45d4b33b333cdecb6e94c2567d1ec49de8
     }
 }
