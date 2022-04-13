@@ -9,6 +9,9 @@ public class User {
     
     public Integer onboardingStep;
 
+    // Integer to determine where to resume onboarding if user logs out before complete.
+    public Integer onboardingStep;
+
     public User() {
 
     }

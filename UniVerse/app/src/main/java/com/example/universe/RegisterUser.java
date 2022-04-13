@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
-    
+
     private TextView banner;
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
     private Button registerUser;
@@ -35,18 +35,18 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_register_user);
         
         mAuth = FirebaseAuth.getInstance();
-        
+
         banner = findViewById(R.id.banner);
         banner.setOnClickListener(this);
-        
+
         registerUser = findViewById(R.id.registerButton);
         registerUser.setOnClickListener(this);
-        
+
         editTextFirstName = findViewById(R.id.registerFirstName);
         editTextLastName = findViewById(R.id.registerLastName);
         editTextEmail = findViewById(R.id.registerEmail);
         editTextPassword = findViewById(R.id.registerPassword);
-        
+
         progressBar = findViewById(R.id.progressBar);
     }
     
@@ -81,7 +81,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
 
                             // Create user object with form data.
-                            User user = new User(firstName, lastName, email);
+                            Integer onboardingStep = 1;
+                            User user = new User(firstName, lastName, email, onboardingStep);
 
                             // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
                             FirebaseDatabase.getInstance().getReference("Users")
@@ -100,6 +101,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
                                         if (!emailSuffix.equals("uta.mavs.edu")) {
 
+                                            // Redirect to RegisterStudentInfo
                                             startActivity(new Intent(RegisterUser.this, RegisterStudentInfo.class));
 
                                         } else if (emailSuffix.equals("uta.edu")) {

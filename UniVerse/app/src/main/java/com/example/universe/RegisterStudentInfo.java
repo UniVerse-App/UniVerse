@@ -117,7 +117,7 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             String photoKey = uploadPicture();
             updateUserInfo(photoKey);
             startActivity(new Intent(RegisterStudentInfo.this, InterestsSelection.class));
-            
+
         }
     }
     
@@ -149,7 +149,7 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         final String randomKey = UUID.randomUUID().toString();
         // Create a reference to 'images/randomKey'
         StorageReference profilePicRef = mStorageRef.child("profilePictures/" + randomKey);
-        
+
         profilePicRef.putFile(selectedImage)
         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
