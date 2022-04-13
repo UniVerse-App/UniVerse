@@ -66,6 +66,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
+        String emailSuffix = email.split("@")[1];
 
         // If form validation is true, attempt to create user in firebase auth and realtime database
         if (validateInput(firstName, lastName, email, password, emailSuffix)) {
