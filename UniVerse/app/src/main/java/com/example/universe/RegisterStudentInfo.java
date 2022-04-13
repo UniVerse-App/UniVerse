@@ -116,8 +116,8 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
 
             String photoKey = uploadPicture();
             updateUserInfo(photoKey);
+            startActivity(new Intent(RegisterStudentInfo.this, InterestsSelection.class));
 
-            // TODO: Load Interests Activity
         }
     }
 
@@ -132,6 +132,7 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
                 snapshot.getRef().child("major").setValue(majorSpinner.getSelectedItem().toString());
                 snapshot.getRef().child("gradYear").setValue(gradYear.getValue());
                 snapshot.getRef().child("profilePicture").setValue(photoKey);
+                snapshot.getRef().child("onboardingStep").setValue(2);
             }
 
             @Override
@@ -148,9 +149,6 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         final String randomKey = UUID.randomUUID().toString();
         // Create a reference to 'images/randomKey'
         StorageReference profilePicRef = mStorageRef.child("profilePictures/" + randomKey);
-
-        // TODO: Save random key to User database reference.
-
 
         profilePicRef.putFile(selectedImage)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
