@@ -59,7 +59,7 @@ public class InterestsSelection extends AppCompatActivity {
 
                         // If successful, proceed to interests page.
                         if (task.isSuccessful()) {
-
+                            // TODO: Redirect to feed
                         } else {
                             Toast.makeText(InterestsSelection.this, "Failed", Toast.LENGTH_SHORT);
                         }
