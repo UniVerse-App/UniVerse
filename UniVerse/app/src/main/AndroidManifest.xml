@@ -19,6 +19,9 @@
             android:name=".RegisterUser"
             android:exported="false" />
         <activity
+            android:name=".InterestsSelection"
+            android:exported="true" />
+        <activity
             android:name=".LoginUser"
             android:exported="true">
             <intent-filter>
