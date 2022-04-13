@@ -4,17 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
+import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Context;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterestsSelection extends AppCompatActivity {
 
@@ -22,28 +31,70 @@ public class InterestsSelection extends AppCompatActivity {
 
     private ChipGroup chipGroup;
     private Chip newChip;
+    private Button button;
+    private boolean tr;
+    private List<Integer> checkedChipIDs;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests_selection);
 
+        int checkedChip = 0;
         chipGroup = findViewById(R.id.InterestChipsGroup);
+        button = findViewById(R.id.Confirm);
+        button.setEnabled(false);
+        tr = true;
+        checkedChipIDs = new ArrayList<>();
         populateChips();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(mAuth.getInstance().getUid()).child("Interests")
+                        .setValue(chipGroup.getCheckedChipIds()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
+                        // If successful, proceed to interests page.
+                        if (task.isSuccessful()) {
+
+                        } else {
+                            Toast.makeText(InterestsSelection.this, "Failed", Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
+            }
+        });
     }
 
-    private Chip buildInterestChip() {
+    private List<Integer> checkIDs(List<Integer> checkedChipIDs, ChipGroup chipGroup){
+        checkedChipIDs = chipGroup.getCheckedChipIds();
+        return checkedChipIDs;
+    }
+
+    private Chip buildInterestChip(Drawable chipIcon) {
         Chip chip = new Chip(InterestsSelection.this);
         chip.setCheckable(true);
-        chip.setChipIcon(getDrawable(R.drawable.ic_baseline_science_24));
+        chip.setChipIcon(chipIcon);
         chip.setChipStrokeColorResource(R.color.accentColor200);
         chip.setChipStrokeWidth(4);
+        chip.setTextSize(20);
         chip.setTextColor(getColor(R.color.accentColor800));
         chip.setChipIconTintResource(R.color.accentColor800);
         chip.setChipBackgroundColorResource(R.color.accentColor100);
         chip.setId(ViewCompat.generateViewId());
-
+        chip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkedChipIDs = chipGroup.getCheckedChipIds();
+                if(checkedChipIDs.size() >= 3)
+                    button.setEnabled(true);
+                else
+                    button.setEnabled(false);
+            }
+        });
         return chip;
 
     }
@@ -58,8 +109,11 @@ public class InterestsSelection extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot interestSnapshot: snapshot.getChildren()) {
-                    Chip chip = buildInterestChip();
+                    String icon = interestSnapshot.child("Icon").getValue(String.class);
+                    @SuppressLint("UseCompatLoadingForDrawables") Drawable chipIcon = getDrawable(getResources().getIdentifier("ic_baseline_"+icon+"_24", "drawable", getPackageName()));
+                    Chip chip = buildInterestChip(chipIcon);
                     chip.setText(interestSnapshot.child("Name").getValue(String.class));
+                    chip.setId(Integer.parseInt(interestSnapshot.getKey()));
                     chipGroup.addView(chip);
                 }
             }
