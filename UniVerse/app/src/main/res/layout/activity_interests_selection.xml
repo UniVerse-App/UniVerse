@@ -26,7 +26,7 @@
         android:id="@+id/interests_bannerSubtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select at least 3 interests below."
+        android:text="Select at least 3 types of events you are interested in."
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="60dp"
         android:textSize="20sp"
@@ -45,5 +45,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/interests_bannerSubtitle">
     </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/Confirm"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="Confirm"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="40dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
