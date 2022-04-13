@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginUser extends AppCompatActivity implements View.OnClickListener {
 
@@ -116,7 +117,25 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
                     } else {
                         Toast.makeText(LoginUser.this, "Welcome back!", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
-                        startActivity(new Intent(LoginUser.this, PlaceHolderFeed.class));
+
+                        // This mess of a line gets the current "onboardingStep" from the User entry in FB to
+                        // determine where we should redirect
+
+                        Integer onboardingStep = Integer.parseInt(FirebaseDatabase.getInstance().getReference()
+                                .child("Users").child(mAuth.getUid()).child("onboardingStep").toString());
+
+                        switch (onboardingStep) {
+                            case 1:
+                                startActivity(new Intent(LoginUser.this, RegisterStudentInfo.class));
+                                break;
+                            case 2:
+                                startActivity(new Intent(LoginUser.this, InterestsSelection.class));
+                                break;
+                            default:
+                                startActivity(new Intent(LoginUser.this, PlaceHolderFeed.class));
+                                break;
+                        }
+
                     }
                 }
                 else {

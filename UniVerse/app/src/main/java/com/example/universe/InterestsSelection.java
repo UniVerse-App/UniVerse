@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,15 +53,18 @@ public class InterestsSelection extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase.getInstance().getReference("Users")
-                        .child(mAuth.getInstance().getUid()).child("Interests")
-                        .setValue(chipGroup.getCheckedChipIds()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+                DatabaseReference userEntry  = userRef.child(mAuth.getInstance().getUid());
+
+                userEntry.child("Interests").setValue(chipGroup.getCheckedChipIds())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
                         // If successful, proceed to interests page.
                         if (task.isSuccessful()) {
-                            // TODO: Redirect to feed
+                            userEntry.child("onboardingStep").setValue(3);
+                            startActivity(new Intent(InterestsSelection.this, PlaceHolderFeed.class));
                         } else {
                             Toast.makeText(InterestsSelection.this, "Failed", Toast.LENGTH_SHORT);
                         }
