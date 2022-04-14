@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,7 +19,7 @@
             android:layout_marginTop="20sp"
             android:text="✨ CREATE NEW EVENT ✨"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -94,6 +94,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
+            android:id="@+id/switchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/location"
@@ -158,6 +159,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/organizerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/organizer"
@@ -183,6 +185,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/summaryDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/summary"
@@ -208,6 +211,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/descriptionBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/description"
@@ -233,57 +237,38 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/numStudentBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/num_student"
-            android:layout_marginLeft="20sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
             android:hint="Enter the quantity"
             android:maxLines="1"
             android:minLines="1" />
 
-        <!--Button to open the image selector-->
-        <!--        <com.google.android.material.imageview.ShapeableImageView-->
-        <!--            android:id="@+id/eventPhotoPickerButton"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@+id/num_student"-->
-        <!--            android:background="@android:color/transparent"-->
-        <!--            android:layout_marginLeft="20sp"-->
-        <!--            android:layout_marginTop="45sp"-->
-
-        <!--            android:onClick="openEventPhotoPicker"/>-->
-
-        <!--ImageView to preview the selected image-->
-        <!--        <ImageView-->
-        <!--            android:id="@+id/IVPreviewImage"-->
-        <!--            android:layout_width="200sp"-->
-        <!--            android:layout_height="200sp"-->
-        <!--            android:layout_below="@id/eventPhotoPickerButton"-->
-        <!--            android:layout_marginStart="16dp"-->
-        <!--            android:layout_marginTop="90sp"-->
-        <!--            android:layout_marginEnd="16dp" />-->
+        <!--    Cancel Button-->
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/eventPicBackground"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginVertical="40dp"
+            android:id="@+id/eventPhotoPickerButton"
+            android:layout_width="350dp"
+            android:layout_height="160dp"
+            android:layout_below="@+id/num_student"
+            android:layout_marginVertical="70sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="27dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile_pic_circle"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/studentRegistration_banner"
-            app:shapeAppearanceOverlay="@style/circleImageView" />
+            android:src="@drawable/event_photo"
+            app:shapeAppearanceOverlay="@style/eventImageView" />
 
-        <!--    Cancel Button-->
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/eventPhotoPickerButton"
             android:layout_marginHorizontal="80sp"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="5sp"
             android:backgroundTint="@android:color/holo_blue_light"
             android:text="Cancel"
             tools:layout_editor_absoluteX="158sp"
@@ -296,7 +281,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/eventPhotoPickerButton"
             android:layout_marginHorizontal="250sp"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@android:color/holo_blue_light"
             android:text="Save"
             tools:layout_editor_absoluteX="158sp"

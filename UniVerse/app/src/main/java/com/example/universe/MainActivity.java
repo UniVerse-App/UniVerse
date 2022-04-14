@@ -1,4 +1,4 @@
-package com.example.event;
+package com.example.universe;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -6,27 +6,51 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.universe.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView eventName, location, organizerName, summary, description, numStudent;
+    private Switch aSwitch;
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
     private Button timeButton;
-    private Button eventPhoto;
+    private ShapeableImageView eventPhoto;
     private ShapeableImageView shapeableImageView;
+    private Button saveButton;
+    private Button cancelButton;
+    private StorageReference mStorageRef;
+    private FirebaseDatabase database;
 
     //hour and min variables
     int hour, min;
@@ -40,13 +64,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initDatePicker();
+
+        eventName = findViewById(R.id.event_name);
+
+        location = findViewById((R.id.location));
+
+        aSwitch = findViewById(R.id.switchButton);
+
         dateButton = findViewById(R.id.datePickerButton);
 
         timeButton = findViewById(R.id.hourPickerButton);
 
+        organizerName = findViewById(R.id.organizerName);
+
+        summary = findViewById(R.id.summaryDescription);
+
+        description = findViewById(R.id.descriptionBox);
+
+        numStudent = findViewById(R.id.numStudentBox);
+
+        saveButton = findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveEvent();
+            }
+        });
+
+        cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelEvent();
+            }
+        });
+
         eventPhoto = findViewById(R.id.eventPhotoPickerButton);
 
+        eventPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openEventPhotoPicker();
+            }
+        });
+
+
+
+        //Firebase
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
     }
+
 
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -64,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         datePickerDialog = new DatePickerDialog(this, 0, dateSetListener, year, month, day);
+
     }
 
     //Method to return Date as a string
@@ -93,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    public void openEventPhotoPicker(View view) {
+    public void openEventPhotoPicker() {
         Intent gallery =new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, 3);
         }
@@ -106,4 +175,72 @@ public class MainActivity extends AppCompatActivity {
             eventPhoto.setImageURI(selectedImage);
         }
     }
+
+    // Uploads photo to Firebase storage and returns key to access photo
+    private String uploadPicture() {
+
+        final String randomKey = UUID.randomUUID().toString();
+        // Create a reference to 'images/randomKey'
+        StorageReference profilePicRef = mStorageRef.child("eventPictures/" + randomKey);
+
+        profilePicRef.putFile(selectedImage)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(MainActivity.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                    }
+                });
+
+        return randomKey;
+    }
+
+    // Updates user profile with photo key and other info
+    private void eventInfo(String photoKey) {
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReference();
+        final String randomKey = UUID.randomUUID().toString();
+
+        dbRef.child("Event").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snapshot.getRef().child("eventName").setValue(eventName.getText().toString().trim());
+                snapshot.getRef().child("location").setValue(location.getText().toString().trim());
+                snapshot.getRef().child("isPublic").setValue(aSwitch.isChecked());
+                snapshot.getRef().child("date").setValue(dateButton.getText().toString());
+                snapshot.getRef().child("time").setValue(timeButton.getText().toString());
+                snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
+                snapshot.getRef().child("summary").setValue(summary.getText().toString().trim());
+                snapshot.getRef().child("description").setValue(description.getText().toString().trim());
+                snapshot.getRef().child("numStudent").setValue(numStudent.getText().toString().trim());
+                snapshot.getRef().child("photo").setValue(photoKey);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Event", error.getMessage());
+            }
+        });
+
+    }
+
+
+    //Create event method
+    private void saveEvent() {
+        String photoKey = uploadPicture();
+            eventInfo(photoKey);
+            //startActivity(new Intent(this, Feed.class));
+    }
+
+    private void cancelEvent() {
+        //startActivity(new Intent(this, Feed.class));
+    }
 }
+
+
