@@ -21,11 +21,9 @@ import java.util.Calendar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.universe.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Locale;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class CreateEvent extends AppCompatActivity {
 
     private TextView eventName, location, organizerName, summary, description, numStudent;
     private Switch aSwitch;
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.create_event);
         initDatePicker();
 
         eventName = findViewById(R.id.event_name);
@@ -187,13 +185,13 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(MainActivity.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                        Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                        Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
                     }
                 });
 
