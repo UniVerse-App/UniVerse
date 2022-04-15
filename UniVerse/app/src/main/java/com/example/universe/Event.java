@@ -34,4 +34,7 @@ public class Event {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+    public Event(){
+
+    }
 }
