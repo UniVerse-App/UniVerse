@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -31,8 +33,9 @@ public class Feed extends AppCompatActivity{
 
    private BottomNavigationView bottomNavigationView;
    private NavController navController;
-   private RecyclerView mEventList;
-   private DatabaseReference mDatabase;
+   public RecyclerView mEventList;
+   FirebaseDatabase mDatabase;
+   DatabaseReference mref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +48,8 @@ public class Feed extends AppCompatActivity{
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Event");
-        mDatabase.keepSynced(true);
-
+        mDatabase = FirebaseDatabase.getInstance();
+        mref = mDatabase.getReference("Event");
         mEventList = (RecyclerView)findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(this));
@@ -57,8 +59,9 @@ public class Feed extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
         FirebaseRecyclerAdapter<Event,EventViewHolder>firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>
-                (Event.class,R.layout.event_card, EventViewHolder.class,mDatabase) {
+                (options) {
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder viewHolder, int position, @NonNull Event model) {
                 viewHolder.setEventName(model.getEventName());
@@ -69,10 +72,12 @@ public class Feed extends AppCompatActivity{
             @NonNull
             @Override
             public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
+
+                return new EventViewHolder(view);
             }
         };
-
+        firebaseRecyclerAdapter.startListening();
         mEventList.setAdapter(firebaseRecyclerAdapter);
     }
 
