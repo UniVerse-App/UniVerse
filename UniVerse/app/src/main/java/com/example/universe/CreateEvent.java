@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -38,7 +40,7 @@ import java.util.UUID;
 
 public class CreateEvent extends AppCompatActivity {
 
-    private TextView eventName, location, organizerName, summary, description, numStudent;
+    private EditText eventName, location, organizerName, summary, description, numStudent;
     private Switch aSwitch;
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
@@ -63,9 +65,9 @@ public class CreateEvent extends AppCompatActivity {
         setContentView(R.layout.create_event);
         initDatePicker();
 
-        eventName = findViewById(R.id.event_name);
+        eventName = findViewById(R.id.eventNameBox);
 
-        location = findViewById((R.id.location));
+        location = findViewById(R.id.locationBox);
 
         aSwitch = findViewById(R.id.switchButton);
 
@@ -169,8 +171,8 @@ public class CreateEvent extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            selectedImage = data.getData();
-            eventPhoto.setImageURI(selectedImage);
+                selectedImage = data.getData();
+                eventPhoto.setImageURI(selectedImage);
         }
     }
 
@@ -178,27 +180,34 @@ public class CreateEvent extends AppCompatActivity {
     private String uploadPicture() {
 
         final String randomKey = UUID.randomUUID().toString();
-        // Create a reference to 'images/randomKey'
-        StorageReference profilePicRef = mStorageRef.child("eventPictures/" + randomKey);
+        StorageReference eventPhotoRef;
+        //When user doesn't choose an img
+        if(selectedImage==null){
+            eventPhotoRef = mStorageRef.child("eventPictures/default.png");
 
-        profilePicRef.putFile(selectedImage)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
-                    }
-                });
+        } else {
+            // Create a reference to 'images/randomKey'
+            eventPhotoRef = mStorageRef.child("eventPictures/" + randomKey);
 
+
+            eventPhotoRef.putFile(selectedImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(CreateEvent.this, "Event photo uploaded!", Toast.LENGTH_SHORT);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateEvent.this, "Event photo could not be uploaded.", Toast.LENGTH_SHORT);
+                        }
+                    });
+        }
         return randomKey;
     }
 
-    // Updates user profile with photo key and other info
+    // Updates user event photo with photo key and other info
     private void eventInfo(String photoKey) {
         database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference();
@@ -226,6 +235,35 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Error warning if text box left NULL method
+    public void errorWarning(View v)
+    {
+        if(eventName.getText().length()==0)
+        {
+            eventName.setError("Field cannot be left blank.");
+        }
+        else if (location.getText().length()==0)
+        {
+            location.setError("Field cannot be left blank.");
+        }
+        else if (organizerName.getText().length()==0)
+        {
+            organizerName.setError("Field cannot be left blank.");
+        }
+        else if (summary.getText().length()==0)
+        {
+            summary.setError("Field cannot be left blank.");
+        }
+        else if (description.getText().length()==0)
+        {
+            description.setError(("Field cannot be left blank."));
+        }
+        else if (numStudent.getText().length()==0)
+        {
+            numStudent.setError("Field cannot be left blank.");
+        }
     }
 
 
