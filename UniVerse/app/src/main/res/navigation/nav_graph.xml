@@ -15,10 +15,10 @@
         android:label="fragment_second"
         tools:layout="@layout/fragment_second" />
     <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.example.universe.ThirdFragment"
-        android:label="fragment_third"
-        tools:layout="@layout/fragment_third" />
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.universe.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
     <fragment
         android:id="@+id/fourthFragment"
         android:name="com.example.universe.FourthFragment"

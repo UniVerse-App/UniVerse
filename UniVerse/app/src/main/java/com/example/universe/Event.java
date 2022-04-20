@@ -1,22 +1,53 @@
 package com.example.universe;
 
 public class Event {
-    private String eventName;
-    private String description;
-    private String photo;
 
-    public Event(String eventName, String description, String photo) {
+    private String eventName, location, time, description, photo;
+    private long timestamp;
+
+    public Event() {
+
+    }
+
+    public Event(String eventName, String location, String time, long timestamp, String photo, String description) {
+        this.location = location;
         this.eventName = eventName;
-        this.description = description;
+        this.time = time;
+        this.timestamp = timestamp;
         this.photo = photo;
+        this.description = description;
     }
 
     public String getEventName() {
         return eventName;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String name) {
+        this.eventName = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public long getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getDescription() {
@@ -33,8 +64,5 @@ public class Event {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-    public Event(){
-
     }
 }
