@@ -13,20 +13,18 @@ public class Event {
 
     }
 
-    public Event(String eventName, String location, String time, long timestamp, String description, String photo) {
+    public Event(String eventName, String location, String time, long timestamp) {
         this.location = location;
         this.eventName = eventName;
         this.time = time;
         this.timestamp = timestamp;
-        this.description = description;
-        this.photo = photo;
     }
 
     public String getEventName() {
         return eventName;
     }
 
-    public void setEventName(String name) {
+    public void setName(String name) {
         this.eventName = name;
     }
 
@@ -51,24 +49,6 @@ public class Event {
     }
 
     public void setTimestamp(long timestamp) {
-        
         this.timestamp = timestamp;
     }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public String getPhoto() {
-        return photo;
-    }
-    
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
 }
