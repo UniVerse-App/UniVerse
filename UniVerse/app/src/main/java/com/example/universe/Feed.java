@@ -60,46 +60,46 @@ public class Feed extends AppCompatActivity{
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mref = mDatabase.getReference("Event");
-        mEventList = (RecyclerView)findViewById(R.id.recycleView);
-        mEventList.setHasFixedSize(true);
-        mEventList.setLayoutManager(new LinearLayoutManager(this));
+//        mDatabase = FirebaseDatabase.getInstance();
+//        mref = mDatabase.getReference("Event");
+//        mEventList = (RecyclerView)findViewById(R.id.recycleView);
+//        mEventList.setHasFixedSize(true);
+//        mEventList.setLayoutManager(new LinearLayoutManager(this));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(this,));
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //startActivity(new Intent(this,));
+//            }
+//        });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
-        FirebaseRecyclerAdapter<Event,EventViewHolder>firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>
-                (options) {
-            @Override
-            protected void onBindViewHolder(@NonNull EventViewHolder viewHolder, int position, @NonNull Event model) {
-                viewHolder.setEventName(model.getEventName());
-                viewHolder.setDesc(model.getDescription());
-                viewHolder.setImage(getApplicationContext(),model.getPhoto());
-            }
-
-            @NonNull
-            @Override
-            public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
-
-                return new EventViewHolder(view);
-            }
-        };
-        firebaseRecyclerAdapter.startListening();
-        mEventList.setAdapter(firebaseRecyclerAdapter);
-    }
-
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
+//        FirebaseRecyclerAdapter<Event,EventViewHolder>firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>
+//                (options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull EventViewHolder viewHolder, int position, @NonNull Event model) {
+//                viewHolder.setEventName(model.getEventName());
+//                viewHolder.setDesc(model.getDescription());
+//                viewHolder.setImage(getApplicationContext(),model.getPhoto());
+//            }
+//
+//            @NonNull
+//            @Override
+//            public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
+//
+//                return new EventViewHolder(view);
+//            }
+//        };
+//        firebaseRecyclerAdapter.startListening();
+//        mEventList.setAdapter(firebaseRecyclerAdapter);
+//    }
+//
     public static class EventViewHolder extends RecyclerView.ViewHolder {
         View mView;
 
@@ -136,9 +136,6 @@ public class Feed extends AppCompatActivity{
                    // Fail to get image url
                 }
             });
-
-
-
         }
     }
 }
