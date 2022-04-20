@@ -61,6 +61,7 @@ public class CreateEvent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
+
         initDatePicker();
 
         eventName = findViewById(R.id.event_name);
