@@ -19,7 +19,7 @@ public class Event {
         this.time = time;
         this.timestamp = timestamp;
         this.description = description;
-        this.photo = photo
+        this.photo = photo;
     }
 
     public String getEventName() {
