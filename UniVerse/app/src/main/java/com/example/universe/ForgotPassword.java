@@ -50,6 +50,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         if (view.getId() == R.id.backToLogin) {
             startActivity(new Intent(this, LoginUser.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
         else if (view.getId() == R.id.submitButton){
             sendPasswordReset();

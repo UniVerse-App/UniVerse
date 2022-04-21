@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/font/public_sans_font.xml" value="0.14621633176571183" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.281975517095821" />
+        <entry key="app/src/main/res/layout/activity_interests_selection.xml" value="0.28559213339033773" />
         <entry key="app/src/main/res/layout/activity_login_user.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register_student_info.xml" value="0.21932449764856776" />
