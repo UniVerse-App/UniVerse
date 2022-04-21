@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateEvent">
+
+    <ImageView
+        android:id="@+id/backEventInfo"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="30dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintBottom_toBottomOf="@id/createEvent_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.63" />
+
+    <!-- Event Name -->
+    <TextView
+        android:id="@+id/createEvent_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Event Title"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintLeft_toLeftOf="@id/backEventInfo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/event_organizer_label"
+        android:layout_height="20dp"
+        android:layout_width="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/transparent"
+        android:text="Organizer Name"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/createEvent_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
+
+    <TextView
+        android:id="@+id/event_organizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/publicsans_regular"
+        android:text="Organizer name"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:layout_marginRight="40dp"
+        android:ems="7"
+        app:layout_constraintTop_toBottomOf="@id/event_organizer_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_organizer_label"/>
+
+    <!-- Location Name-->
+
+    <TextView
+        android:id="@+id/event_location_label"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Location"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_organizer" />
+
+    <TextView
+        android:id="@+id/event_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/publicsans_regular"
+        android:text="Location"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:ems="7"
+        app:layout_constraintTop_toBottomOf="@id/event_location_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_location_label"/>
+
+    <TextView
+        android:id="@+id/event_description_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Description"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/event_location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/event_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description of event"
+        android:textSize="14sp"
+        android:fontFamily="@font/publicsans_regular"
+        android:gravity="top"
+        android:ems="20"
+        android:minLines="3"
+        android:maxLines="3"
+        app:layout_constraintTop_toBottomOf="@id/event_description_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_description_label"/>
+
+    <TextView
+        android:id="@+id/event_datetime_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Date / Time"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/event_description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/DateEvent"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:onClick="openDatePicker"
+        android:text="Date"
+        android:textColor="@color/black"
+        android:fontFamily="@font/publicsans_regular"
+        app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_datetime_label" />
+
+    <TextView
+        android:id="@+id/event_photo_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Event Photo"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/DateEvent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/eventPhoto"
+        android:layout_width="350dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="60sp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/event_photo"
+        app:shapeAppearanceOverlay="@style/eventImageView"
+        app:layout_constraintTop_toBottomOf="@id/event_photo_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <Button
+        android:id="@+id/RSVP_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="60dp"
+        android:text="RSVP"
+        android:textSize="16dp"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventPhoto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

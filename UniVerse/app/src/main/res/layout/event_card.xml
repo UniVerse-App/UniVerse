@@ -92,6 +92,7 @@
             app:layout_constraintLeft_toRightOf="@+id/eventLocation"/>
 
         <Button
+            android:id="@+id/info_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
