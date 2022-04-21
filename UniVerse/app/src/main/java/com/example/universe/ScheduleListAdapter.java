@@ -34,7 +34,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Event> {
         TextView eventLocation = listItemView.findViewById(R.id.eventLocation);
 
         eventName.setText(event.getEventName());
-        eventTime.setText(event.getTime());
+        eventTime.setText(event.getTimeString());
         eventLocation.setText(event.getLocation());
 
         listItemView.setOnClickListener(new View.OnClickListener() {

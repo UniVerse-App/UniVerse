@@ -3,13 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/joshu/Documents/School/PROJECTS/UniVerse/UniVerse/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2495" />
-        <entry key="..\:/Users/joshu/Documents/School/PROJECTS/UniVerse/UniVerse/app/src/main/res/layout/activity_feed.xml" value="0.25" />
-        <entry key="..\:/Users/joshu/Documents/School/PROJECTS/UniVerse/UniVerse/app/src/main/res/layout/fragment_fourth.xml" value="0.1935185185185185" />
-        <entry key="..\:/Users/joshu/Documents/School/PROJECTS/UniVerse/UniVerse/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
-        <entry key="..\:/Users/joshu/Documents/School/PROJECTS/UniVerse/UniVerse/app/src/main/res/xml/root_preferences.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/camera_plus_circle.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/event_photo.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/forgot_pass_splash.xml" value="0.2125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.249" />
+        <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/ic_hericon_at.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/ic_hericon_lock.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/ic_hericon_news.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/ic_hericon_user.xml" value="0.272" />
+        <entry key="app/src/main/res/drawable/ic_lock_hericon.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/ic_splash_art.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/ic_universelogo.xml" value="0.231" />
+        <entry key="app/src/main/res/drawable/photo_placeholder.xml" value="0.231" />
+        <entry key="app/src/main/res/font/gilroy_font.xml" value="0.14621633176571183" />
+        <entry key="app/src/main/res/font/public_sans_font.xml" value="0.14621633176571183" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.281975517095821" />
+        <entry key="app/src/main/res/layout/activity_interests_selection.xml" value="0.28559213339033773" />
+        <entry key="app/src/main/res/layout/activity_login_user.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_register_student_info.xml" value="0.21932449764856776" />
+        <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/create_event.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/create_event_new.xml" value="0.18255664814023087" />
+        <entry key="app/src/main/res/layout/event_card.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_schedule.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.12141941000427534" />
+        <entry key="app/src/main/res/layout/schedule_list_items.xml" value="0.2" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
       </map>
     </option>
