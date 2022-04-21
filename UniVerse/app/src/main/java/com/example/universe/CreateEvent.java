@@ -1,9 +1,12 @@
 package com.example.universe;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,6 +25,8 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,7 +63,7 @@ public class CreateEvent extends AppCompatActivity {
     //Event Photo selection variables
     private Integer PICK_IMAGE = 1;
     private Uri selectedImage;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +114,6 @@ public class CreateEvent extends AppCompatActivity {
         });
 
 
-
         //Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -121,7 +125,7 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                String date = makeDateString(day,month,year);
+                String date = makeDateString(day, month, year);
                 dateButton.setText(date);
             }
         };
@@ -147,14 +151,12 @@ public class CreateEvent extends AppCompatActivity {
 
     //Method to get and show Time Picker
     public void openTimePicker(View view) {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
-        {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMin)
-            {
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMin) {
                 hour = selectedHour;
-                min  = selectedMin;
-                timeButton.setText(String.format(Locale.getDefault(), "%02d:%02d",hour,min));
+                min = selectedMin;
+                timeButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, min));
             }
         };
 
@@ -163,16 +165,16 @@ public class CreateEvent extends AppCompatActivity {
     }
 
     public void openEventPhotoPicker() {
-        Intent gallery =new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, 3);
-        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-                selectedImage = data.getData();
-                eventPhoto.setImageURI(selectedImage);
+            selectedImage = data.getData();
+            eventPhoto.setImageURI(selectedImage);
         }
     }
 
@@ -182,13 +184,13 @@ public class CreateEvent extends AppCompatActivity {
         final String randomKey = UUID.randomUUID().toString();
         StorageReference eventPhotoRef;
         //When user doesn't choose an img
-        if(selectedImage==null){
+        if (selectedImage == null) {
             eventPhotoRef = mStorageRef.child("eventPictures/default.png");
 
         } else {
             // Create a reference to 'images/randomKey'
             eventPhotoRef = mStorageRef.child("eventPictures/" + randomKey);
-        }
+
 
             eventPhotoRef.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -199,11 +201,11 @@ public class CreateEvent extends AppCompatActivity {
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure( Exception e) {
+                        public void onFailure(Exception e) {
                             Toast.makeText(CreateEvent.this, "Event photo could not be uploaded.", Toast.LENGTH_SHORT);
                         }
                     });
-
+        }
         return randomKey;
     }
 
@@ -234,48 +236,75 @@ public class CreateEvent extends AppCompatActivity {
                 Log.d("Event", error.getMessage());
             }
         });
-
     }
 
+
     //Error warning if text box left NULL method
-    public void errorWarning(View v)
-    {
-        if(eventName.getText().length()==0)
-        {
+    public boolean errorWarning() {
+        boolean condition = false;
+        if (eventName.getText().length() == 0) {
+            condition = true;
             eventName.setError("Field cannot be left blank.");
-        }
-        else if (location.getText().length()==0)
-        {
+        } else if (location.getText().length() == 0) {
+            condition = true;
             location.setError("Field cannot be left blank.");
-        }
-        else if (organizerName.getText().length()==0)
-        {
+        } else if (organizerName.getText().length() == 0) {
+            condition = true;
             organizerName.setError("Field cannot be left blank.");
-        }
-        else if (summary.getText().length()==0)
-        {
+        } else if (summary.getText().length() == 0) {
+            condition = true;
             summary.setError("Field cannot be left blank.");
-        }
-        else if (description.getText().length()==0)
-        {
+        } else if (description.getText().length() == 0) {
+            condition = true;
             description.setError(("Field cannot be left blank."));
-        }
-        else if (numStudent.getText().length()==0)
-        {
+        } else if (numStudent.getText().length() == 0) {
+            condition = true;
             numStudent.setError("Field cannot be left blank.");
         }
+        return condition;
     }
 
 
     //Create event method
     private void saveEvent() {
-        String photoKey = uploadPicture();
+        if (errorWarning()) {
+            Toast.makeText(getApplicationContext(), "Please fill", Toast.LENGTH_SHORT).show();
+        } else {
+            String photoKey = uploadPicture();
             eventInfo(photoKey);
             startActivity(new Intent(this, Feed.class));
+            notification();
+        }
     }
 
     private void cancelEvent() {
         startActivity(new Intent(this, Feed.class));
+    }
+
+    private void notification() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", "name", importance);
+            channel.setDescription("description");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID")
+                .setContentTitle(eventName.getText().toString())
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                //.setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(description.getText().toString()))
+                .setContentText(summary.getText().toString());
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(1, builder.build());
     }
 }
 
