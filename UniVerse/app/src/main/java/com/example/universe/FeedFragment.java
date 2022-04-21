@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +65,8 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref, Event.class).build();
+
+        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
         FirebaseRecyclerAdapter<Event, Feed.EventViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, Feed.EventViewHolder>
                 (options) {
             @Override
