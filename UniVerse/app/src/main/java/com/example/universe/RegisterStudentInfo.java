@@ -39,26 +39,44 @@ import java.util.Date;
 import java.util.UUID;
 
 public class RegisterStudentInfo extends AppCompatActivity implements View.OnClickListener {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     private Spinner majorSpinner;
     private NumberPicker gradYear;
     private Button nextButton;
     private ShapeableImageView selectProfilePic, profilePic;
+<<<<<<< HEAD
     
     // Profile pic selection/upload variables
     private Integer PICK_IMAGE = 1;
     private Uri selectedImage;
     
+=======
+
+    // Profile pic selection/upload variables
+    private Integer PICK_IMAGE = 1;
+    private Uri selectedImage;
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     // Firebase variables
     private FirebaseAuth mAuth;
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
+<<<<<<< HEAD
     
     
+=======
+
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_student_info);
+<<<<<<< HEAD
         
         majorSpinner = findViewById(R.id.studentRegistrationMajor);
         
@@ -85,17 +103,53 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         
     }
     
+=======
+
+        majorSpinner = findViewById(R.id.studentRegistrationMajor);
+
+        gradYear = findViewById(R.id.studentRegistrationGradYear);
+
+        // Sets min graduation year to this year, sets max to 8 years from now.
+        gradYear.setMinValue(LocalDate.now().getYear());
+        gradYear.setMaxValue(LocalDate.now().getYear() + 8);
+
+        nextButton = findViewById(R.id.studentRegistrationNextButton);
+        nextButton.setOnClickListener(this);
+
+        profilePic = findViewById(R.id.profilePicBackground);
+
+        selectProfilePic = findViewById(R.id.selectProfilePic);
+        selectProfilePic.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gradArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        majorSpinner.setAdapter(adapter);
+
+    }
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.studentRegistrationNextButton) {
             nextScreen();
         }
         else if (view.getId() == R.id.selectProfilePic) {
+<<<<<<< HEAD
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             startActivityForResult(gallery, 3);
         }
     }
     
+=======
+           Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+           startActivityForResult(gallery, 3);
+        }
+    }
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -104,6 +158,7 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             profilePic.setImageURI(selectedImage);
         }
     }
+<<<<<<< HEAD
     
     private void nextScreen() {
         String major = majorSpinner.getSelectedItem().toString();
@@ -114,18 +169,38 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             
         } else {
             
+=======
+
+    private void nextScreen() {
+        String major = majorSpinner.getSelectedItem().toString();
+        Integer year = gradYear.getValue();
+
+        if (major.equals("Choose a major...")) {
+            Toast.makeText(this, "Please select a Field of Study", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
             String photoKey = uploadPicture();
             updateUserInfo(photoKey);
             startActivity(new Intent(RegisterStudentInfo.this, InterestsSelection.class));
 
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     // Updates user profile with photo key and other info
     private void updateUserInfo(String photoKey) {
         database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference();
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         dbRef.child("Users").child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -134,23 +209,37 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
                 snapshot.getRef().child("profilePicture").setValue(photoKey);
                 snapshot.getRef().child("onboardingStep").setValue(2);
             }
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("User", error.getMessage());
             }
         });
+<<<<<<< HEAD
         
     }
     
     // Uploads photo to Firebase storage and returns key to access photo
     private String uploadPicture() {
         
+=======
+
+    }
+
+    // Uploads photo to Firebase storage and returns key to access photo
+    private String uploadPicture() {
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         final String randomKey = UUID.randomUUID().toString();
         // Create a reference to 'images/randomKey'
         StorageReference profilePicRef = mStorageRef.child("profilePictures/" + randomKey);
 
         profilePicRef.putFile(selectedImage)
+<<<<<<< HEAD
         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -164,6 +253,21 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
             }
         });
         
+=======
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(RegisterStudentInfo.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegisterStudentInfo.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                    }
+                });
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         return randomKey;
     }
 }

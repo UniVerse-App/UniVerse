@@ -15,17 +15,27 @@
     <string name="schedule">Schedule</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<<<<<<< HEAD
     
     
     <string name="register_button">Need an account?</string>
     
+=======
+
+    <string name="register_button">Need an account?</string>
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     <!-- Strings related to navbar -->
     <string name="title_activity_feed">Feed</string>
     <string name="title_feed">Feed</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_settings">Settings</string>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     <!-- Strings for major selection drop down -->
     <string-array name="gradArray">
         <item>Choose a major...</item>

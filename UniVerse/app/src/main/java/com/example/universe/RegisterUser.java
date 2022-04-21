@@ -26,14 +26,24 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
     private Button registerUser;
     private ProgressBar progressBar;
+<<<<<<< HEAD
     
     private FirebaseAuth mAuth;
     
+=======
+
+    private FirebaseAuth mAuth;
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         mAuth = FirebaseAuth.getInstance();
 
         banner = findViewById(R.id.banner);
@@ -49,28 +59,49 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         progressBar = findViewById(R.id.progressBar);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.registerButton) {
             registerUser();
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         else if (view.getId() == R.id.banner) {
             startActivity(new Intent(this, LoginUser.class));
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
+<<<<<<< HEAD
         
         // If form validation is true, attempt to create user in firebase auth and realtime database
         if (validateInput(firstName, lastName, email, password, emailSuffix)) {
             progressBar.setVisibility(View.VISIBLE);
             
+=======
+        String emailSuffix = email.split("@")[1];
+
+        // If form validation is true, attempt to create user in firebase auth and realtime database
+        if (validateInput(firstName, lastName, email, password, emailSuffix)) {
+            progressBar.setVisibility(View.VISIBLE);
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
             // Create user in firebase auth.
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -118,6 +149,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 Toast.LENGTH_LONG
                                         ).show();
                                     }
+<<<<<<< HEAD
                                     
                                     
                                 } else {
@@ -145,6 +177,26 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         
     }
     
+=======
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            });
+                        } else {
+                            Toast.makeText(
+                                    RegisterUser.this,
+                                    "User registered failed! Try again...",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+        }
+
+    }
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
     private boolean validateInput(String firstName, String lastName, String email, String password, String email_suffix) {
         // Field not empty
         if (firstName.isEmpty()) {
@@ -152,35 +204,55 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             editTextFirstName.requestFocus();
             return false;
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         // Field not empty
         if (lastName.isEmpty()) {
             editTextLastName.setError("Last Name is required!");
             editTextLastName.requestFocus();
             return false;
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         // Field not empty
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required!");
             editTextEmail.requestFocus();
             return false;
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         // Valid email pattern
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please provide a valid email!");
             editTextEmail.requestFocus();
             return false;
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         // Field not empty
         if (password.isEmpty()) {
             editTextPassword.setError("Password is required!");
             editTextPassword.requestFocus();
             return false;
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         // Valid password pattern - Min 8 chars, At least one uppercase, one digit, one special character.
         if (!password.matches("^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")) {
             if (password.length() < 8) {
@@ -204,6 +276,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         }
+<<<<<<< HEAD
         
         // Is UTA email?
         //        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
@@ -216,6 +289,20 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         //            editTextEmail.requestFocus();
         //            return false;
         //        }
+=======
+
+        // Is UTA email?
+//        if (email_suffix.equals("mavs.uta.edu") || email_suffix.equals("uta.edu")) {
+//
+//            // All validation checks passed.
+//            return true;
+//
+//        } else {
+//            editTextEmail.setError("Currently we only support UTA emails.");
+//            editTextEmail.requestFocus();
+//            return false;
+//        }
+>>>>>>> dd8eca44802012b8d68db22c5e3e11af62f014a2
         return true;
     }
 }
