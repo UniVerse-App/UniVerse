@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LoginUser">
 
-
     <ImageView
         android:id="@+id/banner"
         android:src="@drawable/ic_universelogo"

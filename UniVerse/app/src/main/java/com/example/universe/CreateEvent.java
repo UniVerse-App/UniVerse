@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,15 +40,13 @@ import java.util.UUID;
 
 public class CreateEvent extends AppCompatActivity {
 
-    private TextView eventName, location, organizerName, summary, description, numStudent;
-    private Switch aSwitch;
+    private TextView eventName, eventLocation, organizerName, eventDescription;
+    private NumberPicker numSeats;
+    private Switch publicSwitch;
     private DatePickerDialog datePickerDialog;
-    private Button dateButton;
-    private Button timeButton;
-    private ShapeableImageView eventPhoto;
-    private ShapeableImageView shapeableImageView;
-    private Button saveButton;
-    private Button cancelButton;
+    private Button dateButton, timeButton, createButton;
+    private ImageView backButton;
+    private ShapeableImageView eventPhotoButton, eventPhotoContainer;
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
 
@@ -65,49 +65,41 @@ public class CreateEvent extends AppCompatActivity {
         initDatePicker();
 
         eventName = findViewById(R.id.event_name);
-
-        location = findViewById((R.id.location));
-
-        aSwitch = findViewById(R.id.switchButton);
-
+        eventLocation = findViewById((R.id.event_location));
         dateButton = findViewById(R.id.datePickerButton);
-
         timeButton = findViewById(R.id.hourPickerButton);
+        organizerName = findViewById(R.id.event_organizer);
+        eventDescription = findViewById(R.id.event_description);
 
-        organizerName = findViewById(R.id.organizerName);
+        // TODO: Fix number picker
+        numSeats = findViewById(R.id.event_seats);
+        numSeats.setMaxValue(9999);
+        numSeats.setMinValue(0);
 
-        summary = findViewById(R.id.summaryDescription);
-
-        description = findViewById(R.id.descriptionBox);
-
-        numStudent = findViewById(R.id.numStudentBox);
-
-        saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        createButton = findViewById(R.id.create_button);
+        createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveEvent();
             }
         });
 
-        cancelButton = findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        backButton = findViewById(R.id.ic_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancelEvent();
             }
         });
 
-        eventPhoto = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoButton = findViewById(R.id.eventPhotoPickerButton);
 
-        eventPhoto.setOnClickListener(new View.OnClickListener() {
+        eventPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEventPhotoPicker();
             }
         });
-
-
 
         //Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -134,6 +126,7 @@ public class CreateEvent extends AppCompatActivity {
 
     }
 
+    // TODO: Change date functionality to use epoch
     //Method to return Date as a string
     private String makeDateString(int day, int month, int year) {
         return month + "/" + day + "/" + year;
@@ -171,7 +164,7 @@ public class CreateEvent extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
-            eventPhoto.setImageURI(selectedImage);
+            eventPhotoContainer.setImageURI(selectedImage);
         }
     }
 
@@ -209,14 +202,13 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().child("eventName").setValue(eventName.getText().toString().trim());
-                snapshot.getRef().child("location").setValue(location.getText().toString().trim());
-                snapshot.getRef().child("isPublic").setValue(aSwitch.isChecked());
+                snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
+                snapshot.getRef().child("isPublic").setValue(publicSwitch.isChecked());
                 snapshot.getRef().child("date").setValue(dateButton.getText().toString());
                 snapshot.getRef().child("time").setValue(timeButton.getText().toString());
                 snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
-                snapshot.getRef().child("summary").setValue(summary.getText().toString().trim());
-                snapshot.getRef().child("description").setValue(description.getText().toString().trim());
-                snapshot.getRef().child("numStudent").setValue(numStudent.getText().toString().trim());
+                snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
+                snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
                 snapshot.getRef().child("photo").setValue(photoKey);
 
             }
@@ -238,7 +230,7 @@ public class CreateEvent extends AppCompatActivity {
     }
 
     private void cancelEvent() {
-        //startActivity(new Intent(this, Feed.class));
+        startActivity(new Intent(this, Feed.class));
     }
 }
 
