@@ -1,0 +1,32 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="Profile"
+        app:icon="@drawable/ic_baseline_person_24">
+
+        <ListPreference
+            app:key="editInfo"
+            app:title="Edit Profile Information" />
+
+        <ListPreference
+            app:key="updatePass"
+            app:title="Change password"/>
+
+        <ListPreference
+            app:key="logout"
+            app:title="Logout"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Notifications"
+        app:icon="@drawable/ic_baseline_notifications_24">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="NotiEnable"
+            app:title="Enable Notifications" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

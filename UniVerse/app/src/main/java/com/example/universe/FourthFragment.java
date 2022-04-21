@@ -1,7 +1,11 @@
 package com.example.universe;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,15 +15,56 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import java.io.*;
 
-public class FourthFragment extends Fragment {
+import android.os.Bundle;
 
-    public FourthFragment(){
-        // require a empty public constructor
-    }
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+public class FourthFragment extends PreferenceFragmentCompat {
+    Context thisContext;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        thisContext = getContext();
 
-        return inflater.inflate(R.layout.fragment_fourth, container, false);
+        findPreference("updatePass").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+
+
+
+//                let user = firebase.auth().currentUser;
+//                let newPassword = getASecureRandomPassword();
+//
+//                user.updatePassword(newPassword).then(() => {
+//                        // Update successful.
+//                }, (error) => {
+//                    // An error happened.
+//                });
+                return true;
+            }
+        });
+
+        findPreference("editInfo").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                Intent intent = new Intent(thisContext, RegisterStudentInfo.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        findPreference("logout").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(thisContext, LoginUser.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 }
