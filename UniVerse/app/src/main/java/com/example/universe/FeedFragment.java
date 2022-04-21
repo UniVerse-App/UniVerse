@@ -78,7 +78,6 @@ public class FeedFragment extends Fragment {
             @Override
             public Feed.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
-
                 return new Feed.EventViewHolder(view);
             }
         };

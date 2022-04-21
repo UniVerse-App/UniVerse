@@ -18,6 +18,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -26,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,13 +46,14 @@ public class CreateEvent extends AppCompatActivity {
 
     private TextView eventName, eventLocation, organizerName, eventDescription;
     private NumberPicker numSeats;
-    private Switch publicSwitch;
     private DatePickerDialog datePickerDialog;
     private Button dateButton, timeButton, createButton;
     private ImageView backButton;
     private ShapeableImageView eventPhotoButton, eventPhotoContainer;
+    private long timestamp;
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
+    private Calendar cal = Calendar.getInstance();
 
     //hour and min variables
     int hour, min;
@@ -73,7 +78,7 @@ public class CreateEvent extends AppCompatActivity {
 
         // TODO: Fix number picker
         numSeats = findViewById(R.id.event_seats);
-        numSeats.setMaxValue(9999);
+        numSeats.setMaxValue(999);
         numSeats.setMinValue(0);
 
         createButton = findViewById(R.id.create_button);
@@ -106,30 +111,23 @@ public class CreateEvent extends AppCompatActivity {
 
     }
 
-
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = makeDateString(day,month,year);
-                dateButton.setText(date);
-            }
-        };
-
-        Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String format = "MMMM d, yyyy";
+                cal.set(year, month, day);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
+                String selectedDateString = simpleDateFormat.format(cal.getTime()).trim();
+                dateButton.setText(selectedDateString);
+            }
+        };
+
         datePickerDialog = new DatePickerDialog(this, 0, dateSetListener, year, month, day);
-
-    }
-
-    // TODO: Change date functionality to use epoch
-    //Method to return Date as a string
-    private String makeDateString(int day, int month, int year) {
-        return month + "/" + day + "/" + year;
     }
 
     //Method to show Date Picker
@@ -147,6 +145,8 @@ public class CreateEvent extends AppCompatActivity {
                 hour = selectedHour;
                 min  = selectedMin;
                 timeButton.setText(String.format(Locale.getDefault(), "%02d:%02d",hour,min));
+                cal.set(Calendar.HOUR, hour);
+                cal.set(Calendar.MINUTE, min);
             }
         };
 
@@ -174,43 +174,61 @@ public class CreateEvent extends AppCompatActivity {
         final String randomKey = UUID.randomUUID().toString();
         // Create a reference to 'images/randomKey'
         StorageReference profilePicRef = mStorageRef.child("eventPictures/" + randomKey);
+        if (selectedImage != null) {
+            profilePicRef.putFile(selectedImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                        }
+                    });
+            return randomKey;
+        }
 
-        profilePicRef.putFile(selectedImage)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
-                    }
-                });
+        return "default.png";
 
-        return randomKey;
+
     }
 
-    // Updates user profile with photo key and other info
+    // Updates Event record with photo key and other info
     private void eventInfo(String photoKey) {
         database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference();
         final String randomKey = UUID.randomUUID().toString();
 
+        // Get timestamp
+        timestamp = cal.getTimeInMillis();
+        String organizerID = FirebaseAuth.getInstance().getUid();
+        ArrayList<String> userList = new ArrayList<String>();
+        userList.add(organizerID);
+        Event event = new Event(eventName.getText().toString().trim(),
+                                organizerName.getText().toString().trim(),
+                                eventLocation.getText().toString().trim(),
+                                timestamp,
+                                photoKey,
+                                eventDescription.getText().toString().trim(),
+                                userList, //Attendees
+                                numSeats.getValue(),
+                                FirebaseAuth.getInstance().getUid() // Organizer ID
+                );
+
         dbRef.child("Event").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getRef().child("eventName").setValue(eventName.getText().toString().trim());
-                snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
-                snapshot.getRef().child("isPublic").setValue(publicSwitch.isChecked());
-                snapshot.getRef().child("date").setValue(dateButton.getText().toString());
-                snapshot.getRef().child("time").setValue(timeButton.getText().toString());
-                snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
-                snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
-                snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
-                snapshot.getRef().child("photo").setValue(photoKey);
-
+                snapshot.getRef().setValue(event);
+                //snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
+                // snapshot.getRef().child("date").setValue(dateButton.getText().toString());
+                // snapshot.getRef().child("time").setValue(timeButton.getText().toString());
+                //snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
+                //snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
+                //snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
+                //snapshot.getRef().child("photo").setValue(photoKey);
             }
 
             @Override
@@ -218,7 +236,6 @@ public class CreateEvent extends AppCompatActivity {
                 Log.d("Event", error.getMessage());
             }
         });
-
     }
 
 
@@ -226,7 +243,8 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
-            //startActivity(new Intent(this, Feed.class));
+            startActivity(new Intent(this, Feed.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void cancelEvent() {

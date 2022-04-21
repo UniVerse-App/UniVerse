@@ -56,7 +56,7 @@
         android:hint="Event name"
         android:maxLines="1"
         android:textSize="14sp"
-        android:ems="7"
+        android:ems="9"
         app:layout_constraintTop_toBottomOf="@id/event_name_label"
         app:layout_constraintLeft_toLeftOf="@id/event_name_label" />
 
@@ -85,16 +85,15 @@
         android:maxLines="1"
         android:textSize="14sp"
         android:layout_marginRight="40dp"
-        android:ems="7"
+        android:ems="9"
         app:layout_constraintTop_toBottomOf="@id/event_organizer_label"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/event_name"/>
+        app:layout_constraintLeft_toLeftOf="@id/event_organizer_label"/>
 
     <!-- Location Name-->
 
     <TextView
         android:id="@+id/event_location_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="15dp"
@@ -105,7 +104,6 @@
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_organizer" />
 
     <EditText
@@ -117,7 +115,7 @@
         android:hint="Location"
         android:maxLines="1"
         android:textSize="14sp"
-        android:ems="7"
+        android:ems="9"
         app:layout_constraintTop_toBottomOf="@id/event_location_label"
         app:layout_constraintLeft_toLeftOf="@id/event_location_label"/>
 
@@ -196,23 +194,21 @@
 
     <TextView
         android:id="@+id/event_seats_label"
-        android:layout_height="20dp"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="20dp"
         android:background="@android:color/transparent"
-        android:text="Attendee Limit"
         android:fontFamily="@font/gilroy_bold"
+        android:text="Attendee Limit"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/event_organizer"
+        app:layout_constraintBottom_toBottomOf="@id/event_location_label"
         app:layout_constraintLeft_toLeftOf="@id/event_organizer"
-        />
+        app:layout_constraintTop_toTopOf="@+id/event_location_label" />
 
     <NumberPicker
         android:id="@+id/event_seats"
         android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/publicsans_regular"
         app:layout_constraintTop_toBottomOf="@id/event_seats_label"
         app:layout_constraintLeft_toLeftOf="@id/event_seats_label"
@@ -231,22 +227,19 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/datePickerButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/eventPhotoPickerButton"
-        android:layout_width="350dp"
-        android:layout_height="160dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="60sp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/event_photo"
         app:shapeAppearanceOverlay="@style/eventImageView"
         app:layout_constraintTop_toBottomOf="@id/event_photo_label"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="@id/event_photo_label" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/selectEventPic"
@@ -270,5 +263,28 @@
         app:layout_constraintTop_toBottomOf="@id/eventPhotoPickerButton"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <TextView
+        android:id="@+id/interests_label"
+        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Category"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/event_photo_label"
+        app:layout_constraintBottom_toBottomOf="@id/event_photo_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_seats_label"
+        />
+
+    <Button
+        android:id="@+id/event_interests"
+        android:layout_height="wrap_content"
+        android:layout_width="140sp"
+        android:hint="Interest..."
+        style="?android:spinnerStyle"
+        app:layout_constraintLeft_toLeftOf="@id/interests_label"
+        app:layout_constraintTop_toBottomOf="@id/interests_label"></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

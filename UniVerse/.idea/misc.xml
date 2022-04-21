@@ -25,7 +25,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register_student_info.xml" value="0.21932449764856776" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/create_event.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/create_event.xml" value="0.335" />
         <entry key="app/src/main/res/layout/create_event_new.xml" value="0.18255664814023087" />
         <entry key="app/src/main/res/layout/event_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_schedule.xml" value="0.22" />
