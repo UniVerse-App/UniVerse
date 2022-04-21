@@ -13,6 +13,7 @@
 
     <!-- Primary Color -->
     <color name="colorPrimary">#0D88F2</color>
+    <color name="colorPrimaryLight">#83B9E8</color>
     <color name="colorPrimaryVariant">#046DC8</color>
     <color name="colorOnPrimary">#FAFAF9</color>
 
@@ -25,4 +26,6 @@
     <color name="accentColor200">#ffc77d</color>
     <color name="accentColor300">#ffaf49</color>
     <color name="accentColor800">#ee6002</color>
+
+    <color name="shimmerBG">#dddddd</color>
 </resources>

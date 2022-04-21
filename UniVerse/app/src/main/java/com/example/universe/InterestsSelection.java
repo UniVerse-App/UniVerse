@@ -64,7 +64,7 @@ public class InterestsSelection extends AppCompatActivity {
                         // If successful, proceed to interests page.
                         if (task.isSuccessful()) {
                             userEntry.child("onboardingStep").setValue(3);
-                            startActivity(new Intent(InterestsSelection.this, PlaceHolderFeed.class));
+                            startActivity(new Intent(InterestsSelection.this, Feed.class));
                         } else {
                             Toast.makeText(InterestsSelection.this, "Failed", Toast.LENGTH_SHORT);
                         }
