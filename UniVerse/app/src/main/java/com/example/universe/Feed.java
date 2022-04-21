@@ -71,8 +71,7 @@ public class Feed extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Feed.this, CreateEvent.class);
-                startActivity(intent);
+
             }
         });
     }
