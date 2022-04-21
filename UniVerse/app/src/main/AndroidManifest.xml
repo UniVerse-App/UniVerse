@@ -16,9 +16,6 @@
         android:name=".ForgotPassword"
         android:exported="false" />
         <activity
-        android:name=".PlaceHolderFeed"
-        android:exported="false" />
-        <activity
         android:name=".RegisterUser"
         android:exported="false" />
         <activity

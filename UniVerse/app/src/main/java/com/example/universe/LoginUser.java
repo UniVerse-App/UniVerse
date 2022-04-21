@@ -132,7 +132,7 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
                                 startActivity(new Intent(LoginUser.this, InterestsSelection.class));
                                 break;
                             default:
-                                startActivity(new Intent(LoginUser.this, PlaceHolderFeed.class));
+                                startActivity(new Intent(LoginUser.this, Feed.class));
                                 break;
                         }
 

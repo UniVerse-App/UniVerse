@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -114,8 +115,8 @@ public class Feed extends AppCompatActivity{
         }
 
         public void setDesc(String desc) {
-            TextView post_desc = (TextView) mView.findViewById(R.id.eventDesc);
-            post_desc.setText(desc);
+            //TextView post_desc = (TextView) mView.findViewById(R.id.eventDesc);
+            //post_desc.setText(desc);
         }
 
         public void setImage(Context ctx, String image)
@@ -128,7 +129,10 @@ public class Feed extends AppCompatActivity{
                 @Override
                 public void onSuccess(Uri uri) {
                   // Success
-                    Glide.with(ctx).load(uri.toString()).into(post_Image);
+                    Glide.with(ctx).load(uri.toString())
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .into(post_Image);
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
