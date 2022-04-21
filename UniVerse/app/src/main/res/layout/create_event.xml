@@ -51,7 +51,7 @@
             android:layout_below="@+id/eventNameTitle"
             android:layout_marginStart="20sp"
             android:hint="Enter event name"
-            android:maxLines="1"
+            android:maxLines="2"
             android:minLines="1" />
 
         <!--Location-->
@@ -76,7 +76,7 @@
             android:layout_below="@+id/locationTitle"
             android:layout_marginStart="20sp"
             android:hint="Enter event location"
-            android:maxLines="1"
+            android:maxLines="2"
             android:minLines="1" />
 
         <!--    Is this event public?-->
