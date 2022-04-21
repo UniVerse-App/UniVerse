@@ -1,5 +1,6 @@
 package com.example.universe;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -58,7 +59,8 @@ public class FeedFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(this,));
+                Intent intent = new Intent(thisContext, CreateEvent.class);
+                startActivity(intent);
             }
         });
 
