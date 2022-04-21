@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.universe">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,9 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UniVerse">
-        <activity
-            android:name=".Notification"
-            android:exported="false" />
         <activity
             android:name=".RegisterStudentInfo"
             android:exported="true" />
@@ -29,9 +27,6 @@
             android:exported="true" />
         <activity
             android:name=".Feed"
-            android:exported="true" />
-        <activity
-            android:name=".CreateEvent"
             android:exported="true" />
         <activity
             android:name=".CreateEvent"

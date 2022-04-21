@@ -188,7 +188,7 @@ public class CreateEvent extends AppCompatActivity {
         } else {
             // Create a reference to 'images/randomKey'
             eventPhotoRef = mStorageRef.child("eventPictures/" + randomKey);
-
+        }
 
             eventPhotoRef.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -199,11 +199,11 @@ public class CreateEvent extends AppCompatActivity {
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
+                        public void onFailure( Exception e) {
                             Toast.makeText(CreateEvent.this, "Event photo could not be uploaded.", Toast.LENGTH_SHORT);
                         }
                     });
-        }
+
         return randomKey;
     }
 
@@ -271,11 +271,11 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
-            //startActivity(new Intent(this, Feed.class));
+            startActivity(new Intent(this, Feed.class));
     }
 
     private void cancelEvent() {
-        //startActivity(new Intent(this, Feed.class));
+        startActivity(new Intent(this, Feed.class));
     }
 }
 

@@ -18,6 +18,10 @@ public class Events {
     public StringBuffer eventDescription;
 
     //constructor
+
+    public Events() {
+    }
+
     public Events (StringBuffer eventName, StringBuffer location, int attendees[],
                    StringBuffer eventPicture, StringBuffer organizer, StringBuffer summary,
                    int eventID, boolean isPublic, int interests[],
@@ -33,6 +37,105 @@ public class Events {
         this.interests = new int[20];
         this.date      = date;
         this.time      = time;
+        this.eventDescription = eventDescription;
+    }
+
+    //Setters and getters
+
+
+    public StringBuffer getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(StringBuffer eventName) {
+        this.eventName = eventName;
+    }
+
+    public StringBuffer getLocation() {
+        return location;
+    }
+
+    public void setLocation(StringBuffer location) {
+        this.location = location;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public ArrayList<String> getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(ArrayList<String> attendees) {
+        this.attendees = attendees;
+    }
+
+    public StringBuffer getEventPicture() {
+        return eventPicture;
+    }
+
+    public void setEventPicture(StringBuffer eventPicture) {
+        this.eventPicture = eventPicture;
+    }
+
+    public StringBuffer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(StringBuffer organizer) {
+        this.organizer = organizer;
+    }
+
+    public StringBuffer getSummary() {
+        return summary;
+    }
+
+    public void setSummary(StringBuffer summary) {
+        this.summary = summary;
+    }
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+
+    public int[] getInterests() {
+        return interests;
+    }
+
+    public void setInterests(int[] interests) {
+        this.interests = interests;
+    }
+
+    public StringBuffer getDate() {
+        return date;
+    }
+
+    public void setDate(StringBuffer date) {
+        this.date = date;
+    }
+
+    public StringBuffer getTime() {
+        return time;
+    }
+
+    public void setTime(StringBuffer time) {
+        this.time = time;
+    }
+
+    public StringBuffer getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(StringBuffer eventDescription) {
         this.eventDescription = eventDescription;
     }
 
