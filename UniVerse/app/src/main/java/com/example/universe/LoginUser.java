@@ -55,11 +55,14 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.registerUser) {
-            startActivity(new Intent(this, RegisterUser.class));
+            Intent intent = new Intent(this, RegisterUser.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         else if (view.getId() == R.id.forgotPassword) {
             startActivity(new Intent(this, ForgotPassword.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
 
         else if (view.getId() == R.id.loginButton) {
@@ -121,14 +124,14 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
                         // This mess of a line gets the current "onboardingStep" from the User entry in FB to
                         // determine where we should redirect
 
-                        Integer onboardingStep = Integer.parseInt(FirebaseDatabase.getInstance().getReference()
-                                .child("Users").child(mAuth.getUid()).child("onboardingStep").toString());
+                        String onboardingStep = FirebaseDatabase.getInstance().getReference()
+                                .child("Users").child(mAuth.getUid()).child("onboardingStep").toString();
 
                         switch (onboardingStep) {
-                            case 1:
+                            case "1":
                                 startActivity(new Intent(LoginUser.this, RegisterStudentInfo.class));
                                 break;
-                            case 2:
+                            case "2":
                                 startActivity(new Intent(LoginUser.this, InterestsSelection.class));
                                 break;
                             default:
