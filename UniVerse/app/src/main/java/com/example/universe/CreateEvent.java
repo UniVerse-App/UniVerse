@@ -1,9 +1,12 @@
 package com.example.universe;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -12,16 +15,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
-import java.util.Calendar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -42,7 +44,6 @@ public class CreateEvent extends AppCompatActivity {
 
     private TextView eventName, eventLocation, organizerName, eventDescription;
     private NumberPicker numSeats;
-    private Switch publicSwitch;
     private DatePickerDialog datePickerDialog;
     private Button dateButton, timeButton, createButton;
     private ImageView backButton;
@@ -92,9 +93,10 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
-        eventPhotoButton = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoButton = findViewById(R.id.selectEventPic);
 
-        eventPhotoButton.setOnClickListener(new View.OnClickListener() {
+        eventPhotoContainer = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEventPhotoPicker();
@@ -198,19 +200,17 @@ public class CreateEvent extends AppCompatActivity {
         DatabaseReference dbRef = database.getReference();
         final String randomKey = UUID.randomUUID().toString();
 
-        dbRef.child("Event").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().child("eventName").setValue(eventName.getText().toString().trim());
                 snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
-                snapshot.getRef().child("isPublic").setValue(publicSwitch.isChecked());
-                snapshot.getRef().child("date").setValue(dateButton.getText().toString());
-                snapshot.getRef().child("time").setValue(timeButton.getText().toString());
                 snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
                 snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
+                snapshot.getRef().child("date").setValue(dateButton.getText().toString());
+                snapshot.getRef().child("time").setValue(timeButton.getText().toString());
                 snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
                 snapshot.getRef().child("photo").setValue(photoKey);
-
             }
 
             @Override
@@ -226,12 +226,39 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
-            //startActivity(new Intent(this, Feed.class));
+            startActivity(new Intent(this, Feed.class));
+            notification();
     }
 
     private void cancelEvent() {
         startActivity(new Intent(this, Feed.class));
     }
+
+
+    private void notification() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", "name", importance);
+            channel.setDescription("description");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID")
+                .setContentTitle(eventName.getText().toString())
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                //.setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setContentText(eventDescription.getText().toString());
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(1, builder.build());
+    }
 }
+
 
 

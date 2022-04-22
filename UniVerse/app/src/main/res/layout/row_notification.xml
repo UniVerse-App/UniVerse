@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/uta_logo"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            android:src="@drawable/uta_logo">
+
+        </ImageView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/event_name_noti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event name"
+                android:textStyle="bold"
+                android:textSize="18sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/event_description_noti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description">
+            </TextView>
+
+            <TextView
+                android:id="@+id/event_time_noti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Time">
+            </TextView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

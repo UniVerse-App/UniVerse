@@ -3,21 +3,17 @@ package com.example.universe;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.google.firebase.database.ChildEventListener;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +22,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class ScheduleFragment extends Fragment {
 
@@ -54,7 +47,7 @@ public class ScheduleFragment extends Fragment {
         eventList.clear();
 
         long startDateTimestamp = calendar.getTimeInMillis();
-        DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Event");
+        DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
 
         // End at a day after start stamp, 86400000 is num ms in a day.
         Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + 86400000));
