@@ -29,8 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
 public class Feed extends AppCompatActivity{
 
    private BottomNavigationView bottomNavigationView;
