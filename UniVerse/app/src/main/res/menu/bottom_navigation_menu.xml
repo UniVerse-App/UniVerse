@@ -8,7 +8,7 @@
         android:icon="@drawable/ic_baseline_home_24" />
 
     <item
-        android:id="@+id/secondFragment"
+        android:id="@+id/notificationFragment"
         android:enabled="true"
         android:title="@string/notifications"
         android:icon="@drawable/ic_baseline_notifications_24"/>

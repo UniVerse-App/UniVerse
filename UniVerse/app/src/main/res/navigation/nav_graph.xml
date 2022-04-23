@@ -10,10 +10,9 @@
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed" />
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.example.universe.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        android:id="@+id/notificationFragment"
+        android:name="com.example.universe.NotificationFragment"
+        android:label="fragment_notification" />
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.example.universe.ScheduleFragment"

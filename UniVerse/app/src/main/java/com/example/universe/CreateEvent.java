@@ -1,6 +1,21 @@
 package com.example.universe;
 
+import static com.example.universe.PushNotification.CHANNEL_10_ID;
+import static com.example.universe.PushNotification.CHANNEL_11_ID;
+import static com.example.universe.PushNotification.CHANNEL_12_ID;
+import static com.example.universe.PushNotification.CHANNEL_13_ID;
+import static com.example.universe.PushNotification.CHANNEL_1_ID;
+import static com.example.universe.PushNotification.CHANNEL_2_ID;
+import static com.example.universe.PushNotification.CHANNEL_3_ID;
+import static com.example.universe.PushNotification.CHANNEL_4_ID;
+import static com.example.universe.PushNotification.CHANNEL_5_ID;
+import static com.example.universe.PushNotification.CHANNEL_6_ID;
+import static com.example.universe.PushNotification.CHANNEL_7_ID;
+import static com.example.universe.PushNotification.CHANNEL_8_ID;
+import static com.example.universe.PushNotification.CHANNEL_9_ID;
+
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,19 +27,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +49,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -54,6 +67,7 @@ public class CreateEvent extends AppCompatActivity {
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
     private Calendar cal = Calendar.getInstance();
+    private NotificationManagerCompat notificationManager;
 
     //hour and min variables
     int hour, min;
@@ -86,6 +100,7 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveEvent();
+                sendOnChannels();
             }
         });
 
@@ -97,7 +112,7 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
-        eventPhotoButton = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoButton = findViewById(R.id.selectEventPic);
 
         eventPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +123,9 @@ public class CreateEvent extends AppCompatActivity {
 
         //Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        //Notification
+        notificationManager = NotificationManagerCompat.from(this);
 
     }
 
@@ -208,15 +226,15 @@ public class CreateEvent extends AppCompatActivity {
         ArrayList<String> userList = new ArrayList<String>();
         userList.add(organizerID);
         Event event = new Event(eventName.getText().toString().trim(),
-                                organizerName.getText().toString().trim(),
-                                eventLocation.getText().toString().trim(),
-                                timestamp,
-                                photoKey,
-                                eventDescription.getText().toString().trim(),
-                                userList, //Attendees
-                                numSeats.getValue(),
-                                FirebaseAuth.getInstance().getUid() // Organizer ID
-                );
+                organizerName.getText().toString().trim(),
+                eventLocation.getText().toString().trim(),
+                timestamp,
+                photoKey,
+                eventDescription.getText().toString().trim(),
+                userList, //Attendees
+                numSeats.getValue(),
+                FirebaseAuth.getInstance().getUid() // Organizer ID
+        );
 
         dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -232,13 +250,6 @@ public class CreateEvent extends AppCompatActivity {
                         Log.d("Error", e.toString());
                     }
                 });
-                //snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
-                // snapshot.getRef().child("date").setValue(dateButton.getText().toString());
-                // snapshot.getRef().child("time").setValue(timeButton.getText().toString());
-                //snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
-                //snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
-                //snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
-                //snapshot.getRef().child("photo").setValue(photoKey);
             }
 
             @Override
@@ -254,12 +265,66 @@ public class CreateEvent extends AppCompatActivity {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
             startActivity(new Intent(this, Feed.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void cancelEvent() {
         startActivity(new Intent(this, Feed.class));
     }
+
+    private void sendOnChannels() {
+        String channel_eventName = eventName.getText().toString();
+        String channel_location  = eventLocation.getText().toString();
+        String channel_description = eventDescription.getText().toString();
+        String channel_date      = dateButton.getText().toString();
+
+        //Select CHANNEL
+        String CHANNEL = "";
+        int interest = 1; //need to add a list of interests by numbers
+        switch (interest) {
+            case 1:  CHANNEL = CHANNEL_1_ID;
+                break;
+            case 2:  CHANNEL = CHANNEL_2_ID;
+                break;
+            case 3:  CHANNEL = CHANNEL_3_ID;
+                break;
+            case 4:  CHANNEL = CHANNEL_4_ID;
+                break;
+            case 5:  CHANNEL = CHANNEL_5_ID;
+                break;
+            case 6:  CHANNEL = CHANNEL_6_ID;
+                break;
+            case 7:  CHANNEL = CHANNEL_7_ID;
+                break;
+            case 8:  CHANNEL = CHANNEL_8_ID;
+                break;
+            case 9:  CHANNEL = CHANNEL_9_ID;
+                break;
+            case 10: CHANNEL = CHANNEL_10_ID;
+                break;
+            case 11: CHANNEL = CHANNEL_11_ID;
+                break;
+            case 12: CHANNEL = CHANNEL_12_ID;
+                break;
+            case 13: CHANNEL = CHANNEL_13_ID;
+                break;
+        }
+        // Create an intent to lead to Feed
+        Intent intent = new Intent(this, Feed.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        //Set notification's visualization
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
+                .setContentTitle(channel_eventName)
+                .setSmallIcon(R.drawable.ic_universelogo)
+                .setContentText(channel_description)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(channel_location + " " + channel_date))
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(interest, notification.build());
+    }
 }
+
 
 
