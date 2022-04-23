@@ -78,6 +78,7 @@ public class FeedFragment extends Fragment {
                 viewHolder.setDayOfMonth(model.getDayOfMonth());
                 viewHolder.setMonthAbr(model.getMonthAbr());
                 viewHolder.setImage(thisContext, model.getPhoto());
+
             }
 
             @NonNull
