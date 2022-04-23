@@ -34,7 +34,7 @@ public class NotificationAdapter extends ArrayAdapter<Event>{
         TextView eventDescription = listItemView.findViewById(R.id.event_description_noti);
 
         eventName.setText(event.getEventName());
-        eventTime.setText(event.getTime());
+        eventTime.setText(event.getTimeString());
         eventDescription.setText(event.getLocation());
 
         listItemView.setOnClickListener(new View.OnClickListener() {
