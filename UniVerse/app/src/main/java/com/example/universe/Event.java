@@ -1,21 +1,37 @@
 package com.example.universe;
 
+import java.lang.reflect.Array;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Event {
 
-    private String eventName, location, time, description, photo;
+    private String eventName, organizerName, location, description, photo, organizerID;
+    private Integer seats;
     private long timestamp;
+    private Calendar c;
+    private ArrayList<String> users;
+
 
     public Event() {
 
     }
 
-    public Event(String eventName, String location, String time, long timestamp, String photo, String description) {
+    public Event(String eventName, String organizerName,String location, long timestamp, String photo, String description, ArrayList<String> users, Integer seats, String organizerID) {
         this.location = location;
+        this.seats = seats;
+        this.users = users;
         this.eventName = eventName;
-        this.time = time;
+        this.organizerName = organizerName;
         this.timestamp = timestamp;
         this.photo = photo;
         this.description = description;
+        this.organizerID = organizerID;
+
     }
 
     public String getEventName() {
@@ -32,14 +48,6 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public long getTimestamp() {
@@ -64,5 +72,46 @@ public class Event {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public ArrayList<String> getUsers() { return users; }
+
+    public void setUsers(ArrayList<String> users) { this.users = users; }
+
+    public Integer getSeats() { return seats; }
+
+    public void setSeats(Integer seats) { this.seats = seats; }
+
+    public String getOrganizerName() { return organizerName; }
+
+    public void setOrganizerName(String organizerName) { this.organizerName = organizerName; }
+
+    public String getTimeString() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        String timeString = String.format(Locale.getDefault(), "%02d:%02d", c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
+        return timeString;
+    }
+
+    public String getDateString() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.US);
+        String dateString = simpleDateFormat.format(c.getTime()).trim();
+        return dateString;
+    }
+
+    public int getDayOfMonth() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        return c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public String getMonthAbr() {
+        String[] mons = new DateFormatSymbols().getShortMonths();
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        String monthAbr = mons[c.get(Calendar.MONTH)].toUpperCase();
+        return monthAbr;
     }
 }

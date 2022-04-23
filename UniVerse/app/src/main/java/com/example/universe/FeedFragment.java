@@ -50,7 +50,7 @@ public class FeedFragment extends Fragment {
         thisContext = container.getContext();
 
         mDatabase = FirebaseDatabase.getInstance();
-        mref = mDatabase.getReference("Event");
+        mref = mDatabase.getReference("Events");
         mEventList = rootView.findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(thisContext));
@@ -64,13 +64,17 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
+        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref, Event.class).build();
         FirebaseRecyclerAdapter<Event, Feed.EventViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, Feed.EventViewHolder>
                 (options) {
             @Override
             protected void onBindViewHolder(@NonNull Feed.EventViewHolder viewHolder, int position, @NonNull Event model) {
                 viewHolder.setEventName(model.getEventName());
                 viewHolder.setDesc(model.getDescription());
+                viewHolder.setLocation(model.getLocation());
+                viewHolder.setTimeString(model.getTimeString());
+                viewHolder.setDayOfMonth(model.getDayOfMonth());
+                viewHolder.setMonthAbr(model.getMonthAbr());
                 viewHolder.setImage(thisContext, model.getPhoto());
             }
 
@@ -78,7 +82,6 @@ public class FeedFragment extends Fragment {
             @Override
             public Feed.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
-
                 return new Feed.EventViewHolder(view);
             }
         };
