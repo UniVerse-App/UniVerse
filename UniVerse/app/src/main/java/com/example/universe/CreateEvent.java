@@ -225,6 +225,22 @@ public class CreateEvent extends AppCompatActivity {
         DatabaseReference dbRef = database.getReference();
         final String randomKey = UUID.randomUUID().toString();
 
+        // Get timestamp
+        timestamp = cal.getTimeInMillis();
+        String organizerID = FirebaseAuth.getInstance().getUid();
+        ArrayList<String> userList = new ArrayList<String>();
+        userList.add(organizerID);
+        Event event = new Event(eventName.getText().toString().trim(),
+                organizerName.getText().toString().trim(),
+                eventLocation.getText().toString().trim(),
+                timestamp,
+                photoKey,
+                eventDescription.getText().toString().trim(),
+                userList, //Attendees
+                numSeats.getValue(),
+                FirebaseAuth.getInstance().getUid() // Organizer ID
+        );
+
         dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
