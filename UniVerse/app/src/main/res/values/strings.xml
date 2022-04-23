@@ -66,4 +66,17 @@
         <item>Other</item>
     </string-array>
 
+    <!-- Strings for choose event category on create/edit event screens. -->
+    <string-array name="interestArray">
+        <item>Choose a major...</item>
+        <item>Comp. Science</item>
+        <item>Civil Engineering</item>
+        <item>Art</item>
+        <item>Design</item>
+        <item>History</item>
+        <item>English</item>
+        <item>Philosophy</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>
