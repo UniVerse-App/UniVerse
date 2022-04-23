@@ -28,8 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+<<<<<<< HEAD
 
 import org.w3c.dom.Text;
+=======
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
 
 public class Feed extends AppCompatActivity{
 

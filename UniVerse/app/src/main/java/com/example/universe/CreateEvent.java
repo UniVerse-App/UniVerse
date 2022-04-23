@@ -15,8 +15,11 @@ import static com.example.universe.PushNotification.CHANNEL_8_ID;
 import static com.example.universe.PushNotification.CHANNEL_9_ID;
 
 import android.app.DatePickerDialog;
+<<<<<<< HEAD
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+=======
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -34,12 +37,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+=======
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -73,7 +79,10 @@ public class CreateEvent extends AppCompatActivity {
     private long timestamp;
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
+<<<<<<< HEAD
     private Calendar cal = Calendar.getInstance();
+=======
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
     private NotificationManagerCompat notificationManager;
 
     //hour and min variables
@@ -121,7 +130,8 @@ public class CreateEvent extends AppCompatActivity {
 
         eventPhotoButton = findViewById(R.id.selectEventPic);
 
-        eventPhotoButton.setOnClickListener(new View.OnClickListener() {
+        eventPhotoContainer = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEventPhotoPicker();
@@ -133,6 +143,11 @@ public class CreateEvent extends AppCompatActivity {
 
         //Notification
         notificationManager = NotificationManagerCompat.from(this);
+<<<<<<< HEAD
+=======
+
+    }
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
 
     }
 
@@ -218,7 +233,29 @@ public class CreateEvent extends AppCompatActivity {
 
         return "default.png";
 
+<<<<<<< HEAD
 
+=======
+//        if (selectedImage == null) {
+//            profilePicRef = mStorageRef.child("eventPictures/default.png");
+//        } else {
+
+            profilePicRef.putFile(selectedImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                        }
+                    });
+        //}
+        return randomKey;
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
     }
 
     // Updates Event record with photo key and other info
@@ -230,6 +267,7 @@ public class CreateEvent extends AppCompatActivity {
         dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+<<<<<<< HEAD
                 snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -248,6 +286,16 @@ public class CreateEvent extends AppCompatActivity {
                 //snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
                 //snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
                 //snapshot.getRef().child("photo").setValue(photoKey);
+=======
+                snapshot.getRef().child("eventName").setValue(eventName.getText().toString().trim());
+                snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
+                snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
+                snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
+                snapshot.getRef().child("date").setValue(dateButton.getText().toString());
+                snapshot.getRef().child("time").setValue(timeButton.getText().toString());
+                snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
+                snapshot.getRef().child("photo").setValue(photoKey);
+>>>>>>> 4473290c7765e73611053aef8630029a5b5bec36
             }
 
             @Override
