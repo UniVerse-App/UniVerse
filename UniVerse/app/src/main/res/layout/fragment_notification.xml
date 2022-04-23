@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".NotificationFragment">
-
-    <TextView
-        android:id="@+id/notification_title"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Notification"
-        android:layout_margin="20dp"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:fontFamily="@font/gilroy_bold"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".NotificationFragment">
 
-    <ListView
-        android:id="@+id/notificationList"
-        android:layout_width="match_parent"
-        android:layout_height="810dp"
-        android:layout_gravity="bottom"
-        tools:listitem="@layout/row_notification"></ListView>
+        <TextView
+            android:id="@+id/emptyNotification"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20sp"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center"
+            android:text="No notification yet..."
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
 
-    <TextView
-        android:id="@+id/emptyNotification"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20sp"
-        android:text="No notification yet..."
-        android:gravity="center"
-        android:textStyle="bold"
-        android:fontFamily="@font/gilroy_semibold">
-    </TextView>
+        <ListView
+            android:id="@+id/notificationList"
+            android:layout_width="match_parent"
+            android:layout_height="810dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="88dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/emptyNotification"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/row_notification">
+        </ListView>
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="Notification"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="58dp">
+        </TextView>
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/builtin_settings_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/notification_title"
+            app:layout_constraintHorizontal_bias="0.963"
+            app:layout_constraintStart_toStartOf="@+id/notification_title"
+            app:layout_constraintTop_toTopOf="@+id/notification_title"
+            app:layout_constraintVertical_bias="0.011"
+            app:srcCompat="@drawable/ic_baseline_settings_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

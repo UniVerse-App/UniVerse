@@ -22,7 +22,6 @@
 
         </ImageView>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,21 +34,27 @@
                 android:layout_height="wrap_content"
                 android:text="Event name"
                 android:textStyle="bold"
-                android:textSize="18sp">
+                android:textSize="18sp"
+                android:minLines="1"
+                android:maxLines="1">
             </TextView>
 
             <TextView
                 android:id="@+id/event_description_noti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description">
+                android:text="Description"
+                android:minLines="1"
+                android:maxLines="2">
             </TextView>
 
             <TextView
                 android:id="@+id/event_time_noti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Event Time">
+                android:text="Event Time"
+                android:minLines="1"
+                android:maxLines="1">
             </TextView>
 
         </LinearLayout>

@@ -30,7 +30,7 @@
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/drawable/ic_splash_art.xml" value="0.111" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/drawable/ic_universelogo.xml" value="0.111" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/drawable/profile_pic_circle.xml" value="0.176" />
-        <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/activity_feed.xml" value="0.11041666666666666" />
+        <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/activity_feed.xml" value="0.25" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/activity_forgot_password.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/activity_interests_selection.xml" value="0.2296280819055579" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/activity_login_user.xml" value="0.1956521739130435" />
@@ -42,11 +42,12 @@
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/create_event_old.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_feed.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_fourth.xml" value="0.25052083333333336" />
-        <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_notification.xml" value="0.1993911719939117" />
+        <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_schedule.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_second.xml" value="0.23923944839114084" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/row_notification.xml" value="0.2" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/schedule_list_items.xml" value="0.21875" />
+        <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/spinner_item.xml" value="0.3209360635185959" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/layout/uta_logo.xml" value="0.28649138712601996" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.122" />
         <entry key="..\:/Users/anhtu/OneDrive/Desktop/UTA folder/CSE_3310/UniVerse/UniVerse/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.176" />
