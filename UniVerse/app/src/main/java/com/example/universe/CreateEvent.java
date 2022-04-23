@@ -1,5 +1,19 @@
 package com.example.universe;
 
+import static com.example.universe.PushNotification.CHANNEL_10_ID;
+import static com.example.universe.PushNotification.CHANNEL_11_ID;
+import static com.example.universe.PushNotification.CHANNEL_12_ID;
+import static com.example.universe.PushNotification.CHANNEL_13_ID;
+import static com.example.universe.PushNotification.CHANNEL_1_ID;
+import static com.example.universe.PushNotification.CHANNEL_2_ID;
+import static com.example.universe.PushNotification.CHANNEL_3_ID;
+import static com.example.universe.PushNotification.CHANNEL_4_ID;
+import static com.example.universe.PushNotification.CHANNEL_5_ID;
+import static com.example.universe.PushNotification.CHANNEL_6_ID;
+import static com.example.universe.PushNotification.CHANNEL_7_ID;
+import static com.example.universe.PushNotification.CHANNEL_8_ID;
+import static com.example.universe.PushNotification.CHANNEL_9_ID;
+
 import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -59,6 +73,7 @@ public class CreateEvent extends AppCompatActivity {
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
     private Calendar cal = Calendar.getInstance();
+    private NotificationManagerCompat notificationManager;
 
     //hour and min variables
     int hour, min;
@@ -91,6 +106,7 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveEvent();
+                sendOnChannels();
             }
         });
 
@@ -113,6 +129,9 @@ public class CreateEvent extends AppCompatActivity {
 
         //Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        //Notification
+        notificationManager = NotificationManagerCompat.from(this);
 
     }
 
@@ -243,92 +262,57 @@ public class CreateEvent extends AppCompatActivity {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
             startActivity(new Intent(this, Feed.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            startActivity(new Intent(this, Feed.class));
-            notification();
     }
 
     private void cancelEvent() {
         startActivity(new Intent(this, Feed.class));
     }
 
-    public void notification() {
-        final String CHANNEL_1_ID = "Graduate";
-        final String CHANNEL_2_ID = "Engineering";
-        final String CHANNEL_3_ID = "Music";
-        final String CHANNEL_4_ID = "Greek Life";
-        final String CHANNEL_5_ID = "Sports";
-        final String CHANNEL_6_ID = "School Spirit";
-        final String CHANNEL_7_ID = "Student Council";
-        final String CHANNEL_8_ID = "Public Speakers";
-        final String CHANNEL_9_ID = "Nursing";
-        final String CHANNEL_10_ID = "Business";
-        final String CHANNEL_11_ID = "Science";
-        final String CHANNEL_12_ID = "Education";
-        final String CHANNEL_13_ID = "ESports";
+    private void sendOnChannels() {
+        String channel_eventName = eventName.getText().toString();
+        String channel_location  = eventLocation.getText().toString();
+        String channel_description = eventDescription.getText().toString();
+        String channel_date      = dateButton.getText().toString();
 
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Graduate", importance);
-
-            NotificationChannel channel2 = new NotificationChannel(CHANNEL_2_ID, "Engineering", importance);
-
-            NotificationChannel channel3 = new NotificationChannel(CHANNEL_3_ID, "Music", importance);
-
-            NotificationChannel channel4 = new NotificationChannel(CHANNEL_4_ID, "Greek Life", importance);
-
-            NotificationChannel channel5 = new NotificationChannel(CHANNEL_5_ID, "Sports", importance);
-
-            NotificationChannel channel6 = new NotificationChannel(CHANNEL_6_ID, "School Spirit", importance);
-
-            NotificationChannel channel7 = new NotificationChannel(CHANNEL_7_ID, "Student Council", importance);
-
-            NotificationChannel channel8 = new NotificationChannel(CHANNEL_8_ID, "Public Speakers", importance);
-
-            NotificationChannel channel9 = new NotificationChannel(CHANNEL_9_ID, "Nursing", importance);
-
-            NotificationChannel channel10 = new NotificationChannel(CHANNEL_10_ID, "Business", importance);
-
-            NotificationChannel channel11 = new NotificationChannel(CHANNEL_11_ID, "Science", importance);
-
-            NotificationChannel channel12 = new NotificationChannel(CHANNEL_12_ID, "Education", importance);
-
-            NotificationChannel channel13 = new NotificationChannel(CHANNEL_13_ID, "ESports", importance);
-
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel1);
-            notificationManager.createNotificationChannel(channel2);
-            notificationManager.createNotificationChannel(channel3);
-            notificationManager.createNotificationChannel(channel4);
-            notificationManager.createNotificationChannel(channel5);
-            notificationManager.createNotificationChannel(channel6);
-            notificationManager.createNotificationChannel(channel7);
-            notificationManager.createNotificationChannel(channel8);
-            notificationManager.createNotificationChannel(channel9);
-            notificationManager.createNotificationChannel(channel10);
-            notificationManager.createNotificationChannel(channel11);
-            notificationManager.createNotificationChannel(channel12);
-            notificationManager.createNotificationChannel(channel13);
+        //Select CHANNEL
+        String CHANNEL = "1"; // set default is 1
+        int interest = 1; //need to add a list of interests by numbers
+        switch (interest) {
+            case 1:  CHANNEL = CHANNEL_1_ID;
+                break;
+            case 2:  CHANNEL = CHANNEL_2_ID;
+                break;
+            case 3:  CHANNEL = CHANNEL_3_ID;
+                break;
+            case 4:  CHANNEL = CHANNEL_4_ID;
+                break;
+            case 5:  CHANNEL = CHANNEL_5_ID;
+                break;
+            case 6:  CHANNEL = CHANNEL_6_ID;
+                break;
+            case 7:  CHANNEL = CHANNEL_7_ID;
+                break;
+            case 8:  CHANNEL = CHANNEL_8_ID;
+                break;
+            case 9:  CHANNEL = CHANNEL_9_ID;
+                break;
+            case 10: CHANNEL = CHANNEL_10_ID;
+                break;
+            case 11: CHANNEL = CHANNEL_11_ID;
+                break;
+            case 12: CHANNEL = CHANNEL_12_ID;
+                break;
+            case 13: CHANNEL = CHANNEL_13_ID;
+                break;
         }
-    //Set notification content
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID")
-                .setContentTitle(eventName.getText().toString())
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                //.setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setContentText(eventLocation.getText().toString())
-                .setContentText(eventDescription.getText().toString())
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
+                .setContentTitle(channel_eventName)
+                .setSmallIcon(R.drawable.uta_logo)
+                .setContentText(channel_description)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(dateButton.getText().toString() + " " + timeButton.getText().toString()))
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+                            .bigText(channel_location + " " + channel_date));
 
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        managerCompat.notify(1, builder.build());
+        notificationManager.notify(interest, notification.build());
     }
 }
 
