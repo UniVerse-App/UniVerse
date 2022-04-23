@@ -9,6 +9,10 @@
             app:title="Edit Profile Information" />
 
         <ListPreference
+            app:key="updateInt"
+            app:title="Update Intersts"/>
+
+        <EditTextPreference
             app:key="updatePass"
             app:title="Change password"/>
 
