@@ -86,6 +86,9 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         settingButton = rootView.findViewById(R.id.builtin_settings_button);
         settingButton.setOnClickListener(this);
 
+        settingButton = rootView.findViewById(R.id.builtin_settings_button);
+        settingButton.setOnClickListener(this);
+
         notificationListView = rootView.findViewById(R.id.notificationList);
         notificationListView.setEmptyView(rootView.findViewById(R.id.emptyElement));
         notificationList = new ArrayList<>();
