@@ -82,7 +82,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
 
         thisContext = container.getContext();
-
+        calendar = Calendar.getInstance();
         settingButton = rootView.findViewById(R.id.builtin_settings_button);
         settingButton.setOnClickListener(this);
 

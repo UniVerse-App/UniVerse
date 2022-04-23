@@ -24,7 +24,7 @@ public class NotificationAdapter extends ArrayAdapter<Event>{
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.schedule_list_items, parent, false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.row_notification, parent, false);
         }
 
         Event event = getItem(position);
