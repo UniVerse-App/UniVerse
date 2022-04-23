@@ -67,6 +67,15 @@ public class FeedFragment extends Fragment {
             @Override
             public Feed.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
+
+                Button info = view.findViewById(R.id.info_button);
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(thisContext, EventInfo.class));
+                    }
+                });
+
                 return new Feed.EventViewHolder(view);
             }
         };
