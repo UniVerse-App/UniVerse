@@ -1,11 +1,13 @@
 package com.example.universe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class NotificationFragment extends Fragment {
+public class NotificationFragment extends Fragment implements View.OnClickListener{
     private Context thisContext;
 
     private ListView notificationListView;
@@ -30,6 +32,7 @@ public class NotificationFragment extends Fragment {
 
     private String eventTime;
 
+    private ImageView settingButton;
 
     public NotificationFragment() {
         //require an empty public constructor
@@ -80,6 +83,9 @@ public class NotificationFragment extends Fragment {
 
         thisContext = container.getContext();
 
+        settingButton = rootView.findViewById(R.id.builtin_settings_button);
+        settingButton.setOnClickListener(this);
+
         notificationListView = rootView.findViewById(R.id.notificationList);
         notificationListView.setEmptyView(rootView.findViewById(R.id.emptyElement));
         notificationList = new ArrayList<>();
@@ -87,4 +93,11 @@ public class NotificationFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onClick(View view) {
+        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+    }
+
 }
+

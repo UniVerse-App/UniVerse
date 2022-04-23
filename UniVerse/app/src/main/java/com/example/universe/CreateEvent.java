@@ -15,6 +15,7 @@ import static com.example.universe.PushNotification.CHANNEL_8_ID;
 import static com.example.universe.PushNotification.CHANNEL_9_ID;
 
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -260,7 +261,7 @@ public class CreateEvent extends AppCompatActivity {
         String channel_date      = dateButton.getText().toString();
 
         //Select CHANNEL
-        String CHANNEL = "1"; // set default is 1
+        String CHANNEL = "";
         int interest = 1; //need to add a list of interests by numbers
         switch (interest) {
             case 1:  CHANNEL = CHANNEL_1_ID;
@@ -290,12 +291,24 @@ public class CreateEvent extends AppCompatActivity {
             case 13: CHANNEL = CHANNEL_13_ID;
                 break;
         }
+        // Create an intent
+        Intent intent = new Intent(this, Feed.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+//        final Intent notificationIntent = new Intent(this, YourActivity.class);
+//        notificationIntent.setAction(Intent.ACTION_MAIN);
+//        notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        //Set notification's visualization
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
                 .setContentTitle(channel_eventName)
                 .setSmallIcon(R.drawable.uta_logo)
                 .setContentText(channel_description)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(channel_location + " " + channel_date));
+                            .bigText(channel_location + " " + channel_date))
+                .setContentIntent(pendingIntent);
 
         notificationManager.notify(interest, notification.build());
     }
