@@ -218,10 +218,20 @@ public class CreateEvent extends AppCompatActivity {
                                 FirebaseAuth.getInstance().getUid() // Organizer ID
                 );
 
-        dbRef.child("Event").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getRef().setValue(event);
+                snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_LONG);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Error", e.toString());
+                    }
+                });
                 //snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
                 // snapshot.getRef().child("date").setValue(dateButton.getText().toString());
                 // snapshot.getRef().child("time").setValue(timeButton.getText().toString());
@@ -233,7 +243,7 @@ public class CreateEvent extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Event", error.getMessage());
+                Log.d("Events", error.getMessage());
             }
         });
     }

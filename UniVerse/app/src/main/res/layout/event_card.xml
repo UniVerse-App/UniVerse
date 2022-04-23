@@ -49,6 +49,7 @@
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
+            android:id="@+id/monthAbr"
             android:layout_height="20dp"
             android:layout_width="60dp"
             android:fontFamily="@font/gilroy_bold"
@@ -59,6 +60,21 @@
             app:layout_constraintLeft_toLeftOf="@id/dateSquare"
             app:layout_constraintRight_toRightOf="@id/dateSquare"
             android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/monthDay"
+            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="24"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/monthAbr"
+            app:layout_constraintLeft_toLeftOf="@id/dateSquare"
+            app:layout_constraintRight_toRightOf="@id/dateSquare"
+            app:layout_constraintBottom_toBottomOf="@id/dateSquare"
+            android:background="@android:color/transparent"/>
 
         <ImageView
             android:id="@+id/mapPin"

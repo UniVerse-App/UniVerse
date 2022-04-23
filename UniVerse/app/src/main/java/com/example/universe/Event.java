@@ -1,6 +1,7 @@
 package com.example.universe;
 
 import java.lang.reflect.Array;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,10 +31,6 @@ public class Event {
         this.photo = photo;
         this.description = description;
         this.organizerID = organizerID;
-
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(this.timestamp);
-        this.c = c;
 
     }
 
@@ -90,13 +87,31 @@ public class Event {
     public void setOrganizerName(String organizerName) { this.organizerName = organizerName; }
 
     public String getTimeString() {
-        String timeString = String.format(Locale.getDefault(), "%02d:%02d", this.c.get(Calendar.HOUR), this.c.get(Calendar.MINUTE));
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        String timeString = String.format(Locale.getDefault(), "%02d:%02d", c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
         return timeString;
     }
 
     public String getDateString() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.US);
-        String dateString = simpleDateFormat.format(this.c.getTime()).trim();
+        String dateString = simpleDateFormat.format(c.getTime()).trim();
         return dateString;
+    }
+
+    public int getDayOfMonth() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        return c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public String getMonthAbr() {
+        String[] mons = new DateFormatSymbols().getShortMonths();
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(this.timestamp);
+        String monthAbr = mons[c.get(Calendar.MONTH)].toUpperCase();
+        return monthAbr;
     }
 }

@@ -54,7 +54,7 @@ public class ScheduleFragment extends Fragment {
         eventList.clear();
 
         long startDateTimestamp = calendar.getTimeInMillis();
-        DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Event");
+        DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
 
         // End at a day after start stamp, 86400000 is num ms in a day.
         Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + 86400000));

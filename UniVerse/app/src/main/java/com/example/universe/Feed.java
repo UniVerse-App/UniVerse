@@ -40,6 +40,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 public class Feed extends AppCompatActivity{
 
    private BottomNavigationView bottomNavigationView;
@@ -93,6 +95,26 @@ public class Feed extends AppCompatActivity{
         public void setDesc(String desc) {
             //TextView post_desc = (TextView) mView.findViewById(R.id.eventDesc);
             //post_desc.setText(desc);
+        }
+
+        public void setTimeString(String timeString){
+            TextView post_eventTime = (TextView) mView.findViewById(R.id.eventTime);
+            post_eventTime.setText(timeString);
+        }
+
+        public void setLocation(String location) {
+            TextView post_eventLocation = (TextView) mView.findViewById(R.id.eventLocation);
+            post_eventLocation.setText(location);
+        }
+
+        public void setDayOfMonth(Integer dayOfMonth) {
+            TextView post_eventDayOfMonth = (TextView) mView.findViewById(R.id.monthDay);
+            post_eventDayOfMonth.setText(String.valueOf(dayOfMonth));
+        }
+
+        public void setMonthAbr(String monthAbr) {
+            TextView post_monthAbr = (TextView) mView.findViewById(R.id.monthAbr);
+            post_monthAbr.setText(monthAbr);
         }
 
         public void setImage(Context ctx, String image)
