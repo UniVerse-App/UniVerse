@@ -7,17 +7,30 @@
     android:orientation="vertical"
     tools:context=".NotificationFragment">
 
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Notification"
+        android:layout_margin="20dp"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ListView
         android:id="@+id/notificationList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/row_notification">
-    </ListView>
+        android:layout_height="810dp"
+        android:layout_gravity="bottom"
+        tools:listitem="@layout/row_notification"></ListView>
 
     <TextView
         android:id="@+id/emptyNotification"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="20sp"
         android:text="No notification yet..."
         android:gravity="center"
         android:textStyle="bold"

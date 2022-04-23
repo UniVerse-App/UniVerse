@@ -64,7 +64,6 @@ public class ScheduleFragment extends Fragment {
                 } else {
                     ScheduleListAdapter adapter = new ScheduleListAdapter(thisContext, eventList);
                     eventListView.setAdapter(adapter);
-
                 }
             }
 
