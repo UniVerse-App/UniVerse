@@ -15,8 +15,9 @@
 
         <ImageView
             android:id="@+id/uta_logo"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
             android:src="@drawable/uta_logo">
 
         </ImageView>
