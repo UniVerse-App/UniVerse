@@ -19,7 +19,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -31,12 +30,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +49,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
@@ -255,13 +250,6 @@ public class CreateEvent extends AppCompatActivity {
                         Log.d("Error", e.toString());
                     }
                 });
-                //snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
-                // snapshot.getRef().child("date").setValue(dateButton.getText().toString());
-                // snapshot.getRef().child("time").setValue(timeButton.getText().toString());
-                //snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
-                //snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
-                //snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
-                //snapshot.getRef().child("photo").setValue(photoKey);
             }
 
             @Override
@@ -320,20 +308,15 @@ public class CreateEvent extends AppCompatActivity {
             case 13: CHANNEL = CHANNEL_13_ID;
                 break;
         }
-        // Create an intent
+        // Create an intent to lead to Feed
         Intent intent = new Intent(this, Feed.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-//        final Intent notificationIntent = new Intent(this, YourActivity.class);
-//        notificationIntent.setAction(Intent.ACTION_MAIN);
-//        notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         //Set notification's visualization
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
                 .setContentTitle(channel_eventName)
-                .setSmallIcon(R.drawable.uta_logo)
+                .setSmallIcon(R.drawable.ic_universelogo)
                 .setContentText(channel_description)
                 .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(channel_location + " " + channel_date))

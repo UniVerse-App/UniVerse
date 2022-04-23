@@ -99,7 +99,16 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+        //startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        // for Android 8 and above
+        intent.putExtra("android.provider.extra.APP_PACKAGE", getActivity().getPackageName());
+
+        startActivity(intent);
     }
 
 }
