@@ -51,7 +51,7 @@ public class FeedFragment extends Fragment {
         thisContext = container.getContext();
 
         mDatabase = FirebaseDatabase.getInstance();
-        mref = mDatabase.getReference("Event");
+        mref = mDatabase.getReference("Events");
         mEventList = rootView.findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(thisContext));
@@ -74,12 +74,21 @@ public class FeedFragment extends Fragment {
                 viewHolder.setEventName(model.getEventName());
                 viewHolder.setDesc(model.getDescription());
                 viewHolder.setImage(thisContext, model.getPhoto());
+
             }
 
             @NonNull
             @Override
             public Feed.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
+
+                Button info = view.findViewById(R.id.info_button);
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(thisContext, EventInfo.class));
+                    }
+                });
 
                 return new Feed.EventViewHolder(view);
             }
