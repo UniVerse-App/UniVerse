@@ -9,13 +9,14 @@
 
     <ImageView
         android:id="@+id/backEventInfo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="center"
         android:layout_marginHorizontal="30dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="@id/createEvent_title"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/createEvent_title"
         app:layout_constraintVertical_bias="0.63" />
 
     <!-- Event Name -->
@@ -31,23 +32,22 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintLeft_toLeftOf="@id/backEventInfo"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/backEventInfo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/event_organizer_label"
         android:layout_height="20dp"
         android:layout_width="120dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
         android:background="@android:color/transparent"
         android:text="Organizer Name"
         android:fontFamily="@font/gilroy_bold"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/createEvent_title"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/event_location_label"
+        app:layout_constraintBottom_toBottomOf="@id/event_location_label"
+        app:layout_constraintLeft_toRightOf="@id/event_location_label"
         />
 
 
@@ -57,9 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/publicsans_regular"
-        android:text="Organizer name"
+        android:text=""
         android:maxLines="1"
         android:textSize="14sp"
+        android:textColor="@color/black"
         android:layout_marginRight="40dp"
         android:ems="7"
         app:layout_constraintTop_toBottomOf="@id/event_organizer_label"
@@ -69,7 +70,7 @@
 
     <TextView
         android:id="@+id/event_location_label"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="15dp"
@@ -80,15 +81,15 @@
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/event_organizer" />
+        app:layout_constraintTop_toBottomOf="@id/DateEvent" />
 
     <TextView
         android:id="@+id/event_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/publicsans_regular"
-        android:text="Location"
+        android:text=""
+        android:textColor="@color/black"
         android:maxLines="1"
         android:textSize="14sp"
         android:ems="7"
@@ -115,10 +116,11 @@
         android:id="@+id/event_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description of event"
+        android:text=""
         android:textSize="14sp"
         android:fontFamily="@font/publicsans_regular"
         android:gravity="top"
+        android:textColor="@color/black"
         android:ems="20"
         android:minLines="3"
         android:maxLines="3"
@@ -127,7 +129,7 @@
 
     <TextView
         android:id="@+id/event_datetime_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="15dp"
@@ -137,14 +139,13 @@
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/event_description" />
+        app:layout_constraintTop_toBottomOf="@id/eventPhoto"/>
 
     <TextView
         android:id="@+id/DateEvent"
         android:layout_width="120sp"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:text=""
         android:textColor="@color/black"
         android:fontFamily="@font/publicsans_regular"
         app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
@@ -154,44 +155,25 @@
         android:id="@+id/TimeEvent"
         android:layout_width="120sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/publicsans_regular"
-        android:text="Time"
+        android:text=""
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
-        app:layout_constraintStart_toEndOf="@+id/DateEvent"
-        app:layout_constraintTop_toTopOf="@+id/event_datetime_label" />
 
-    <TextView
-        android:id="@+id/event_photo_label"
-        android:layout_height="20dp"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="40dp"
-        android:background="@android:color/transparent"
-        android:text="Event Photo"
-        android:fontFamily="@font/gilroy_bold"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/DateEvent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintStart_toEndOf="@+id/DateEvent"
+        app:layout_constraintTop_toTopOf="@+id/DateEvent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/eventPhoto"
-        android:layout_width="350dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="360dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="60sp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/event_photo"
-        app:shapeAppearanceOverlay="@style/eventImageView"
-        app:layout_constraintTop_toBottomOf="@id/event_photo_label"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createEvent_title"
+        app:shapeAppearanceOverlay="@style/eventImageView" />
 
 
     <Button
@@ -204,8 +186,8 @@
         android:fontFamily="@font/gilroy_bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventPhoto"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="30dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
