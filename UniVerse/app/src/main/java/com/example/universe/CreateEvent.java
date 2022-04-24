@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,8 +28,11 @@ import java.util.Calendar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,11 +54,13 @@ public class CreateEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateButton, timeButton, createButton;
     private ImageView backButton;
-    private ShapeableImageView eventPhotoButton, eventPhotoContainer;
+    private FloatingActionButton eventPhotoButton;
+    private ShapeableImageView eventPhotoContainer;
     private long timestamp;
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
     private Calendar cal = Calendar.getInstance();
+    private Spinner interestSpinner;
 
     //hour and min variables
     int hour, min;
@@ -75,6 +82,12 @@ public class CreateEvent extends AppCompatActivity {
         timeButton = findViewById(R.id.hourPickerButton);
         organizerName = findViewById(R.id.event_organizer);
         eventDescription = findViewById(R.id.event_description);
+        eventPhotoContainer = findViewById(R.id.eventPhotoContainer);
+        interestSpinner = findViewById(R.id.event_interests);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.interestArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        interestSpinner.setAdapter(adapter);
 
         // TODO: Fix number picker
         numSeats = findViewById(R.id.event_seats);
@@ -97,7 +110,7 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
-        eventPhotoButton = findViewById(R.id.eventPhotoPickerButton);
+        eventPhotoButton = findViewById(R.id.selectEventPic);
 
         eventPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +177,9 @@ public class CreateEvent extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
-            eventPhotoContainer.setImageURI(selectedImage);
+            Glide.with(CreateEvent.this).load(selectedImage.toString())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(eventPhotoContainer);
         }
     }
 
@@ -215,8 +230,9 @@ public class CreateEvent extends AppCompatActivity {
                                 eventDescription.getText().toString().trim(),
                                 userList, //Attendees
                                 numSeats.getValue(),
-                                FirebaseAuth.getInstance().getUid() // Organizer ID
-                );
+                                FirebaseAuth.getInstance().getUid(), // Organizer ID
+                                interestSpinner.getSelectedItem().toString()
+                            );
 
         dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -232,13 +248,6 @@ public class CreateEvent extends AppCompatActivity {
                         Log.d("Error", e.toString());
                     }
                 });
-                //snapshot.getRef().child("location").setValue(eventLocation.getText().toString().trim());
-                // snapshot.getRef().child("date").setValue(dateButton.getText().toString());
-                // snapshot.getRef().child("time").setValue(timeButton.getText().toString());
-                //snapshot.getRef().child("organizerName").setValue(organizerName.getText().toString().trim());
-                //snapshot.getRef().child("description").setValue(eventDescription.getText().toString().trim());
-                //snapshot.getRef().child("numStudent").setValue(numSeats.getValue());
-                //snapshot.getRef().child("photo").setValue(photoKey);
             }
 
             @Override

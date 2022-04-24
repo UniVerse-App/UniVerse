@@ -64,15 +64,17 @@
         app:layout_constraintRight_toRightOf="parent" />
 
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/selectProfilePic"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
+        android:foregroundGravity="center"
+        android:foreground="@drawable/ic_baseline_add_a_photo_24"
+        android:foregroundTint="@color/white"
+        android:backgroundTint="@color/accentColor300"
         app:layout_constraintBottom_toBottomOf="@id/profilePicBackground"
         app:layout_constraintRight_toRightOf="@id/profilePicBackground"
-        app:srcCompat="@drawable/camera_plus_circle"
         />
 
     <TextView

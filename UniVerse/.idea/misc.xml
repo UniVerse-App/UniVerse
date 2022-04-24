@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/camera_plus_circle.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/event_photo.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/forgot_pass_splash.xml" value="0.2125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.249" />
         <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/ic_hericon_at.xml" value="0.231" />
@@ -26,7 +27,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register_student_info.xml" value="0.21932449764856776" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/create_event.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/create_event.xml" value="0.33" />
         <entry key="app/src/main/res/layout/create_event_new.xml" value="0.18255664814023087" />
         <entry key="app/src/main/res/layout/event_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.19025224454895254" />

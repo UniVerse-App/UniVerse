@@ -18,8 +18,11 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +46,8 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
     private Spinner majorSpinner;
     private NumberPicker gradYear;
     private Button nextButton;
-    private ShapeableImageView selectProfilePic, profilePic;
+    private FloatingActionButton selectProfilePic;
+    private ShapeableImageView profilePic;
 
     // Profile pic selection/upload variables
     private Integer PICK_IMAGE = 1;
@@ -101,7 +105,9 @@ public class RegisterStudentInfo extends AppCompatActivity implements View.OnCli
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
-            profilePic.setImageURI(selectedImage);
+            Glide.with(RegisterStudentInfo.this).load(selectedImage.toString())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilePic);
         }
     }
 
