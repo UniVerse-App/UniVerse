@@ -58,11 +58,11 @@ public class ScheduleFragment extends Fragment {
                     for (DataSnapshot eventsSnapshot : snapshot.getChildren()) {
                         Event event = eventsSnapshot.getValue(Event.class);
                         eventList.add(event);
-                        ScheduleListAdapter adapter = new ScheduleListAdapter(thisContext, eventList);
+                        ScheduleListAdapter adapter = new ScheduleListAdapter(thisContext, eventList, eventsSnapshot.getKey());
                         eventListView.setAdapter(adapter);
                     }
                 } else {
-                    ScheduleListAdapter adapter = new ScheduleListAdapter(thisContext, eventList);
+                    ScheduleListAdapter adapter = new ScheduleListAdapter(thisContext, eventList, "");
                     eventListView.setAdapter(adapter);
                 }
             }
