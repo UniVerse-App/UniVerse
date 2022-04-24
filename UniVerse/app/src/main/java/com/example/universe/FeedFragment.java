@@ -54,11 +54,28 @@ public class FeedFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance();
         mref = mDatabase.getReference("Events");
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
         mEventList = rootView.findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(thisContext));
+        mEventList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+                if (!recyclerView.canScrollVertically(1)) {
+                    fab.setVisibility(View.INVISIBLE);
+                }
+
+                else {
+                    if (fab.getVisibility() == View.INVISIBLE) {
+                        fab.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
