@@ -34,6 +34,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 public class FeedFragment extends Fragment {
 
     public RecyclerView mEventList;
@@ -71,12 +73,14 @@ public class FeedFragment extends Fragment {
                 (options) {
             @Override
             protected void onBindViewHolder(@NonNull Feed.EventViewHolder viewHolder, int position, @NonNull Event model) {
+                DatabaseReference eventReference = getRef(position);
                 viewHolder.setEventName(model.getEventName());
                 viewHolder.setDesc(model.getDescription());
                 viewHolder.setLocation(model.getLocation());
                 viewHolder.setTimeString(model.getTimeString());
                 viewHolder.setDayOfMonth(model.getDayOfMonth());
                 viewHolder.setMonthAbr(model.getMonthAbr());
+                viewHolder.setEventID(eventReference.getKey());
                 viewHolder.setImage(thisContext, model.getPhoto());
 
             }
@@ -90,7 +94,12 @@ public class FeedFragment extends Fragment {
                 info.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(thisContext, EventInfo.class));
+                        Intent intent = new Intent(thisContext, EventInfo.class);
+                        ViewGroup parent = (ViewGroup) view.getParent();
+                        TextView idView = (TextView) parent.findViewById(R.id.eventID);
+                        intent.putExtra("Event_ID",idView.getText().toString());
+                        startActivity(intent);
+
                     }
                 });
 

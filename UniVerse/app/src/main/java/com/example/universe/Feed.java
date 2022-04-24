@@ -87,6 +87,10 @@ public class Feed extends AppCompatActivity{
             mView = itemView;
         }
 
+        public void setEventID(String ID){
+            TextView post_eventID = (TextView) mView.findViewById(R.id.eventID);
+            post_eventID.setText(ID);
+        }
         public void setEventName(String eventName) {
             TextView post_eventName = (TextView) mView.findViewById(R.id.eventTitle);
             post_eventName.setText(eventName);
