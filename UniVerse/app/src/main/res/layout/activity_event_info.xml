@@ -127,30 +127,41 @@
 
     <TextView
         android:id="@+id/event_datetime_label"
-        android:layout_height="20dp"
         android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
+        android:layout_height="20dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/transparent"
-        android:text="Date / Time"
         android:fontFamily="@font/gilroy_bold"
+        android:text="Date / Time"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/event_description"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/event_description" />
 
     <TextView
         android:id="@+id/DateEvent"
         android:layout_width="120sp"
         android:layout_height="wrap_content"
-        android:onClick="openDatePicker"
         android:text="Date"
         android:textColor="@color/black"
         android:fontFamily="@font/publicsans_regular"
         app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
         app:layout_constraintLeft_toLeftOf="@id/event_datetime_label" />
+
+    <TextView
+        android:id="@+id/TimeEvent"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/publicsans_regular"
+        android:text="Time"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toEndOf="@+id/DateEvent"
+        app:layout_constraintTop_toTopOf="@+id/event_datetime_label" />
 
     <TextView
         android:id="@+id/event_photo_label"

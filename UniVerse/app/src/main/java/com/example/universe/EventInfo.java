@@ -23,6 +23,12 @@ public class EventInfo extends AppCompatActivity {
     DatabaseReference mref;
     private TextView eventTitle;
     private String eventID;
+    private TextView OrganizerName;
+    private TextView Location;
+    private TextView Description;
+    private TextView Date;
+    private TextView Time;
+    private ImageView Photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,12 @@ public class EventInfo extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mref = mDatabase.getReference("Events");
         eventTitle = findViewById(R.id.createEvent_title);
+        OrganizerName = findViewById(R.id.event_organizer);
+        Location = findViewById(R.id.event_location);
+        Description = findViewById(R.id.event_description);
+        Date = findViewById(R.id.DateEvent);
+        Time = findViewById(R.id.TimeEvent);
+        Photo = findViewById(R.id.eventPhoto);
         getdata();
 
         ImageView backButton = findViewById(R.id.backEventInfo);
@@ -74,6 +86,11 @@ public class EventInfo extends AppCompatActivity {
                     if(key.equals(eventID)) {
                         Event event = eventsSnapshot.getValue(Event.class);
                         eventTitle.setText(event.getEventName());
+                        OrganizerName.setText(event.getOrganizerName());
+                        Location.setText(event.getLocation());
+                        Description.setText(event.getDescription());
+                        Date.setText(event.getDateString());
+                        Time.setText(event.getTimeString());
                     }
                 }
             }
@@ -84,4 +101,5 @@ public class EventInfo extends AppCompatActivity {
             }
         });
     }
+
 }
