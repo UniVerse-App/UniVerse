@@ -16,6 +16,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.Calendar;
 
 public class FeedFragment extends Fragment {
 
@@ -65,8 +68,8 @@ public class FeedFragment extends Fragment {
             }
         });
 
-
-        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(mref,Event.class).build();
+        Query query = mref.orderByChild("timestamp").startAfter(Calendar.getInstance().getTimeInMillis());
+        FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(query,Event.class).build();
         FirebaseRecyclerAdapter<Event, Feed.EventViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, Feed.EventViewHolder>
                 (options) {
             @Override
