@@ -1,6 +1,7 @@
 package com.example.universe;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,7 +9,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,10 +19,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,7 +33,7 @@ import com.google.firebase.storage.StorageReference;
 public class EventInfo extends AppCompatActivity {
 
     FirebaseDatabase mDatabase;
-    DatabaseReference mref;
+    DatabaseReference eventsTable, usersTable;
     private TextView eventTitle;
     private String eventID;
     private TextView OrganizerName;
@@ -47,7 +50,13 @@ public class EventInfo extends AppCompatActivity {
         setContentView(R.layout.activity_event_info);
         eventID = getIntent().getStringExtra("Event_ID");
         mDatabase = FirebaseDatabase.getInstance();
-        mref = mDatabase.getReference("Events");
+        eventsTable = mDatabase.getReference("Events");
+        usersTable = mDatabase.getReference("Users");
+
+        // Get logged in user record.
+        String userId = FirebaseAuth.getInstance().getUid();
+        DatabaseReference userRecord = usersTable.child(userId);
+
         eventTitle = findViewById(R.id.createEvent_title);
         OrganizerName = findViewById(R.id.event_organizer);
         eventLocation = findViewById(R.id.event_location);
@@ -73,6 +82,25 @@ public class EventInfo extends AppCompatActivity {
         Button RSVP_Button = findViewById(R.id.RSVP_button);
         RSVP_Button.setTag(1);
         RSVP_Button.setText("RSVP");
+        Query query = userRecord.child("eventsAttending").orderByValue().equalTo(eventID);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot event : snapshot.getChildren()) {
+                    if (event.getValue().equals(eventID)) {
+                        RSVP_Button.setTag(0);
+                        RSVP_Button.setText("Cancel RSVP");
+                        RSVP_Button.setBackgroundColor(getResources().getColor(R.color.accentColor800));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         RSVP_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,16 +110,34 @@ public class EventInfo extends AppCompatActivity {
                     RSVP_Button.setText("Cancel RSVP");
                     RSVP_Button.setBackgroundColor(getResources().getColor(R.color.accentColor800));
                     view.setTag(0);
-                    // Remove user id from Event record
-                    // Remove event id from User record
+
+                    // Append user id to Event record
+                    DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
+                    DatabaseReference pushUserRef = eventUsersRef.push();
+                    pushUserRef.setValue(userId);
+
+                    // Append event id to User record
+                    DatabaseReference userRef = userRecord.child("eventsAttending");
+                    DatabaseReference pushEventRef = userRef.push();
+                    pushEventRef.setValue(eventID);
+
                 }
                 else
                 {
                     RSVP_Button.setText("RSVP");
                     RSVP_Button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     view.setTag(1);
-                    // Append user id to Event record
-                    // Append event id to User record
+
+                    // Remove user id from Event record
+                    DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
+                    DatabaseReference eRef = eventUsersRef.orderByValue().equalTo(userId).getRef();
+                    eRef.removeValue();
+
+                    // Remove event id from User record
+                    DatabaseReference userRef = userRecord.child("eventsAttending");
+                    DatabaseReference uRef = userRef.orderByValue().equalTo(eventID).getRef();
+                    uRef.removeValue();
+
                 }
             }
         });
@@ -99,7 +145,7 @@ public class EventInfo extends AppCompatActivity {
 
     private void getEventData()
     {
-        mref.addValueEventListener(new ValueEventListener() {
+        eventsTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot eventsSnapshot : snapshot.getChildren()) {
@@ -141,5 +187,4 @@ public class EventInfo extends AppCompatActivity {
             }
         });
     }
-
 }

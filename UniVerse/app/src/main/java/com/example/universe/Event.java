@@ -87,6 +87,10 @@ public class Event {
 
     public void setOrganizerName(String organizerName) { this.organizerName = organizerName; }
 
+    public String getOrganizerID() { return organizerID; }
+
+    public void setOrganizerID(String organizerID) { this.organizerID = organizerID; }
+
     public String getEventInterest() { return eventInterest;}
 
     public void setEventInterest(String interest) { this.eventInterest = interest;}
