@@ -52,6 +52,18 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/eventName"
+        app:layout_constraintLeft_toLeftOf="@id/eventName"
+        android:id="@+id/scheduleItem_eventID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text=""
+        android:fontFamily="@font/publicsans_regular"
+        android:textSize="16sp" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

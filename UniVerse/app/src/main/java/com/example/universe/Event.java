@@ -10,27 +10,28 @@ import java.util.Locale;
 
 public class Event {
 
-    private String eventName, organizerName, location, description, photo, organizerID;
+    private String eventName, organizerName, location, description, photo, organizerID, eventInterest;
     private Integer seats;
     private long timestamp;
     private Calendar c;
-    private ArrayList<String> users;
+    private ArrayList<String> eventAttendees;
 
 
     public Event() {
 
     }
 
-    public Event(String eventName, String organizerName,String location, long timestamp, String photo, String description, ArrayList<String> users, Integer seats, String organizerID) {
+    public Event(String eventName, String organizerName,String location, long timestamp, String photo, String description, ArrayList<String> eventAttendees, Integer seats, String organizerID, String interest) {
         this.location = location;
         this.seats = seats;
-        this.users = users;
+        this.eventAttendees = eventAttendees;
         this.eventName = eventName;
         this.organizerName = organizerName;
         this.timestamp = timestamp;
         this.photo = photo;
         this.description = description;
         this.organizerID = organizerID;
+        this.eventInterest = interest;
 
     }
 
@@ -74,9 +75,9 @@ public class Event {
         this.photo = photo;
     }
 
-    public ArrayList<String> getUsers() { return users; }
+    public ArrayList<String> getEventAttendees() { return eventAttendees; }
 
-    public void setUsers(ArrayList<String> users) { this.users = users; }
+    public void setEventAttendees(ArrayList<String> users) { this.eventAttendees = eventAttendees; }
 
     public Integer getSeats() { return seats; }
 
@@ -86,10 +87,19 @@ public class Event {
 
     public void setOrganizerName(String organizerName) { this.organizerName = organizerName; }
 
+    public String getOrganizerID() { return organizerID; }
+
+    public void setOrganizerID(String organizerID) { this.organizerID = organizerID; }
+
+    public String getEventInterest() { return eventInterest;}
+
+    public void setEventInterest(String interest) { this.eventInterest = interest;}
+
     public String getTimeString() {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(this.timestamp);
-        String timeString = String.format(Locale.getDefault(), "%02d:%02d", c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
+        SimpleDateFormat mSDF = new SimpleDateFormat("h:mm a", Locale.US);
+        String timeString = mSDF.format(c.getTime());
         return timeString;
     }
 

@@ -38,6 +38,7 @@
         <item>Philosophy</item>
         <item>Other</item>
     </string-array>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -55,15 +56,20 @@
 
     <!-- Strings for choose event category on create/edit event screens. -->
     <string-array name="interestArray">
-        <item>Choose a major...</item>
-        <item>Comp. Science</item>
-        <item>Civil Engineering</item>
-        <item>Art</item>
-        <item>Design</item>
-        <item>History</item>
-        <item>English</item>
-        <item>Philosophy</item>
-        <item>Other</item>
+        <item>Category...</item>
+        <item>Graduate</item>
+        <item>Engineering</item>
+        <item>Music</item>
+        <item>Greek Life</item>
+        <item>Sports</item>
+        <item>School Spirit</item>
+        <item>Student Gov.</item>
+        <item>Public Speakers</item>
+        <item>Nursing</item>
+        <item>Business</item>
+        <item>Science</item>
+        <item>Education</item>
+        <item>eSports</item>
     </string-array>
 
 </resources>

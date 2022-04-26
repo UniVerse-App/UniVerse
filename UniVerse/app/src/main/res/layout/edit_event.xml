@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateEvent">
+    tools:context=".EditEvent">
 
     <ImageView
         android:id="@+id/ic_back"
@@ -22,7 +22,7 @@
         android:id="@+id/createEvent_title"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Create Event"
+        android:text="Edit Event"
         android:layout_margin="20dp"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -251,20 +251,34 @@
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="@id/eventPhotoContainer"
         app:layout_constraintRight_toRightOf="@id/eventPhotoContainer"
-/>
+        />
 
     <Button
         android:id="@+id/create_button"
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="60dp"
-        android:text="Create Event"
+        android:text="Update Event"
         android:textSize="16dp"
         android:fontFamily="@font/gilroy_bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/cancel_button"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="30dp"
+        />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:text="Cancel Event"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:backgroundTint="@color/accentColor800"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintLeft_toRightOf="@id/create_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/create_button"
+        app:layout_constraintBottom_toBottomOf="@id/create_button"
         />
 
     <TextView
