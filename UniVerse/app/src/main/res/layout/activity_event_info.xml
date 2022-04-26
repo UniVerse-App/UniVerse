@@ -240,7 +240,7 @@
 
     <TextView
         android:id="@+id/DateEvent"
-        android:layout_width="120sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/black"
@@ -248,16 +248,6 @@
         app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
         app:layout_constraintLeft_toLeftOf="@id/datetime_icon" />
 
-    <TextView
-        android:id="@+id/TimeEvent"
-        android:layout_width="120sp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/publicsans_regular"
-        android:text=""
-        android:textColor="@color/black"
-
-        app:layout_constraintStart_toEndOf="@+id/DateEvent"
-        app:layout_constraintTop_toTopOf="@+id/DateEvent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/eventPhoto"

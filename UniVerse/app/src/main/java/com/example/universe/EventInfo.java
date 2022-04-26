@@ -61,7 +61,6 @@ public class EventInfo extends AppCompatActivity {
         eventLocation = findViewById(R.id.event_location);
         eventDescription = findViewById(R.id.event_description);
         eventDate = findViewById(R.id.DateEvent);
-        eventTime = findViewById(R.id.TimeEvent);
         eventPhoto = findViewById(R.id.eventPhoto);
         eventSeats = findViewById(R.id.event_seats);
 
@@ -166,8 +165,7 @@ public class EventInfo extends AppCompatActivity {
                         organizerName.setText(event.getOrganizerName());
                         eventLocation.setText(event.getLocation());
                         eventDescription.setText(event.getDescription());
-                        eventDate.setText(event.getDateString());
-                        eventTime.setText(event.getTimeString());
+                        eventDate.setText(event.getDateString() + " - " + event.getTimeString());
 
                         //TODO: FIX SEATS REMAINING CALCULATION
                         if (event.getSeats() == 0) {
@@ -180,7 +178,7 @@ public class EventInfo extends AppCompatActivity {
                                 String seatsString = (remainingSeats.toString() + "more");
                                 eventSeats.setText(seatsString);
                             }
-                        eventSeats.setText(event.getSeats());
+                        eventSeats.setText(event.getSeats().toString() + " of " + event.getSeats().toString() );
                         }
                         // Enable edit button
                         if (userId.equals(event.getOrganizerID())) {
