@@ -1,7 +1,6 @@
 package com.example.universe;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -20,7 +19,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,13 +32,8 @@ public class EventInfo extends AppCompatActivity {
 
     FirebaseDatabase mDatabase;
     DatabaseReference eventsTable, usersTable;
-    private TextView eventTitle;
-    private String eventID;
-    private TextView OrganizerName;
-    private TextView eventLocation;
-    private TextView eventDescription;
-    private TextView eventDate;
-    private TextView eventTime;
+    private TextView eventTitle, organizerName, eventLocation, eventDescription, eventDate, eventTime, editButton, eventSeats;
+    private String eventID, userId;
     private ImageView eventPhoto;
     private Context thisContext;
 
@@ -48,22 +41,39 @@ public class EventInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         eventID = getIntent().getStringExtra("Event_ID");
         mDatabase = FirebaseDatabase.getInstance();
         eventsTable = mDatabase.getReference("Events");
         usersTable = mDatabase.getReference("Users");
 
         // Get logged in user record.
-        String userId = FirebaseAuth.getInstance().getUid();
+        userId = FirebaseAuth.getInstance().getUid();
         DatabaseReference userRecord = usersTable.child(userId);
 
         eventTitle = findViewById(R.id.createEvent_title);
-        OrganizerName = findViewById(R.id.event_organizer);
+        organizerName = findViewById(R.id.event_organizer);
         eventLocation = findViewById(R.id.event_location);
         eventDescription = findViewById(R.id.event_description);
         eventDate = findViewById(R.id.DateEvent);
         eventTime = findViewById(R.id.TimeEvent);
         eventPhoto = findViewById(R.id.eventPhoto);
+        eventSeats = findViewById(R.id.event_seats);
+
+        editButton = findViewById(R.id.edit_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EventInfo.this, EditEvent.class);
+                intent.putExtra("Event_ID", eventID);
+                startActivity(intent);
+            }
+        });
 
         thisContext = getBaseContext();
 
@@ -153,11 +163,29 @@ public class EventInfo extends AppCompatActivity {
                     if(key.equals(eventID)) {
                         Event event = eventsSnapshot.getValue(Event.class);
                         eventTitle.setText(event.getEventName());
-                        OrganizerName.setText(event.getOrganizerName());
+                        organizerName.setText(event.getOrganizerName());
                         eventLocation.setText(event.getLocation());
                         eventDescription.setText(event.getDescription());
                         eventDate.setText(event.getDateString());
                         eventTime.setText(event.getTimeString());
+
+                        //TODO: FIX SEATS REMAINING CALCULATION
+                        if (event.getSeats() == 0) {
+                            eventSeats.setText("Unlimited");
+                        } else {
+                            Integer numAttendees = 0;
+                            if (event.getEventAttendees() != null) {
+                                numAttendees = event.getEventAttendees().size();
+                                Integer remainingSeats = event.getSeats() - numAttendees;
+                                String seatsString = (remainingSeats.toString() + "more");
+                                eventSeats.setText(seatsString);
+                            }
+                        eventSeats.setText(event.getSeats());
+                        }
+                        // Enable edit button
+                        if (userId.equals(event.getOrganizerID())) {
+                            editButton.setVisibility(View.VISIBLE);
+                        }
 
                         // Insert photo
                         StorageReference reference;

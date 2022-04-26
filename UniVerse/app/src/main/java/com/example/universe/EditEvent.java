@@ -17,9 +17,11 @@ import static com.example.universe.PushNotification.CHANNEL_9_ID;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -29,12 +31,13 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -43,13 +46,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,21 +67,25 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
-public class CreateEvent extends AppCompatActivity {
+public class EditEvent extends AppCompatActivity {
 
     private TextView eventName, eventLocation, organizerName, eventDescription;
     private NumberPicker numSeats;
+    private Boolean newPicture = false; // For detecting user changed photo
     private DatePickerDialog datePickerDialog;
-    private Button dateButton, timeButton, createButton;
+    private Button dateButton, timeButton, createButton, cancelButton;
     private ImageView backButton;
     private FloatingActionButton eventPhotoButton;
     private ShapeableImageView eventPhotoContainer;
     private long timestamp;
     private StorageReference mStorageRef;
+    private DatabaseReference eventsTable;
     private FirebaseDatabase database;
     private Calendar cal = Calendar.getInstance();
     private NotificationManagerCompat notificationManager;
     private Spinner interestSpinner;
+    private String eventID;
+    private Event thisEvent;
 
     //hour and min variables
     int hour, min;
@@ -87,7 +97,7 @@ public class CreateEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_event);
+        setContentView(R.layout.edit_event);
 
         initDatePicker();
 
@@ -97,14 +107,9 @@ public class CreateEvent extends AppCompatActivity {
         timeButton = findViewById(R.id.hourPickerButton);
         organizerName = findViewById(R.id.event_organizer);
         eventDescription = findViewById(R.id.event_description);
-        eventPhotoContainer = findViewById(R.id.eventPhotoContainer);
+
         interestSpinner = findViewById(R.id.event_interests);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.interestArray, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        interestSpinner.setAdapter(adapter);
-
-        // TODO: Fix number picker
         numSeats = findViewById(R.id.event_seats);
         numSeats.setMaxValue(999);
         numSeats.setMinValue(0);
@@ -118,11 +123,21 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
 
+        cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelEvent();
+                // sendOnChannels();
+            }
+        });
+
+
         backButton = findViewById(R.id.ic_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cancelEvent();
+                backToEventInfo();
             }
         });
 
@@ -140,6 +155,73 @@ public class CreateEvent extends AppCompatActivity {
 
         //Notification
         notificationManager = NotificationManagerCompat.from(this);
+
+        // Get Event Record
+        eventID = getIntent().getStringExtra("Event_ID");
+        database = FirebaseDatabase.getInstance();
+        eventsTable = database.getReference("Events");
+        Query eventRecord = eventsTable.orderByKey().equalTo(eventID);
+        eventRecord.addChildEventListener(new ChildEventListener(){
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                thisEvent = snapshot.getValue(Event.class);
+                cal.setTimeInMillis(thisEvent.getTimestamp());
+                eventName.setText(thisEvent.getEventName());
+                eventLocation.setText(thisEvent.getLocation());
+                organizerName.setText(thisEvent.getOrganizerName());
+                eventDescription.setText(thisEvent.getDescription());
+                numSeats.setValue(thisEvent.getSeats());
+
+                // Load existing photo
+                eventPhotoContainer = findViewById(R.id.eventPhotoContainer);
+                StorageReference photoRef = mStorageRef.child("eventPictures/" + thisEvent.getPhoto());
+                Task<Uri> imageUrl = photoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Success
+                        Glide.with(EditEvent.this).load(uri.toString())
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .into(eventPhotoContainer);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Fail to get image url
+                    }
+                });
+
+                dateButton.setText(thisEvent.getDateString());
+                timeButton.setText(thisEvent.getTimeString());
+
+                // Set Interest selected
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(EditEvent.this, R.array.interestArray, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                interestSpinner.setAdapter(adapter);
+                int position = adapter.getPosition(thisEvent.getEventInterest());
+                interestSpinner.setSelection(position);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 
@@ -195,15 +277,17 @@ public class CreateEvent extends AppCompatActivity {
         startActivityForResult(gallery, 3);
         }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            selectedImage = data.getData();
-            Glide.with(CreateEvent.this).load(selectedImage.toString())
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(eventPhotoContainer);
-        }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK && data != null) {
+                selectedImage = data.getData();
+
+                Glide.with(EditEvent.this).load(selectedImage.toString())
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(eventPhotoContainer);
+                newPicture = true;
+            }
     }
 
     // Uploads photo to Firebase storage and returns key to access photo
@@ -217,13 +301,13 @@ public class CreateEvent extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(CreateEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
+                            Toast.makeText(EditEvent.this, "Profile pic uploaded!", Toast.LENGTH_SHORT);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CreateEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
+                            Toast.makeText(EditEvent.this, "Profile pic could not be uploaded.", Toast.LENGTH_SHORT);
                         }
                     });
             return randomKey;
@@ -234,11 +318,20 @@ public class CreateEvent extends AppCompatActivity {
 
     }
 
+    //Create event method
+    private void saveEvent() {
+        String photoKey = thisEvent.getPhoto();
+        if (newPicture) {
+            photoKey = uploadPicture();
+        }
+        eventInfo(photoKey);
+        backToEventInfo();
+    }
+
     // Updates Event record with photo key and other info
     private void eventInfo(String photoKey) {
         database = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = database.getReference();
-        final String randomKey = UUID.randomUUID().toString();
 
         // Get timestamp
         timestamp = cal.getTimeInMillis();
@@ -257,13 +350,13 @@ public class CreateEvent extends AppCompatActivity {
                                 interestSpinner.getSelectedItem().toString()
                             );
 
-        dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child("Events").child(eventID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_LONG);
+                        Toast.makeText(EditEvent.this, "Event created!", Toast.LENGTH_LONG);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -280,16 +373,39 @@ public class CreateEvent extends AppCompatActivity {
         });
     }
 
-
-    //Create event method
-    private void saveEvent() {
-        String photoKey = uploadPicture();
-            eventInfo(photoKey);
-            startActivity(new Intent(this, Feed.class));
+    private void cancelEvent() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditEvent.this);
+        builder.setTitle("Cancel Event");
+        builder.setMessage("Are you sure want to cancel the event? \n\nThis action is permanent!");
+        builder.setIcon(R.drawable.ic_heroicon_warning);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                eventsTable.child(eventID).removeValue();
+                Intent goToFeed=new Intent(EditEvent.this, Feed.class);
+                goToFeed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(goToFeed);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
-    private void cancelEvent() {
-        startActivity(new Intent(this, Feed.class));
+    private void returnToFeed() {
+        Intent intent = new Intent(this, Feed.class);
+        startActivity(intent);
+    }
+
+    private void backToEventInfo() {
+        Intent intent = new Intent(this, EventInfo.class);
+        intent.putExtra("Event_ID", eventID);
+        startActivity(intent);
     }
 
     private void sendOnChannels() {
