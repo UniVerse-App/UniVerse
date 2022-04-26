@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="8dp"
     android:layout_margin="10dp"
     android:elevation="90dp">
 
@@ -26,16 +26,21 @@
 
         <TextView
             android:id="@+id/eventTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gilroy_bold"
             android:text="Event Title"
+            android:layout_marginHorizontal="16dp"
             android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
-
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="@id/dateSquare"
-            app:layout_constraintLeft_toRightOf="@id/dateSquare"
+            android:textIsSelectable="false"
+            app:layout_constraintTop_toBottomOf="@id/eventImage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias=".15"
             />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -43,9 +48,9 @@
             android:id="@+id/dateSquare"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="16dp"
             android:background="@color/colorPrimaryLight"
-            app:layout_constraintTop_toBottomOf="@id/eventImage"
+            app:layout_constraintTop_toTopOf="@id/mapPin"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
@@ -77,12 +82,14 @@
             android:background="@android:color/transparent"/>
 
         <ImageView
+            android:layout_marginTop="6dp"
             android:id="@+id/mapPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_location_on_24"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_heroicon_location"
             app:layout_constraintTop_toBottomOf="@id/eventTitle"
-            app:layout_constraintLeft_toLeftOf="@id/eventTitle"
+            app:layout_constraintLeft_toRightOf="@id/dateSquare"
             app:tint="@color/colorPrimaryLight" />
 
         <TextView
@@ -110,16 +117,25 @@
             app:layout_constraintLeft_toRightOf="@+id/eventLocation"
             app:layout_constraintRight_toLeftOf="@id/eventTime"/>
 
+        <ImageView
+            android:id="@+id/ic_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/ic_heroicon_clock"
+            app:layout_constraintTop_toBottomOf="@id/mapPin"
+            app:layout_constraintLeft_toLeftOf="@id/mapPin"
+            app:tint="@color/colorPrimaryLight" />
+
         <TextView
             android:id="@+id/eventTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3:00p-4:00p"
-            android:layout_marginLeft="6dp"
             android:fontFamily="@font/publicsans_regular"
-            app:layout_constraintTop_toTopOf="@+id/mapPin"
-            app:layout_constraintBottom_toBottomOf="@id/mapPin"
-            app:layout_constraintLeft_toRightOf="@+id/bullet"/>
+            app:layout_constraintTop_toTopOf="@+id/ic_clock"
+            app:layout_constraintBottom_toBottomOf="@id/ic_clock"
+            app:layout_constraintLeft_toLeftOf="@id/eventLocation"/>
 
         <Button
             android:id="@+id/info_button"
@@ -127,8 +143,8 @@
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:text="INFO"
             android:fontFamily="@font/gilroy_bold"/>

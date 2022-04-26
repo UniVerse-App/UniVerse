@@ -4,19 +4,19 @@
         app:title="Profile"
         app:icon="@drawable/ic_baseline_person_24">
 
-        <ListPreference
+        <Preference
             app:key="editInfo"
             app:title="Edit Profile Information" />
 
-        <ListPreference
+        <Preference
             app:key="updateInt"
-            app:title="Update Intersts"/>
+            app:title="Update Interests"/>
 
         <EditTextPreference
             app:key="updatePass"
             app:title="Change password"/>
 
-        <ListPreference
+        <Preference
             app:key="logout"
             app:title="Logout"/>
 

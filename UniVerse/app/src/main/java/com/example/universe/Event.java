@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Event {
 
@@ -14,14 +16,14 @@ public class Event {
     private Integer seats;
     private long timestamp;
     private Calendar c;
-    private ArrayList<String> eventAttendees;
+    private HashMap<String, Object> eventAttendees;
 
 
     public Event() {
 
     }
 
-    public Event(String eventName, String organizerName,String location, long timestamp, String photo, String description, ArrayList<String> eventAttendees, Integer seats, String organizerID, String interest) {
+    public Event(String eventName, String organizerName,String location, long timestamp, String photo, String description, HashMap<String, Object> eventAttendees, Integer seats, String organizerID, String interest) {
         this.location = location;
         this.seats = seats;
         this.eventAttendees = eventAttendees;
@@ -75,9 +77,9 @@ public class Event {
         this.photo = photo;
     }
 
-    public ArrayList<String> getEventAttendees() { return eventAttendees; }
+    public Map<String, Object> getEventAttendees() { return eventAttendees; }
 
-    public void setEventAttendees(ArrayList<String> users) { this.eventAttendees = eventAttendees; }
+    public void setEventAttendees(HashMap<String, Object> users) { this.eventAttendees = eventAttendees; }
 
     public Integer getSeats() { return seats; }
 

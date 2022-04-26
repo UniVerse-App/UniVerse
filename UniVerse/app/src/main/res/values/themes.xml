@@ -32,6 +32,6 @@
 
     <style name="eventDateSquare" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">25%</item>
+        <item name="cornerSize">8%</item>
     </style>
 </resources>

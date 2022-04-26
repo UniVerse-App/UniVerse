@@ -46,7 +46,11 @@
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintLeft_toLeftOf="@id/datetime_icon"
+        app:layout_constraintRight_toRightOf="@id/eventPhoto"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintTop_toBottomOf="@id/eventPhoto" />
 
     <!-- Organizer -->
@@ -217,11 +221,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_heroicon_clock"
-        android:layout_marginLeft="40dp"
         app:layout_constraintRight_toLeftOf="@id/event_datetime_label"
         app:layout_constraintBottom_toBottomOf="@id/event_datetime_label"
         app:layout_constraintTop_toTopOf="@id/event_datetime_label"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="@id/eventPhoto"/>
 
     <TextView
         android:id="@+id/event_datetime_label"

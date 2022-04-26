@@ -53,6 +53,20 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is logged in...
+        if (mAuth.getCurrentUser() != null) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user.isEmailVerified()) {
+                Intent intent = new Intent(this, Feed.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == R.id.registerUser) {
             Intent intent = new Intent(this, RegisterUser.class);

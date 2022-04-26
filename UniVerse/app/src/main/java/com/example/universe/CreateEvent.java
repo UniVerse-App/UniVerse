@@ -58,7 +58,9 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class CreateEvent extends AppCompatActivity {
@@ -243,15 +245,16 @@ public class CreateEvent extends AppCompatActivity {
         // Get timestamp
         timestamp = cal.getTimeInMillis();
         String organizerID = FirebaseAuth.getInstance().getUid();
-        ArrayList<String> userList = new ArrayList<String>();
-        userList.add(organizerID);
+        String key = UUID.randomUUID().toString();
+        HashMap<String, Object> attendeeList = new HashMap<>();
+        attendeeList.put(key, organizerID);
         Event event = new Event(eventName.getText().toString().trim(),
                                 organizerName.getText().toString().trim(),
                                 eventLocation.getText().toString().trim(),
                                 timestamp,
                                 photoKey,
                                 eventDescription.getText().toString().trim(),
-                                userList, //Attendees
+                                attendeeList, //Attendees
                                 numSeats.getValue(),
                                 FirebaseAuth.getInstance().getUid(), // Organizer ID
                                 interestSpinner.getSelectedItem().toString()

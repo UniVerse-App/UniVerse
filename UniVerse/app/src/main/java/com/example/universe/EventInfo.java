@@ -28,6 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EventInfo extends AppCompatActivity {
 
     FirebaseDatabase mDatabase;
@@ -122,8 +125,10 @@ public class EventInfo extends AppCompatActivity {
 
                     // Append user id to Event record
                     DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
-                    DatabaseReference pushUserRef = eventUsersRef.push();
-                    pushUserRef.setValue(userId);
+                    String key = eventUsersRef.push().getKey();
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(key, eventID);
+                    eventUsersRef.updateChildren(map);
 
                     // Append event id to User record
                     DatabaseReference userRef = userRecord.child("eventsAttending");
