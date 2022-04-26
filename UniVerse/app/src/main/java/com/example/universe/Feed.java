@@ -29,8 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class Feed extends AppCompatActivity{
 
+public class Feed extends AppCompatActivity{
    private BottomNavigationView bottomNavigationView;
    private NavController navController;
    public RecyclerView mEventList;
@@ -41,6 +41,7 @@ public class Feed extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushNotification notification = new PushNotification();
         setContentView(R.layout.activity_feed);
         FragmentManager supportFragmentManger = getSupportFragmentManager();
 

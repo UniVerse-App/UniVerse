@@ -20,6 +20,7 @@ public class PushNotification extends Application {
     public static final String CHANNEL_11_ID = "Science";
     public static final String CHANNEL_12_ID = "Education";
     public static final String CHANNEL_13_ID = "ESports";
+
     @Override
     public void onCreate() {
         super.onCreate();

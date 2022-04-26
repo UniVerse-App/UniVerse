@@ -288,6 +288,7 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
+            sendOnChannels();
             startActivity(new Intent(this, Feed.class));
     }
 
