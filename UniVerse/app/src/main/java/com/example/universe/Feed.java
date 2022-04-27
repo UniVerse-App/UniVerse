@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -129,6 +130,42 @@ public class Feed extends AppCompatActivity{
             }
         });
 
+        FloatingActionButton backToTop = findViewById(R.id.backToTop);
+        backToTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEventList.smoothScrollToPosition(0);
+            }
+        });
+        mEventList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            backToTop.setVisibility(View.GONE);
+                        }
+                    }, 2000);
+                }
+            }
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0)
+                {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            backToTop.setVisibility(View.VISIBLE);
+                        }
+                    },500);
+                } else if (dy < 0){
+                    backToTop.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         PushNotification notifications = new PushNotification();
     }
 
@@ -165,9 +202,9 @@ public class Feed extends AppCompatActivity{
             post_eventTime.setText(timeString);
         }
 
-        public void setLocation(String location) {
-            TextView post_eventLocation = (TextView) mView.findViewById(R.id.eventLocation);
-            post_eventLocation.setText(location);
+        public void setEventInterest(String location) {
+            TextView post_eventInterest = (TextView) mView.findViewById(R.id.eventInterest);
+            post_eventInterest.setText(location);
         }
 
         public void setDayOfMonth(Integer dayOfMonth) {

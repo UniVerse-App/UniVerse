@@ -112,16 +112,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_heroicon_location"
+            android:src="@drawable/ic_heroicon_clipboard"
             app:layout_constraintTop_toBottomOf="@id/eventTitle"
             app:layout_constraintLeft_toRightOf="@id/dateSquare"
             app:tint="@color/colorPrimaryLight" />
 
         <TextView
-            android:id="@+id/eventLocation"
+            android:id="@+id/eventInterest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Location"
+            android:text="Event Category"
             android:layout_marginLeft="6dp"
             android:fontFamily="@font/publicsans_regular"
             app:layout_constraintTop_toTopOf="@+id/mapPin"
@@ -139,7 +139,7 @@
             android:fontFamily="@font/publicsans_regular"
             app:layout_constraintTop_toTopOf="@+id/mapPin"
             app:layout_constraintBottom_toBottomOf="@id/mapPin"
-            app:layout_constraintLeft_toRightOf="@+id/eventLocation"
+            app:layout_constraintLeft_toRightOf="@+id/eventInterest"
             app:layout_constraintRight_toLeftOf="@id/eventTime"/>
 
         <ImageView
@@ -160,7 +160,7 @@
             android:fontFamily="@font/publicsans_regular"
             app:layout_constraintTop_toTopOf="@+id/ic_clock"
             app:layout_constraintBottom_toBottomOf="@id/ic_clock"
-            app:layout_constraintLeft_toLeftOf="@id/eventLocation"/>
+            app:layout_constraintLeft_toLeftOf="@id/eventInterest"/>
 
         <Button
             android:id="@+id/info_button"
