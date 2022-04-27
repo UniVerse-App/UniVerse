@@ -1,6 +1,7 @@
 package com.example.universe;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +41,8 @@ public class EventInfo extends AppCompatActivity {
     private String eventID, userId;
     private ImageView eventPhoto;
     private Context thisContext;
+    private Button RSVP_Button;
+    private Boolean userAttending = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,6 @@ public class EventInfo extends AppCompatActivity {
 
         thisContext = getBaseContext();
 
-
         // Load event data into view
         getEventData();
 
@@ -88,21 +91,19 @@ public class EventInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(EventInfo.this, Feed.class));
+                EventInfo.this.finish();
             }
         });
 
-        Button RSVP_Button = findViewById(R.id.RSVP_button);
-        RSVP_Button.setTag(1);
-        RSVP_Button.setText("RSVP");
         Query query = userRecord.child("eventsAttending").orderByValue().equalTo(eventID);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot event : snapshot.getChildren()) {
                     if (event.getValue().equals(eventID)) {
-                        RSVP_Button.setTag(0);
-                        RSVP_Button.setText("Cancel RSVP");
-                        RSVP_Button.setBackgroundColor(getResources().getColor(R.color.accentColor800));
+                        // User has already RSVPd
+                        userAttending = true;
+                        updateRSVPButton();
                     }
                 }
             }
@@ -113,49 +114,86 @@ public class EventInfo extends AppCompatActivity {
             }
         });
 
+        RSVP_Button = findViewById(R.id.RSVP_button);
         RSVP_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final int status = (Integer) view.getTag();
                 if(status == 1)
                 {
-                    RSVP_Button.setText("Cancel RSVP");
-                    RSVP_Button.setBackgroundColor(getResources().getColor(R.color.accentColor800));
-                    view.setTag(0);
-
                     // Append user id to Event record
                     DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
-                    String key = eventUsersRef.push().getKey();
-                    Map<String, Object> map = new HashMap<>();
-                    map.put(key, eventID);
-                    eventUsersRef.updateChildren(map);
+                    DatabaseReference pushUserRef = eventUsersRef.push();
+                    pushUserRef.setValue(userId);
 
                     // Append event id to User record
                     DatabaseReference userRef = userRecord.child("eventsAttending");
                     DatabaseReference pushEventRef = userRef.push();
                     pushEventRef.setValue(eventID);
 
-                }
-                else
-                {
-                    RSVP_Button.setText("RSVP");
-                    RSVP_Button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    view.setTag(1);
+                    userAttending = true;
+
+                } else {
 
                     // Remove user id from Event record
-                    DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
-                    DatabaseReference eRef = eventUsersRef.orderByValue().equalTo(userId).getRef();
-                    eRef.removeValue();
+                    DatabaseReference eventRef = eventsTable.child(eventID).child("eventAttendees");
+                    Query eventQuery = eventRef.orderByValue().equalTo(userId);
+                    eventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot user: snapshot.getChildren()) {
+                                user.getRef().removeValue();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
                     // Remove event id from User record
                     DatabaseReference userRef = userRecord.child("eventsAttending");
-                    DatabaseReference uRef = userRef.orderByValue().equalTo(eventID).getRef();
-                    uRef.removeValue();
+                    Query userQuery = userRef.orderByValue().equalTo(eventID);
+                    userQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot event: snapshot.getChildren()) {
+                                event.getRef().removeValue();
+                            }
+                        }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    userAttending = false;
                 }
             }
         });
+        updateRSVPButton();
     }
+
+    private void updateRSVPButton() {
+        if( userAttending ){
+            RSVP_Button.setTag(0);
+            RSVP_Button.setEnabled(true);
+            RSVP_Button.setText("Cancel RSVP");
+            RSVP_Button.setBackgroundColor(getResources().getColor(R.color.accentColor800));
+        }
+        else if (eventSeats.getText() == "None") {
+            RSVP_Button.setText("EVENT FULL");
+            RSVP_Button.setEnabled(false);
+            RSVP_Button.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.material_grey_300));
+        } else {
+            RSVP_Button.setTag(1);
+            RSVP_Button.setText("RSVP");
+            RSVP_Button.setEnabled(true);
+            RSVP_Button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }
+    }
+
 
     private void getEventData()
     {
@@ -171,20 +209,8 @@ public class EventInfo extends AppCompatActivity {
                         eventLocation.setText(event.getLocation());
                         eventDescription.setText(event.getDescription());
                         eventDate.setText(event.getDateString() + " - " + event.getTimeString());
+                        eventSeats.setText(event.getRemainingSeats());
 
-                        //TODO: FIX SEATS REMAINING CALCULATION
-                        if (event.getSeats() == 0) {
-                            eventSeats.setText("Unlimited");
-                        } else {
-                            Integer numAttendees = 0;
-                            if (event.getEventAttendees() != null) {
-                                numAttendees = event.getEventAttendees().size();
-                                Integer remainingSeats = event.getSeats() - numAttendees;
-                                String seatsString = (remainingSeats.toString() + "more");
-                                eventSeats.setText(seatsString);
-                            }
-                        eventSeats.setText(event.getSeats().toString() + " of " + event.getSeats().toString() );
-                        }
                         // Enable edit button
                         if (userId.equals(event.getOrganizerID())) {
                             editButton.setVisibility(View.VISIBLE);
@@ -208,6 +234,9 @@ public class EventInfo extends AppCompatActivity {
                                 // Fail to get image url
                             }
                         });
+
+                        // Check RSVP Button
+                        updateRSVPButton();
                     }
                 }
             }
