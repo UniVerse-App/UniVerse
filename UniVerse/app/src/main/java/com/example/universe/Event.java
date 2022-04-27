@@ -1,16 +1,17 @@
 package com.example.universe;
 
-import java.lang.reflect.Array;
+import com.google.firebase.database.Exclude;
+
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class Event {
+    @Exclude
+    public String key;
 
     private String eventName, organizerName, location, description, photo, organizerID, eventInterest;
     private Integer seats;

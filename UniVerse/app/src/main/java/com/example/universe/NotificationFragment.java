@@ -44,25 +44,19 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         //Using Events data to display on notification
         DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
 
-        long startDateTimestamp = calendar.getTimeInMillis();
-
-
-        // End at a day after start stamp, 604800000 is num ms in a week.
-        //Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + 604800000));
-        //query.addValueEventListener(new ValueEventListener() {
         eventsTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if  (snapshot.exists()) {
                     for (DataSnapshot eventsSnapshot : snapshot.getChildren()) {
                         Event event = eventsSnapshot.getValue(Event.class);
-
+                        event.key = eventsSnapshot.getKey();
                         notificationList.add(event);
-                        NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList);
+                        NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList, "");
                         notificationListView.setAdapter(adapter);
                     }
                 } else {
-                    NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList);
+                    NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList, "");
                     notificationListView.setAdapter(adapter);
 
                 }

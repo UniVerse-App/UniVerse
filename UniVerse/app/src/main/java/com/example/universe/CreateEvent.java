@@ -29,7 +29,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -56,11 +55,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 public class CreateEvent extends AppCompatActivity {
@@ -78,6 +75,7 @@ public class CreateEvent extends AppCompatActivity {
     private Calendar cal = Calendar.getInstance();
     private NotificationManagerCompat notificationManager;
     private Spinner interestSpinner;
+
 
     //hour and min variables
     int hour, min;
@@ -116,7 +114,7 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveEvent();
-                sendOnChannels();
+                //sendOnChannels();
             }
         });
 
@@ -305,6 +303,7 @@ public class CreateEvent extends AppCompatActivity {
         //Select CHANNEL
         String CHANNEL = "";
         int interest = 1; //need to add a list of interests by numbers
+
         switch (interest) {
             case 1:  CHANNEL = CHANNEL_1_ID;
                 break;
@@ -338,16 +337,17 @@ public class CreateEvent extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        //Set notification's visualization
+//        //Set notification's visualization
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
                 .setContentTitle(channel_eventName)
                 .setSmallIcon(R.drawable.ic_universelogo)
                 .setContentText(channel_description)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(channel_location + " " + channel_date))
+                        .bigText(channel_location + " " + channel_date))
                 .setContentIntent(pendingIntent);
 
         notificationManager.notify(interest, notification.build());
+
     }
 }
 

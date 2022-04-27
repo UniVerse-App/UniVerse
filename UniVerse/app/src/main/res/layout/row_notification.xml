@@ -18,7 +18,7 @@
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_gravity="center"
-            android:src="@drawable/uta_logo">
+            android:src="@drawable/ic_universelogo">
 
         </ImageView>
 
@@ -55,6 +55,16 @@
                 android:text="Event Time"
                 android:minLines="1"
                 android:maxLines="1">
+            </TextView>
+
+            <TextView
+                android:id="@+id/notificationItem_eventID"
+                android:layout_height="1dp"
+                android:text=""
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="@id/event_name_noti"
+                app:layout_constraintTop_toBottomOf="@id/event_name_noti"
+                android:layout_width="1dp">
             </TextView>
 
         </LinearLayout>

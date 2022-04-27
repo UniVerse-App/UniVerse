@@ -1,5 +1,20 @@
 package com.example.universe;
 
+import static com.example.universe.PushNotification.CHANNEL_10_ID;
+import static com.example.universe.PushNotification.CHANNEL_11_ID;
+import static com.example.universe.PushNotification.CHANNEL_12_ID;
+import static com.example.universe.PushNotification.CHANNEL_13_ID;
+import static com.example.universe.PushNotification.CHANNEL_1_ID;
+import static com.example.universe.PushNotification.CHANNEL_2_ID;
+import static com.example.universe.PushNotification.CHANNEL_3_ID;
+import static com.example.universe.PushNotification.CHANNEL_4_ID;
+import static com.example.universe.PushNotification.CHANNEL_5_ID;
+import static com.example.universe.PushNotification.CHANNEL_6_ID;
+import static com.example.universe.PushNotification.CHANNEL_7_ID;
+import static com.example.universe.PushNotification.CHANNEL_8_ID;
+import static com.example.universe.PushNotification.CHANNEL_9_ID;
+
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,6 +42,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,6 +57,7 @@ public class Feed extends AppCompatActivity{
    public RecyclerView mEventList;
    FirebaseDatabase mDatabase;
    DatabaseReference mref;
+   private NotificationManagerCompat notificationManager;
 
 
     @Override
@@ -52,7 +74,45 @@ public class Feed extends AppCompatActivity{
 
 
         mDatabase = FirebaseDatabase.getInstance();
-        mref = mDatabase.getReference("Event");
+
+        //Notification
+        notificationManager = NotificationManagerCompat.from(this);
+
+        mref = mDatabase.getReference("Events");
+        mref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.child("notify").exists()) {
+                    if (snapshot.child("notify").getValue().equals("true")) {
+                        String eventTitle = snapshot.child("eventName").getValue().toString();
+                        sendOnChannels(eventTitle);
+                        DatabaseReference notifyBool = snapshot.child("notify").getRef();
+                        notifyBool.setValue("false");
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         mEventList = (RecyclerView)findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
         mEventList.setLayoutManager(new LinearLayoutManager(this));
@@ -65,6 +125,8 @@ public class Feed extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        PushNotification notifications = new PushNotification();
     }
 
         public static class EventViewHolder extends RecyclerView.ViewHolder {
@@ -132,4 +194,61 @@ public class Feed extends AppCompatActivity{
             });
         }
     }
+
+    private void sendOnChannels(String eventName) {
+        String channel_eventName = eventName; //eventName.getText().toString();
+        String channel_location  = "Location"; //eventLocation.getText().toString();
+        String channel_description = "Description"; //eventDescription.getText().toString();
+        String channel_date      = "Date"; //dateButton.getText().toString();
+
+        //Select CHANNEL
+        String CHANNEL = "";
+        int interest = 1; //need to add a list of interests by numbers
+
+        switch (interest) {
+            case 1:  CHANNEL = CHANNEL_1_ID;
+                break;
+            case 2:  CHANNEL = CHANNEL_2_ID;
+                break;
+            case 3:  CHANNEL = CHANNEL_3_ID;
+                break;
+            case 4:  CHANNEL = CHANNEL_4_ID;
+                break;
+            case 5:  CHANNEL = CHANNEL_5_ID;
+                break;
+            case 6:  CHANNEL = CHANNEL_6_ID;
+                break;
+            case 7:  CHANNEL = CHANNEL_7_ID;
+                break;
+            case 8:  CHANNEL = CHANNEL_8_ID;
+                break;
+            case 9:  CHANNEL = CHANNEL_9_ID;
+                break;
+            case 10: CHANNEL = CHANNEL_10_ID;
+                break;
+            case 11: CHANNEL = CHANNEL_11_ID;
+                break;
+            case 12: CHANNEL = CHANNEL_12_ID;
+                break;
+            case 13: CHANNEL = CHANNEL_13_ID;
+                break;
+        }
+        // Create an intent to lead to Feed
+        Intent intent = new Intent(this, Feed.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+//        //Set notification's visualization
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
+                .setContentTitle(channel_eventName)
+                .setSmallIcon(R.drawable.ic_universelogo)
+                .setContentText(channel_description)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(channel_location + " " + channel_date))
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(interest, notification.build());
+
+    }
+
 }
