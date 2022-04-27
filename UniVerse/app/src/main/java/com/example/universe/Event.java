@@ -79,7 +79,7 @@ public class Event {
 
     public HashMap<String, String> getEventAttendees() { return eventAttendees; }
 
-    public void setEventAttendees(HashMap<String, String> users) { this.eventAttendees = eventAttendees; }
+    public void setEventAttendees(HashMap<String, String> eventAttendees) { this.eventAttendees = eventAttendees; }
 
     public Integer getSeats() { return seats; }
 
@@ -125,5 +125,20 @@ public class Event {
         c.setTimeInMillis(this.timestamp);
         String monthAbr = mons[c.get(Calendar.MONTH)].toUpperCase();
         return monthAbr;
+    }
+
+    public String getRemainingSeats() {
+        if (this.getEventAttendees() == null) {
+            return (this.seats.toString() + " of " + this.seats.toString());
+        }
+        Integer remainingSeats = this.seats - this.getEventAttendees().size();
+        if ( remainingSeats < 0 ) {
+            return "Unlimited";
+        } else if (remainingSeats == 0) {
+            return "None";
+        } else {
+            return (remainingSeats.toString() + " of " + this.seats.toString());
+        }
+
     }
 }
