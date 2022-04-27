@@ -125,10 +125,8 @@ public class EventInfo extends AppCompatActivity {
 
                     // Append user id to Event record
                     DatabaseReference eventUsersRef = eventsTable.child(eventID).child("eventAttendees");
-                    String key = eventUsersRef.push().getKey();
-                    Map<String, Object> map = new HashMap<>();
-                    map.put(key, eventID);
-                    eventUsersRef.updateChildren(map);
+                    DatabaseReference pushUserRef = eventUsersRef.push();
+                    pushUserRef.setValue(userId);
 
                     // Append event id to User record
                     DatabaseReference userRef = userRecord.child("eventsAttending");
