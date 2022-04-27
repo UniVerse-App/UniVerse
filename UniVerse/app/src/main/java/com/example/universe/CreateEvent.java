@@ -246,7 +246,7 @@ public class CreateEvent extends AppCompatActivity {
         timestamp = cal.getTimeInMillis();
         String organizerID = FirebaseAuth.getInstance().getUid();
         String key = UUID.randomUUID().toString();
-        HashMap<String, Object> attendeeList = new HashMap<>();
+        HashMap<String, String> attendeeList = new HashMap<>();
         attendeeList.put(key, organizerID);
         Event event = new Event(eventName.getText().toString().trim(),
                                 organizerName.getText().toString().trim(),
