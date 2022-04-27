@@ -68,6 +68,7 @@ public class FeedFragment extends Fragment {
             }
         });
 
+
         Query query = mref.orderByChild("timestamp").startAfter(Calendar.getInstance().getTimeInMillis());
         FirebaseRecyclerOptions<Event> options = new FirebaseRecyclerOptions.Builder<Event>().setQuery(query,Event.class).build();
         FirebaseRecyclerAdapter<Event, Feed.EventViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Event, Feed.EventViewHolder>
@@ -77,7 +78,7 @@ public class FeedFragment extends Fragment {
                 DatabaseReference eventReference = getRef(position);
                 viewHolder.setEventName(model.getEventName());
                 viewHolder.setDesc(model.getDescription());
-                viewHolder.setLocation(model.getLocation());
+                viewHolder.setEventInterest(model.getEventInterest());
                 viewHolder.setTimeString(model.getTimeString());
                 viewHolder.setDayOfMonth(model.getDayOfMonth());
                 viewHolder.setMonthAbr(model.getMonthAbr());
