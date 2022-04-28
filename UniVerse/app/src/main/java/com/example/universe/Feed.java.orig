@@ -84,6 +84,7 @@ public class Feed extends AppCompatActivity{
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if  (snapshot.exists()) {
+<<<<<<< HEAD
                     Notification noti = snapshot.getValue(Notification.class);
                     HashMap<String, String> users = noti.getUserArray();
                     String user = FirebaseAuth.getInstance().getUid();
@@ -95,6 +96,13 @@ public class Feed extends AppCompatActivity{
                     }
                     for (DataSnapshot notifySnapshot : snapshot.getChildren()) {
                        //fhadf
+
+
+=======
+                    for (DataSnapshot notifySnapshot : snapshot.getChildren()) {
+                       //fhadf
+                        String string = notifySnapshot.getKey();
+>>>>>>> f7293dba0f5481007b128d91f0f6f34ac8d57e63
 
                     }
                 }
