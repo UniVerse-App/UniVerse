@@ -280,7 +280,8 @@ public class CreateEvent extends AppCompatActivity {
                 eventName.getText().toString(),
                 "",
                 event.getTimeString(),
-                userArray
+                userArray,
+                event.getEventInterest(),
                 );
 
         // Notification notification = new notification

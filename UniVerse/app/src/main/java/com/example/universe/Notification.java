@@ -3,17 +3,18 @@ package com.example.universe;
 import java.util.HashMap;
 
 public class Notification {
-    private String type, eventName, eventId, eventTime;
+    private String type, eventName, eventId, eventTime, channel;
     private HashMap<String, String> userArray;
 
     public Notification() {}
 
-    public Notification(String type, String eventName, String eventId, String eventTime, HashMap<String, String> userArray) {
-        this.type = type;
+    public Notification(String notificationType, String eventName, String eventId, String eventTime, HashMap<String, String> userArray, String eventInterest) {
+        this.type = notificationType;
         this.eventName = eventName;
         this.eventId = eventId;
         this.eventTime = eventTime;
         this.userArray = userArray;
+        this.channel = eventInterest;
     }
 
     public HashMap<String, String> getUserArray() {
@@ -54,6 +55,14 @@ public class Notification {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }
 
