@@ -293,7 +293,7 @@ public class CreateEvent extends AppCompatActivity {
                 keyRef.setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        notification.setEventId(key);
+                        notification.setEventId(key.toString());
                         Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
