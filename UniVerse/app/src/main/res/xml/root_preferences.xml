@@ -12,9 +12,9 @@
             app:key="updateInt"
             app:title="Update Interests"/>
 
-        <EditTextPreference
+        <Preference
             app:key="updatePass"
-            app:title="Change password"/>
+            app:title="Change Password"/>
 
         <Preference
             app:key="logout"
@@ -26,10 +26,9 @@
         app:title="Notifications"
         app:icon="@drawable/ic_baseline_notifications_24">
 
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
+        <Preference
             app:key="NotiEnable"
-            app:title="Enable Notifications" />
+            app:title="Notification Settings" />
 
     </PreferenceCategory>
 
