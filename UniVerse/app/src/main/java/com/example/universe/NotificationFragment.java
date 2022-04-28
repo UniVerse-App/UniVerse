@@ -37,6 +37,8 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private DatabaseReference mref;
 
 
+
+
     public NotificationFragment() {
         //require an empty public constructor
     }
@@ -48,8 +50,8 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private void fetchNotification() {
         notificationList.clear();
         //Calendar calendar;
-        calendar.getInstance();
-        long startDateTimestamp = calendar.getTimeInMillis();
+        //calendar.getInstance();
+        //long startDateTimestamp = calendar.getTimeInMillis();
 
         //Using Events data to display on notification
         DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
