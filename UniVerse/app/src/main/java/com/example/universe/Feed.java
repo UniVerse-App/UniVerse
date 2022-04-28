@@ -58,6 +58,8 @@ public class Feed extends AppCompatActivity{
    public RecyclerView mEventList;
    FirebaseDatabase mDatabase;
    DatabaseReference mref;
+   private FirebaseDatabase mData;
+   private DatabaseReference nref;
    private NotificationManagerCompat notificationManager;
 
 
@@ -72,6 +74,41 @@ public class Feed extends AppCompatActivity{
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+        mData = FirebaseDatabase.getInstance();
+        nref = mData.getReference("Notifications");
+
+        nref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if  (snapshot.exists()) {
+                    for (DataSnapshot notifySnapshot : snapshot.getChildren()) {
+                       //fhadf
+                        String string = notifySnapshot.getKey();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         mDatabase = FirebaseDatabase.getInstance();
 
