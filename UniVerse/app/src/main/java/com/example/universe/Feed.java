@@ -43,6 +43,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +51,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 
 public class Feed extends AppCompatActivity{
@@ -81,9 +84,19 @@ public class Feed extends AppCompatActivity{
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if  (snapshot.exists()) {
+                    Notification noti = snapshot.getValue(Notification.class);
+                    HashMap<String, String> users = noti.getUserArray();
+                    String user = FirebaseAuth.getInstance().getUid();
+                    if(users.containsValue(user))
+                    {
+                        //create notification
+                        sendOnChannels(noti.getEventName(), noti.getEventTime(), noti.getEventId(), noti.getChannel() );
+                        snapshot.child("userArray").child(user).getRef().removeValue();
+                    }
                     for (DataSnapshot notifySnapshot : snapshot.getChildren()) {
                        //fhadf
-                        String string = notifySnapshot.getKey();
+
+
 
                     }
                 }
@@ -276,44 +289,14 @@ public class Feed extends AppCompatActivity{
         }
     }
 
-    private void sendOnChannels(String eventName, String eventTime, String eventDate, String eventLocation) {
+    private void sendOnChannels(String eventName, String eventTime, String channel, String eventID) {
         String channel_eventName = eventName; //eventName.getText().toString();
-        String channel_location  = eventLocation; //eventLocation.getText().toString();
         String channel_eventTime = eventTime; //eventDescription.getText().toString();
-        String channel_date      = eventDate; //dateButton.getText().toString();
-
+        String channel_eventID   = eventID;
         //Select CHANNEL
-        String CHANNEL = "";
+        String CHANNEL = channel;
         int interest = 1; //need to add a list of interests by numbers
 
-        switch (interest) {
-            case 1:  CHANNEL = CHANNEL_1_ID;
-                break;
-            case 2:  CHANNEL = CHANNEL_2_ID;
-                break;
-            case 3:  CHANNEL = CHANNEL_3_ID;
-                break;
-            case 4:  CHANNEL = CHANNEL_4_ID;
-                break;
-            case 5:  CHANNEL = CHANNEL_5_ID;
-                break;
-            case 6:  CHANNEL = CHANNEL_6_ID;
-                break;
-            case 7:  CHANNEL = CHANNEL_7_ID;
-                break;
-            case 8:  CHANNEL = CHANNEL_8_ID;
-                break;
-            case 9:  CHANNEL = CHANNEL_9_ID;
-                break;
-            case 10: CHANNEL = CHANNEL_10_ID;
-                break;
-            case 11: CHANNEL = CHANNEL_11_ID;
-                break;
-            case 12: CHANNEL = CHANNEL_12_ID;
-                break;
-            case 13: CHANNEL = CHANNEL_13_ID;
-                break;
-        }
         // Create an intent to lead to Feed
         Intent intent = new Intent(this, Feed.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -325,7 +308,7 @@ public class Feed extends AppCompatActivity{
                 .setSmallIcon(R.drawable.ic_universelogo)
                 .setContentText(channel_eventName)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(channel_location + " " + channel_date))
+                        .bigText(eventTime))
                 .setContentIntent(pendingIntent);
 
         notificationManager.notify(interest, notification.build());
