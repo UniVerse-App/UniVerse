@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".NotificationFragment">
 
         <TextView
             android:id="@+id/emptyNotification"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20sp"
             android:fontFamily="@font/gilroy_semibold"
             android:gravity="center"
-            android:text="No notification yet..."
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent">
         </TextView>
@@ -25,12 +19,12 @@
         <ListView
             android:id="@+id/notificationList"
             android:layout_width="match_parent"
-            android:layout_height="790sp"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginTop="88dp"
+            android:layout_marginHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@+id/emptyNotification"
-            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/row_notification">
         </ListView>
 
@@ -62,4 +56,3 @@
             app:layout_constraintVertical_bias="0.011"
             app:srcCompat="@drawable/ic_baseline_settings_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

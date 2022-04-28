@@ -16,6 +16,7 @@ import java.util.List;
 
 public class NotificationAdapter extends ArrayAdapter<Event>{
     private String eventId;
+    Context thisContext = this.getContext();
 
     public NotificationAdapter(@NonNull Context context, ArrayList<Event> notificationList, String eventId) {
         super(context, 0, (List<Event>) notificationList);
@@ -40,20 +41,20 @@ public class NotificationAdapter extends ArrayAdapter<Event>{
         eventName.setText(event.getEventName());
         eventDate.setText(event.getDateString());
         eventDescription.setText(event.getLocation());
-        String id = this.eventId;
 
-        eventId.setText(event.key);
+        String id = event.key;
+        eventId.setText(id);
 
-        Context thisContext = this.getContext();
+
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: Load event info page.
                 Intent intent = new Intent(thisContext, EventInfo.class);
-                intent.putExtra("Event_ID", event.key);
+                //intent.putExtra("Event_ID", event.key);
+                intent.putExtra("Event_ID", id);
                 thisContext.startActivity(intent);
-                //finish();
             }
         });
 
