@@ -84,6 +84,7 @@ public class CreateEvent extends AppCompatActivity {
     //Event Photo selection variables
     private Integer PICK_IMAGE = 1;
     private Uri selectedImage;
+    private HashMap<String, String> userArray;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,22 @@ public class CreateEvent extends AppCompatActivity {
         //Notification
         notificationManager = NotificationManagerCompat.from(this);
 
+
+        // Create notification object
+        userArray = new HashMap<>();
+        FirebaseDatabase.getInstance().getReference().child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(DataSnapshot d : dataSnapshot.getChildren()) {
+                        userArray.put(d.getKey().toString(), d.getKey().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }//onCancelled
+        });
     }
 
     private void initDatePicker() {
@@ -258,22 +275,6 @@ public class CreateEvent extends AppCompatActivity {
                                 interestSpinner.getSelectedItem().toString()
                             );
 
-        // Create notification object
-        HashMap<String, String> userArray = new HashMap<>();
-        dbRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for(DataSnapshot d : dataSnapshot.getChildren()) {
-                        userArray.put(d.getKey(), d.getKey());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }//onCancelled
-        });
-
 
         Notification notification = new Notification(
                 "create",
@@ -281,7 +282,7 @@ public class CreateEvent extends AppCompatActivity {
                 "",
                 event.getTimeString(),
                 userArray,
-                event.getEventInterest(),
+                event.getEventInterest()
                 );
 
         // Notification notification = new notification
@@ -337,7 +338,7 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
-            sendOnChannels();
+            // sendOnChannels();
             startActivity(new Intent(this, Feed.class));
     }
 

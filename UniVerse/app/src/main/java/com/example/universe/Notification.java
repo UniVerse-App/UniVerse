@@ -8,13 +8,13 @@ public class Notification {
 
     public Notification() {}
 
-    public Notification(String notificationType, String eventName, String eventId, String eventTime, HashMap<String, String> userArray, String eventInterest) {
+    public Notification(String notificationType, String eventName, String eventId, String eventTime, HashMap<String, String> userArray, String channel) {
         this.type = notificationType;
         this.eventName = eventName;
         this.eventId = eventId;
         this.eventTime = eventTime;
         this.userArray = userArray;
-        this.channel = eventInterest;
+        this.channel = channel;
     }
 
     public HashMap<String, String> getUserArray() {
