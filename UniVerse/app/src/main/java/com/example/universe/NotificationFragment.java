@@ -30,9 +30,14 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     private Calendar calendar;
 
-    private String eventTime;
 
     private ImageView settingButton;
+
+    private FirebaseDatabase mDatabse;
+    private DatabaseReference mref;
+
+
+
 
     public NotificationFragment() {
         //require an empty public constructor
@@ -40,10 +45,15 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     private void fetchNotification() {
         notificationList.clear();
+        //Calendar calendar;
+        //calendar.getInstance();
+        //long startDateTimestamp = calendar.getTimeInMillis();
 
         //Using Events data to display on notification
         DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
 
+
+        //Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + 86400000));
         eventsTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,6 +72,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
                 }
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("loadEvent:onCancelled", error.getMessage());
@@ -74,12 +85,12 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
-
         thisContext = container.getContext();
-        calendar = Calendar.getInstance();
-        settingButton = rootView.findViewById(R.id.builtin_settings_button);
-        settingButton.setOnClickListener(this);
 
+        mDatabse = FirebaseDatabase.getInstance();
+        mref = mDatabse.getReference("Events");
+
+        //take to system settings
         settingButton = rootView.findViewById(R.id.builtin_settings_button);
         settingButton.setOnClickListener(this);
 
