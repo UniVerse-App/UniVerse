@@ -340,14 +340,13 @@ public class EditEvent extends AppCompatActivity {
         String organizerID = FirebaseAuth.getInstance().getUid();
         String key = UUID.randomUUID().toString();
         HashMap<String, String> attendeeList = new HashMap<>();
-        attendeeList.put(key, organizerID);
         Event event = new Event(eventName.getText().toString().trim(),
                                 organizerName.getText().toString().trim(),
                                 eventLocation.getText().toString().trim(),
                                 timestamp,
                                 photoKey,
                                 eventDescription.getText().toString().trim(),
-                                attendeeList, //Attendees
+                                thisEvent.getEventAttendees(), //Attendees
                                 Integer.parseInt(numSeats.getText().toString()),
                                 FirebaseAuth.getInstance().getUid(), // Organizer ID
                                 interestSpinner.getSelectedItem().toString()
