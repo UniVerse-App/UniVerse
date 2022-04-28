@@ -258,12 +258,42 @@ public class CreateEvent extends AppCompatActivity {
                                 interestSpinner.getSelectedItem().toString()
                             );
 
-        dbRef.child("Events").child(randomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Create notification object
+        HashMap<String, String> userArray = new HashMap<>();
+        dbRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(DataSnapshot d : dataSnapshot.getChildren()) {
+                        userArray.put(d.getKey(), d.getKey());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }//onCancelled
+        });
+
+
+        Notification notification = new Notification(
+                "create",
+                eventName.getText().toString(),
+                "",
+                event.getTimeString(),
+                userArray
+                );
+
+        // Notification notification = new notification
+
+        dbRef.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+                DatabaseReference keyRef = snapshot.getRef().push();
+                String key = keyRef.getKey();
+                keyRef.setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
+                        notification.setEventId(key.toString());
                         Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -277,6 +307,26 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Events", error.getMessage());
+            }
+        });
+
+        String notificationKey = UUID.randomUUID().toString();
+        dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DatabaseReference keyRef = snapshot.getRef().push();
+                String key = keyRef.getKey();
+                keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // SUCCESS!
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
