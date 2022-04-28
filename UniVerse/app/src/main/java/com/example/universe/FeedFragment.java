@@ -33,6 +33,7 @@ public class FeedFragment extends Fragment {
     public RecyclerView mEventList;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mref;
+
     private Context thisContext;
 
     public FeedFragment() {
@@ -46,6 +47,8 @@ public class FeedFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance();
         mref = mDatabase.getReference("Events");
+
+
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
         mEventList = rootView.findViewById(R.id.recycleView);
         mEventList.setHasFixedSize(true);
