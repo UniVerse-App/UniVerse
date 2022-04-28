@@ -90,12 +90,8 @@ public class Feed extends AppCompatActivity{
                     if(users.containsValue(user))
                     {
                         //create notification
-                        sendOnChannels(noti.getEventName(), noti.getEventTime(), noti.getEventId(), noti.getChannel() );
+                        sendOnChannels(noti.getEventName(), noti.getEventTime(), noti.getChannel(), noti.getEventId() );
                         snapshot.child("userArray").child(user).getRef().removeValue();
-                    }
-                    for (DataSnapshot notifySnapshot : snapshot.getChildren()) {
-                       //fhadf
-
                     }
                 }
             }
@@ -307,7 +303,7 @@ public class Feed extends AppCompatActivity{
                 .setContentText(channel_eventName)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(eventTime))
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent).setPriority(NotificationCompat.PRIORITY_HIGH);
 
         notificationManager.notify(interest, notification.build());
 
