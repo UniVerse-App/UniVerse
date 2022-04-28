@@ -22,36 +22,19 @@ import com.google.firebase.auth.FirebaseUser;
 public class FourthFragment extends PreferenceFragmentCompat {
     Context thisContext;
     int duration = Toast.LENGTH_SHORT;
+    String toastText;
+    String newPass;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         thisContext = getContext();
-
-        findPreference("updatePass").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        findPreference("updatePass").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(thisContext);
-                final String newPass = sp.getString("updatePass","");
-
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = mAuth.getCurrentUser();
-
-                AuthCredential credential = EmailAuthProvider.getCredential("user@example.com", "password1234");
-                user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast toast = Toast.makeText(thisContext, "Password successfully updated!", duration);
-                            toast.show();
-                        }
-                        else {
-                            Toast toast = Toast.makeText(thisContext, "Password update Failed.",duration);
-                            toast.show();
-                        }
-                    }
-                });
-                return true;
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                Intent intent = new Intent(thisContext, ForgotPassword.class);
+                startActivity(intent);
+                return false;
             }
         });
 
@@ -79,6 +62,22 @@ public class FourthFragment extends PreferenceFragmentCompat {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(thisContext, LoginUser.class);
                 startActivity(intent);
+                return true;
+            }
+        });
+
+        findPreference("NotiEnable").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                // for Android 8 and above
+                intent.putExtra("android.provider.extra.APP_PACKAGE", getActivity().getPackageName());
+
+                startActivity(intent);
+
                 return true;
             }
         });

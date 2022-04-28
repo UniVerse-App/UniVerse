@@ -165,13 +165,6 @@ public class Feed extends AppCompatActivity{
                 }
             }
         });
-<<<<<<< HEAD
-=======
-
-
-        PushNotification notifications = new PushNotification();
-
->>>>>>> 689b1ed730028a1c6d4febb3b289e1a386673964
     }
 
         public static class EventViewHolder extends RecyclerView.ViewHolder {
