@@ -165,7 +165,6 @@ public class Feed extends AppCompatActivity{
                 }
             }
         });
-
     }
 
         public static class EventViewHolder extends RecyclerView.ViewHolder {

@@ -1,12 +1,11 @@
 package com.example.universe;
 
-import com.google.firebase.database.core.EventTarget;
-
 import java.util.HashMap;
 
 public class User {
 
-    public String firstName, lastName, email, major;
+    public String firstName, lastName, email, major, profilePicture;
+    public Integer gradYear;
     public Boolean isOrganizer;
     public Integer[] interests;
     public HashMap<String,String> eventsAttending;
@@ -18,12 +17,15 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, Integer onboardingStep, HashMap<String, String> eventsAttending) {
+    public User(String firstName, String lastName, String email, Integer gradYear, String major, Integer onboardingStep, HashMap<String, String> eventsAttending, String profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.onboardingStep = onboardingStep;
         this.eventsAttending = eventsAttending;
+        this.gradYear = gradYear;
+        this.major = major;
+        this.profilePicture = profilePicture;
     }
 
     public String getFirstName() {
@@ -60,7 +62,31 @@ public class User {
 
     public HashMap<String, String> getEventsAttending() { return eventsAttending;}
 
+    public Integer getGradYear() {
+        return gradYear;
+    }
+
+    public void setGradYear(Integer gradYear) {
+        this.gradYear = gradYear;
+    }
+
     public void setEventsAttending(HashMap<String, String> eventsAttending) {
         this.eventsAttending = eventsAttending;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setInterests(Integer[] interests) {
+        this.interests = interests;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
