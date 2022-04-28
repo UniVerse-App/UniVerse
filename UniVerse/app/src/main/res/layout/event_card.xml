@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:orientation="vertical"
-        android:background="#FAFAF9">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/eventImage"
@@ -23,6 +23,31 @@
             android:scaleType="centerCrop"
             android:background="@color/shimmerBG"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/checkboxBack"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="@id/checkbox"
+            app:layout_constraintRight_toRightOf="@id/checkbox"
+            app:layout_constraintTop_toTopOf="@id/checkbox"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox"
+            />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/white"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:src="@drawable/ic_heroicon_check"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:id="@+id/eventTitle"

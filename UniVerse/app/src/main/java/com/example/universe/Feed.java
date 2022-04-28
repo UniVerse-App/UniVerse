@@ -63,7 +63,6 @@ public class Feed extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PushNotification notification = new PushNotification();
         setContentView(R.layout.activity_feed);
         FragmentManager supportFragmentManger = getSupportFragmentManager();
 
@@ -76,7 +75,7 @@ public class Feed extends AppCompatActivity{
         mDatabase = FirebaseDatabase.getInstance();
 
         //Notification
-        notificationManager = NotificationManagerCompat.from(this);
+        notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
         mref = mDatabase.getReference("Events");
         mref.addChildEventListener(new ChildEventListener() {
@@ -85,7 +84,11 @@ public class Feed extends AppCompatActivity{
                 if (snapshot.child("notify").exists()) {
                     if (snapshot.child("notify").getValue().equals("true")) {
                         String eventTitle = snapshot.child("eventName").getValue().toString();
-                        sendOnChannels(eventTitle);
+                        String eventTime = snapshot.child("timeString").getValue().toString();
+                        String eventDate = snapshot.child("dateString").getValue().toString();
+                        String eventLocation = snapshot.child("location").getValue().toString();
+
+                        sendOnChannels(eventTitle, eventTime, eventDate, eventLocation);
                         DatabaseReference notifyBool = snapshot.child("notify").getRef();
                         notifyBool.setValue("false");
                     }
@@ -141,6 +144,12 @@ public class Feed extends AppCompatActivity{
             TextView post_eventID = (TextView) mView.findViewById(R.id.eventID);
             post_eventID.setText(ID);
         }
+
+        public void showAttendingCheck() {
+            mView.findViewById(R.id.checkbox).setVisibility(View.VISIBLE);
+            mView.findViewById(R.id.checkboxBack).setVisibility(View.VISIBLE);
+        }
+
         public void setEventName(String eventName) {
             TextView post_eventName = (TextView) mView.findViewById(R.id.eventTitle);
             post_eventName.setText(eventName);
@@ -195,11 +204,11 @@ public class Feed extends AppCompatActivity{
         }
     }
 
-    private void sendOnChannels(String eventName) {
+    private void sendOnChannels(String eventName, String eventTime, String eventDate, String eventLocation) {
         String channel_eventName = eventName; //eventName.getText().toString();
-        String channel_location  = "Location"; //eventLocation.getText().toString();
-        String channel_description = "Description"; //eventDescription.getText().toString();
-        String channel_date      = "Date"; //dateButton.getText().toString();
+        String channel_location  = eventLocation; //eventLocation.getText().toString();
+        String channel_eventTime = eventTime; //eventDescription.getText().toString();
+        String channel_date      = eventDate; //dateButton.getText().toString();
 
         //Select CHANNEL
         String CHANNEL = "";
@@ -240,9 +249,9 @@ public class Feed extends AppCompatActivity{
 
 //        //Set notification's visualization
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
-                .setContentTitle(channel_eventName)
+                .setContentTitle("Check out this new event!")
                 .setSmallIcon(R.drawable.ic_universelogo)
-                .setContentText(channel_description)
+                .setContentText(channel_eventName)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(channel_location + " " + channel_date))
                 .setContentIntent(pendingIntent);

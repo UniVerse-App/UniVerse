@@ -264,7 +264,7 @@ public class CreateEvent extends AppCompatActivity {
                 snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_LONG);
+                        Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
