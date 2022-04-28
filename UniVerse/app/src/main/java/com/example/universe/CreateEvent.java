@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -63,7 +64,7 @@ import java.util.UUID;
 public class CreateEvent extends AppCompatActivity {
 
     private TextView eventName, eventLocation, organizerName, eventDescription;
-    private NumberPicker numSeats;
+    private TextView numSeats;
     private DatePickerDialog datePickerDialog;
     private Button dateButton, timeButton, createButton;
     private ImageView backButton;
@@ -106,8 +107,8 @@ public class CreateEvent extends AppCompatActivity {
 
         // TODO: Fix number picker
         numSeats = findViewById(R.id.event_seats);
-        numSeats.setMaxValue(999);
-        numSeats.setMinValue(0);
+      //  numSeats.setMaxValue(999);
+       // numSeats.setMinValue(0);
 
         createButton = findViewById(R.id.create_button);
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +254,7 @@ public class CreateEvent extends AppCompatActivity {
                                 photoKey,
                                 eventDescription.getText().toString().trim(),
                                 attendeeList, //Attendees
-                                numSeats.getValue(),
+                                Integer.parseInt(numSeats.getText().toString()),
                                 FirebaseAuth.getInstance().getUid(), // Organizer ID
                                 interestSpinner.getSelectedItem().toString()
                             );

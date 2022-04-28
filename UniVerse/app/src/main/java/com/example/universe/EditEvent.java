@@ -72,7 +72,7 @@ import java.util.UUID;
 public class EditEvent extends AppCompatActivity {
 
     private TextView eventName, eventLocation, organizerName, eventDescription;
-    private NumberPicker numSeats;
+    private TextView numSeats;
     private Boolean newPicture = false; // For detecting user changed photo
     private DatePickerDialog datePickerDialog;
     private Button dateButton, timeButton, createButton, cancelButton;
@@ -113,8 +113,8 @@ public class EditEvent extends AppCompatActivity {
         interestSpinner = findViewById(R.id.event_interests);
 
         numSeats = findViewById(R.id.event_seats);
-        numSeats.setMaxValue(999);
-        numSeats.setMinValue(0);
+       // numSeats.setMaxValue(999);
+       // numSeats.setMinValue(0);
 
         createButton = findViewById(R.id.create_button);
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +172,7 @@ public class EditEvent extends AppCompatActivity {
                 eventLocation.setText(thisEvent.getLocation());
                 organizerName.setText(thisEvent.getOrganizerName());
                 eventDescription.setText(thisEvent.getDescription());
-                numSeats.setValue(thisEvent.getSeats());
+                numSeats.setText(thisEvent.getSeats().toString());
 
                 // Load existing photo
                 eventPhotoContainer = findViewById(R.id.eventPhotoContainer);
@@ -348,7 +348,7 @@ public class EditEvent extends AppCompatActivity {
                                 photoKey,
                                 eventDescription.getText().toString().trim(),
                                 attendeeList, //Attendees
-                                numSeats.getValue(),
+                                Integer.parseInt(numSeats.getText().toString()),
                                 FirebaseAuth.getInstance().getUid(), // Organizer ID
                                 interestSpinner.getSelectedItem().toString()
                             );

@@ -204,10 +204,15 @@
         app:layout_constraintLeft_toLeftOf="@id/event_organizer"
         app:layout_constraintTop_toTopOf="@+id/event_location_label" />
 
-    <NumberPicker
+    <EditText
         android:id="@+id/event_seats"
+        android:inputType="number"
         android:layout_width="120dp"
         android:layout_height="40dp"
+        android:hint="Number of Seats"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:ems="9"
         android:fontFamily="@font/publicsans_regular"
         app:layout_constraintTop_toBottomOf="@id/event_seats_label"
         app:layout_constraintLeft_toLeftOf="@id/event_seats_label"
