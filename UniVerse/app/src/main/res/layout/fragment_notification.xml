@@ -8,11 +8,10 @@
         <TextView
             android:id="@+id/emptyNotification"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20sp"
             android:fontFamily="@font/gilroy_semibold"
             android:gravity="center"
-            android:text="No notification yet..."
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent">
         </TextView>

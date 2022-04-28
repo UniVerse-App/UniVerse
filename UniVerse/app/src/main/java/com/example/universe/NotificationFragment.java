@@ -3,7 +3,6 @@ package com.example.universe;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private ListView notificationListView;
     private ArrayList<Event> notificationList;
 
-    private Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
 
 
     private ImageView settingButton;
@@ -37,24 +37,24 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
     private DatabaseReference mref;
 
 
-
-
     public NotificationFragment() {
         //require an empty public constructor
+    }
+
+    public NotificationFragment(Calendar calendar) {
+        this.calendar = calendar;
     }
 
     private void fetchNotification() {
         notificationList.clear();
         //Calendar calendar;
-        //calendar.getInstance();
-        //long startDateTimestamp = calendar.getTimeInMillis();
+        calendar.getInstance();
+        long startDateTimestamp = calendar.getTimeInMillis();
 
         //Using Events data to display on notification
         DatabaseReference eventsTable = FirebaseDatabase.getInstance().getReference("Events");
 
-
-        //Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + 86400000));
-        eventsTable.addValueEventListener(new ValueEventListener() {
+        /* eventsTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if  (snapshot.exists()) {
@@ -77,7 +77,38 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("loadEvent:onCancelled", error.getMessage());
             }
+        });*/
+
+        //Try code
+        Query query = eventsTable.orderByChild("timestamp").startAt(startDateTimestamp).endAt((startDateTimestamp + (86400000 * 7)));
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if  (snapshot.exists()) {
+                    for (DataSnapshot eventsSnapshot : snapshot.getChildren()) {
+                        Event event = eventsSnapshot.getValue(Event.class);
+                        event.key = eventsSnapshot.getKey();
+                        notificationList.add(event);
+                        NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList, "");
+                        notificationListView.setAdapter(adapter);
+                    }
+                } else {
+                    NotificationAdapter adapter = new NotificationAdapter(thisContext, notificationList, "");
+                    notificationListView.setAdapter(adapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
+
+
+
+
+
 
 
     }
