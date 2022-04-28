@@ -67,7 +67,7 @@ public class FourthFragment extends PreferenceFragmentCompat {
         findPreference("editInfo").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                Intent intent = new Intent(thisContext, RegisterStudentInfo.class);
+                Intent intent = new Intent(thisContext, EditStudentInfo.class);
                 startActivity(intent);
                 return true;
             }
