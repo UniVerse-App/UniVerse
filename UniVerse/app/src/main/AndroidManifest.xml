@@ -38,8 +38,13 @@
         <activity
             android:name=".EventInfo"
             android:exported="false" />
+
         <activity android:name=".EditEvent"
             android:exported="true" />
+
+        <activity android:name=".EditStudentInfo"
+            android:exported="true" />
+
         <activity
             android:name=".LoginUser"
             android:exported="true">

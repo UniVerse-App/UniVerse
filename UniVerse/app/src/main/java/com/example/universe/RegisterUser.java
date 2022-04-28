@@ -86,7 +86,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
                             // Create user object with form data.
                             Integer onboardingStep = 1;
-                            User user = new User(firstName, lastName, email, onboardingStep, new HashMap<>());
+                            User user = new User(firstName, lastName, email, 0, "", onboardingStep, new HashMap<>(), "");
 
                             // Write user object to database using auth uID as key, thus linking auth entry and user entry by the same uID
                             FirebaseDatabase.getInstance().getReference("Users")

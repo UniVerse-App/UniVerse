@@ -8,6 +8,7 @@
         <entry key="..\:/Users/kevin/Documents/CSE3310/UniVerse/UniVerse/app/src/main/res/layout/activity_feed.xml" value="0.14764492753623187" />
         <entry key="..\:/Users/kevin/Documents/CSE3310/UniVerse/UniVerse/app/src/main/res/layout/event_card.xml" value="0.264" />
         <entry key="..\:/Users/kevin/Documents/CSE3310/UniVerse/UniVerse/app/src/main/res/layout/fragment_feed.xml" value="0.14764492753623187" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/camera_plus_circle.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/event_photo.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/forgot_pass_splash.xml" value="0.2125" />
@@ -34,6 +35,9 @@
         <entry key="app/src/main/res/font/gilroy_font.xml" value="0.14621633176571183" />
         <entry key="app/src/main/res/font/public_sans_font.xml" value="0.14621633176571183" />
         <entry key="app/src/main/res/layout-w1240dp/edit_event.xml" value="0.19591836734693877" />
+        <entry key="app/src/main/res/layout-w936dp/activity_edit_student_info.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-w936dp/activity_register_student_info.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_edit_student_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_event_info.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.281975517095821" />
