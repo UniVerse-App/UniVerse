@@ -19,7 +19,7 @@ public class App extends Application {
     public static final String CHANNEL_10_ID = "Business";
     public static final String CHANNEL_11_ID = "Science";
     public static final String CHANNEL_12_ID = "Education";
-    public static final String CHANNEL_13_ID = "ESports";
+    public static final String CHANNEL_13_ID = "eSports";
 
     @Override
     public void onCreate() {

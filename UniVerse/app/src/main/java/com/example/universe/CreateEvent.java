@@ -296,6 +296,24 @@ public class CreateEvent extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         notification.setEventId(key.toString());
+                        dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                DatabaseReference keyRef = snapshot.getRef().push();
+                                String key = keyRef.getKey();
+                                keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        // SUCCESS!
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -309,26 +327,6 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Events", error.getMessage());
-            }
-        });
-
-        String notificationKey = UUID.randomUUID().toString();
-        dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DatabaseReference keyRef = snapshot.getRef().push();
-                String key = keyRef.getKey();
-                keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // SUCCESS!
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

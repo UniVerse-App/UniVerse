@@ -128,7 +128,7 @@ public class FeedFragment extends Fragment {
                         Intent intent = new Intent(thisContext, EventInfo.class);
                         ViewGroup parent = (ViewGroup) view.getParent();
                         TextView idView = (TextView) parent.findViewById(R.id.eventID);
-                        intent.putExtra("Event_ID",idView.getText().toString());
+                        intent.putExtra("Event_ID", idView.getText().toString());
                         startActivity(intent);
 
                     }
