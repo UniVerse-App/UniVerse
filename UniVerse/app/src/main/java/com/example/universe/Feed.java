@@ -18,6 +18,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -90,7 +91,7 @@ public class Feed extends AppCompatActivity{
                     if(users.containsValue(user))
                     {
                         //create notification
-                        sendOnChannels(noti.getEventName(), noti.getEventTime(), noti.getChannel(), noti.getEventId() );
+                        sendOnChannels(noti.getEventName(), noti.getEventTime(), noti.getChannel(), noti.getEventId(), noti.getType());
                         snapshot.child("userArray").child(user).getRef().removeValue();
                     }
                 }
@@ -133,7 +134,7 @@ public class Feed extends AppCompatActivity{
                         String eventDate = snapshot.child("dateString").getValue().toString();
                         String eventLocation = snapshot.child("location").getValue().toString();
 
-                        sendOnChannels(eventTitle, eventTime, eventDate, eventLocation);
+                        // sendOnChannels(eventTitle, eventTime, eventDate, eventLocation);
                         DatabaseReference notifyBool = snapshot.child("notify").getRef();
                         notifyBool.setValue("false");
                     }
@@ -283,26 +284,46 @@ public class Feed extends AppCompatActivity{
         }
     }
 
-    private void sendOnChannels(String eventName, String eventTime, String channel, String eventID) {
+    private void sendOnChannels(String eventName, String eventTime, String channel, String eventID, String eventType) {
         String channel_eventName = eventName; //eventName.getText().toString();
         String channel_eventTime = eventTime; //eventDescription.getText().toString();
         String channel_eventID   = eventID;
+        String notificationTitle = "Notification from UniVerse";
+
+        if (eventType.equals("create")) {
+            notificationTitle = "Check out this new event!";
+        } else if (eventType.equals("edit")) {
+            notificationTitle = "There is a change to one of your events!";
+        }
+
         //Select CHANNEL
         String CHANNEL = channel;
         int interest = 1; //need to add a list of interests by numbers
 
         // Create an intent to lead to Feed
-        Intent intent = new Intent(this, Feed.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        Intent intent = new Intent(this, EventInfo.class);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("Event_ID", eventID);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getActivity(this,
+                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        }else {
+            pendingIntent = PendingIntent.getActivity(this,
+                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        }
+        // PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 //        //Set notification's visualization
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL)
-                .setContentTitle("Check out this new event!")
+                .setContentTitle(notificationTitle)
                 .setSmallIcon(R.drawable.ic_universelogo)
                 .setContentText(channel_eventName)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(eventTime))
+                        .bigText(channel_eventName
+                                 + " - " + eventTime))
                 .setContentIntent(pendingIntent).setPriority(NotificationCompat.PRIORITY_HIGH);
 
         notificationManager.notify(interest, notification.build());
