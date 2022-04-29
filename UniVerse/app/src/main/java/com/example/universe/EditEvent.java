@@ -88,6 +88,7 @@ public class EditEvent extends AppCompatActivity {
     private Spinner interestSpinner;
     private String eventID;
     private Event thisEvent;
+    private HashMap<String, String> userArray;
 
     //hour and min variables
     int hour, min;
@@ -224,6 +225,21 @@ public class EditEvent extends AppCompatActivity {
             }
         });
 
+        // Create notification object
+        userArray = new HashMap<>();
+        FirebaseDatabase.getInstance().getReference().child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(DataSnapshot d : dataSnapshot.getChildren()) {
+                        userArray.put(d.getKey().toString(), d.getKey().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }//onCancelled
+        });
 
     }
 
@@ -352,12 +368,39 @@ public class EditEvent extends AppCompatActivity {
                                 interestSpinner.getSelectedItem().toString()
                             );
 
+        Notification notification = new Notification(
+                "edit",
+                eventName.getText().toString(),
+                eventID,
+                event.getTimeString(),
+                userArray,
+                event.getEventInterest()
+        );
+
         dbRef.child("Events").child(eventID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().setValue(event).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    DatabaseReference keyRef = snapshot.getRef().push();
+                                    String key = keyRef.getKey();
+                                    keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            // SUCCESS!
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         Toast.makeText(EditEvent.this, "Event created!", Toast.LENGTH_LONG);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

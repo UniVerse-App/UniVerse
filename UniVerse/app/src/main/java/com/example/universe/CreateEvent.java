@@ -84,6 +84,7 @@ public class CreateEvent extends AppCompatActivity {
     //Event Photo selection variables
     private Integer PICK_IMAGE = 1;
     private Uri selectedImage;
+    private HashMap<String, String> userArray;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,22 @@ public class CreateEvent extends AppCompatActivity {
         //Notification
         notificationManager = NotificationManagerCompat.from(this);
 
+
+        // Create notification object
+        userArray = new HashMap<>();
+        FirebaseDatabase.getInstance().getReference().child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(DataSnapshot d : dataSnapshot.getChildren()) {
+                        userArray.put(d.getKey().toString(), d.getKey().toString());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }//onCancelled
+        });
     }
 
     private void initDatePicker() {
@@ -258,29 +275,14 @@ public class CreateEvent extends AppCompatActivity {
                                 interestSpinner.getSelectedItem().toString()
                             );
 
-        // Create notification object
-        HashMap<String, String> userArray = new HashMap<>();
-        dbRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for(DataSnapshot d : dataSnapshot.getChildren()) {
-                        userArray.put(d.getKey(), d.getKey());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }//onCancelled
-        });
-
 
         Notification notification = new Notification(
                 "create",
                 eventName.getText().toString(),
                 "",
                 event.getTimeString(),
-                userArray
+                userArray,
+                event.getEventInterest()
                 );
 
         // Notification notification = new notification
@@ -294,6 +296,24 @@ public class CreateEvent extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         notification.setEventId(key.toString());
+                        dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                DatabaseReference keyRef = snapshot.getRef().push();
+                                String key = keyRef.getKey();
+                                keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        // SUCCESS!
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         Toast.makeText(CreateEvent.this, "Event created!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -309,26 +329,6 @@ public class CreateEvent extends AppCompatActivity {
                 Log.d("Events", error.getMessage());
             }
         });
-
-        String notificationKey = UUID.randomUUID().toString();
-        dbRef.child("Notifications").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DatabaseReference keyRef = snapshot.getRef().push();
-                String key = keyRef.getKey();
-                keyRef.setValue(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // SUCCESS!
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 
@@ -336,7 +336,7 @@ public class CreateEvent extends AppCompatActivity {
     private void saveEvent() {
         String photoKey = uploadPicture();
             eventInfo(photoKey);
-            sendOnChannels();
+            // sendOnChannels();
             startActivity(new Intent(this, Feed.class));
     }
 

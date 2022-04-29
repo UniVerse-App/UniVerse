@@ -19,7 +19,7 @@ public class App extends Application {
     public static final String CHANNEL_10_ID = "Business";
     public static final String CHANNEL_11_ID = "Science";
     public static final String CHANNEL_12_ID = "Education";
-    public static final String CHANNEL_13_ID = "ESports";
+    public static final String CHANNEL_13_ID = "eSports";
 
     @Override
     public void onCreate() {
@@ -35,29 +35,29 @@ public class App extends Application {
 
             NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Graduate", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel2 = new NotificationChannel(CHANNEL_2_ID, "Engineering", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel2 = new NotificationChannel(CHANNEL_2_ID, "Engineering", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel3 = new NotificationChannel(CHANNEL_3_ID, "Music", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel3 = new NotificationChannel(CHANNEL_3_ID, "Music", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel4 = new NotificationChannel(CHANNEL_4_ID, "Greek Life", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel4 = new NotificationChannel(CHANNEL_4_ID, "Greek Life", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel5 = new NotificationChannel(CHANNEL_5_ID, "Sports", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel5 = new NotificationChannel(CHANNEL_5_ID, "Sports", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel6 = new NotificationChannel(CHANNEL_6_ID, "School Spirit", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel6 = new NotificationChannel(CHANNEL_6_ID, "School Spirit", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel7 = new NotificationChannel(CHANNEL_7_ID, "Student Council", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel7 = new NotificationChannel(CHANNEL_7_ID, "Student Council", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel8 = new NotificationChannel(CHANNEL_8_ID, "Public Speakers", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel8 = new NotificationChannel(CHANNEL_8_ID, "Public Speakers", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel9 = new NotificationChannel(CHANNEL_9_ID, "Nursing", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel9 = new NotificationChannel(CHANNEL_9_ID, "Nursing", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel10 = new NotificationChannel(CHANNEL_10_ID, "Business", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel10 = new NotificationChannel(CHANNEL_10_ID, "Business", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel11 = new NotificationChannel(CHANNEL_11_ID, "Science", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel11 = new NotificationChannel(CHANNEL_11_ID, "Science", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel12 = new NotificationChannel(CHANNEL_12_ID, "Education", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel12 = new NotificationChannel(CHANNEL_12_ID, "Education", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationChannel channel13 = new NotificationChannel(CHANNEL_13_ID, "ESports", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel13 = new NotificationChannel(CHANNEL_13_ID, "ESports", NotificationManager.IMPORTANCE_HIGH);
 
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
