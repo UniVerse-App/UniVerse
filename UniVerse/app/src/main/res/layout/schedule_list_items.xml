@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/eventTime"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="2:00pm"
+        android:fontFamily="@font/gilroy_semibold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <TextView
+        app:layout_constraintTop_toTopOf="@id/eventTime"
+        app:layout_constraintLeft_toRightOf="@id/eventTime"
+        app:layout_constraintRight_toLeftOf="@id/info_icon"
+        app:layout_constraintHorizontal_bias="0"
+        android:id="@+id/eventName"
+        android:fontFamily="@font/gilroy_bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Event Name"
+        android:textIsSelectable="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/eventName"
+        app:layout_constraintLeft_toLeftOf="@id/eventName"
+        android:id="@+id/eventLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Location"
+        android:fontFamily="@font/publicsans_regular"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/info_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_info_24"
+        app:tint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="@id/eventTime"
+        app:layout_constraintBottom_toBottomOf="@id/eventTime"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/eventName"
+        app:layout_constraintLeft_toLeftOf="@id/eventName"
+        android:id="@+id/scheduleItem_eventID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text=""
+        android:fontFamily="@font/publicsans_regular"
+        android:textSize="16sp" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

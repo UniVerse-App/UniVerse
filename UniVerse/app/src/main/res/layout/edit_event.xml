@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditEvent">
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintTop_toTopOf="@id/createEvent_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/createEvent_title"
+        android:layout_marginHorizontal="20dp"/>
+
+    <TextView
+        android:id="@+id/createEvent_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Edit Event"
+        android:layout_margin="20dp"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ic_back"/>
+
+    <!-- Event Name -->
+    <TextView
+        android:id="@+id/event_name_label"
+        android:layout_height="20dp"
+        android:layout_width="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/transparent"
+        android:text="Event Name"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/createEvent_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/publicsans_regular"
+        android:hint="Event name"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:ems="9"
+        app:layout_constraintTop_toBottomOf="@id/event_name_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_name_label" />
+
+    <TextView
+        android:id="@+id/event_organizer_label"
+        android:layout_height="20dp"
+        android:layout_width="120dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:text="Organizer Name"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/createEvent_title"
+        app:layout_constraintLeft_toRightOf="@id/event_name_label"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/event_organizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/publicsans_regular"
+        android:hint="Organizer name"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:layout_marginRight="40dp"
+        android:ems="9"
+        app:layout_constraintTop_toBottomOf="@id/event_organizer_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_organizer_label"/>
+
+    <!-- Location Name-->
+
+    <TextView
+        android:id="@+id/event_location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Location"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_organizer" />
+
+    <EditText
+        android:id="@+id/event_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_name"
+        android:fontFamily="@font/publicsans_regular"
+        android:hint="Location"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:ems="9"
+        app:layout_constraintTop_toBottomOf="@id/event_location_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_location_label"/>
+
+    <TextView
+        android:id="@+id/event_description_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Description"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/event_location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/event_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_name"
+        android:hint="Enter a brief description of the event here."
+        android:textSize="14sp"
+        android:fontFamily="@font/publicsans_regular"
+        android:gravity="top"
+        android:ems="20"
+        android:minLines="3"
+        android:maxLines="3"
+        app:layout_constraintTop_toBottomOf="@id/event_description_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_description_label"/>
+
+    <TextView
+        android:id="@+id/event_datetime_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Date / Time"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/event_description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <Button
+        android:id="@+id/datePickerButton"
+        style="?android:spinnerStyle"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:onClick="openDatePicker"
+        android:hint="Date"
+        android:textColor="@color/black"
+        android:fontFamily="@font/publicsans_regular"
+        app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_datetime_label" />
+
+    <Button
+        android:id="@+id/hourPickerButton"
+        style="?android:spinnerStyle"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:onClick="openTimePicker"
+        android:hint="Time"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/publicsans_regular"
+        app:layout_constraintTop_toBottomOf="@id/event_datetime_label"
+        app:layout_constraintLeft_toRightOf="@id/datePickerButton" />
+
+    <TextView
+        android:id="@+id/event_seats_label"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Attendee Limit"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/event_location_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_organizer"
+        app:layout_constraintTop_toTopOf="@+id/event_location_label" />
+
+    <EditText
+        android:id="@+id/event_seats"
+        android:inputType="number"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:hint="Number of Seats"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:ems="9"
+        android:fontFamily="@font/publicsans_regular"
+        app:layout_constraintTop_toBottomOf="@id/event_seats_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_seats_label"
+        />
+
+    <TextView
+        android:id="@+id/event_photo_label"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@android:color/transparent"
+        android:text="Event Photo"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/datePickerButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/eventPhotoContainer"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/event_photo"
+        app:shapeAppearanceOverlay="@style/eventImageView"
+        app:layout_constraintTop_toBottomOf="@id/event_photo_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_photo_label" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/selectEventPic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/colorPrimary"
+        android:foreground="@drawable/ic_baseline_add_a_photo_24"
+        android:foregroundTint="@android:color/white"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/eventPhotoContainer"
+        app:layout_constraintRight_toRightOf="@id/eventPhotoContainer"
+        />
+
+    <Button
+        android:id="@+id/create_button"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:text="Update Event"
+        android:textSize="16dp"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/cancel_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="30dp"
+        />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:text="Cancel Event"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:backgroundTint="@color/accentColor800"
+        android:fontFamily="@font/gilroy_bold"
+        app:layout_constraintLeft_toRightOf="@id/create_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/create_button"
+        app:layout_constraintBottom_toBottomOf="@id/create_button"
+        />
+
+    <TextView
+        android:id="@+id/interests_label"
+        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Category"
+        android:fontFamily="@font/gilroy_bold"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/event_photo_label"
+        app:layout_constraintBottom_toBottomOf="@id/event_photo_label"
+        app:layout_constraintLeft_toLeftOf="@id/event_seats_label"
+        />
+
+    <Spinner
+        android:id="@+id/event_interests"
+        android:layout_height="wrap_content"
+        android:layout_width="140sp"
+        android:hint="Interest..."
+        style="?android:spinnerStyle"
+        app:layout_constraintLeft_toLeftOf="@id/interests_label"
+        app:layout_constraintTop_toBottomOf="@id/interests_label"></Spinner>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

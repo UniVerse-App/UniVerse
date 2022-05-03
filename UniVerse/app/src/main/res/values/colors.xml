@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Background -->
+    <color name="colorBackground">#E5E5E5</color>
+    <color name="colorLightGray">#FAFAFA</color>
+
+    <!-- Primary Color -->
+    <color name="colorPrimary">#0D88F2</color>
+    <color name="colorPrimaryLight">#68b7ff</color>
+    <color name="colorPrimaryVariant">#005cbf</color>
+    <color name="colorOnPrimary">#FAFAF9</color>
+
+    <!-- Secondary brand color. -->
+    <color name="colorSecondary">#3FB1B5</color>
+    <color name="colorSecondaryVariant">#258588</color>
+    <color name="colorOnSecondary">@color/black</color>
+
+    <color name="accentColor100">#ffddb0</color>
+    <color name="accentColor200">#ffc77d</color>
+    <color name="accentColor300">#ffaf49</color>
+    <color name="accentColor800">#ee6002</color>
+
+    <color name="shimmerBG">#dddddd</color>
 </resources>
