@@ -1,77 +1,48 @@
 # UniVerse
 
-Student based social network centered around campus events and activities.
+**UniVerse** is a social networking application designed to assist students and organizers alike in creating, managing, finding, and attending on-campus events. The app’s core feature is a personalized “feed” that will display upcoming events and activities relevant to each user. From the feed, users will be able to view details on each event and RSVP to events they wish to attend.
+
+**UniVerse** is written entirely in Java, and its dependencies include FirebaseAuth, FirebaseStorage, FirebaseDatabase, and Glide.
+
+[Heroicons](https://heroicons.com/) were used in addition to the base material icons provided in Android Studio.
+
+---
+
+**UniVerse** was created as a term project for an ABET accredited Fundamentals of Software Engineering course by:
+
+Adam Emerson - [@AdamGEmerson](https://github.com/AdamGEmerson)
+
+Josh Boudria - [@JoshGBoudria](https://github.com/JoshGBoudria)
+
+Kevin Flores - [@kevin8360](https://github.com/kevin8630)
+
+Vo Ho Anh Tuan - [@VoHoAnhTuan](https://github.com/VoHoAnhTuan)
 
 
-## This Document
+## Folders
 
-This is a living document we can use to keep track of our progress, save helpful links, etc.  Don't hesitate to add things to this or make changes as you see necesary.
+`UniVerse/` contains the apps codebase in its entireity.
 
-
-## Folder Structure
-
-`uniVerse` will be the actual project folder for Android Studio
-
-`increment_1` should contain our relevant star UML files (everyone please add your files if you have them).
-
-`increment_2` will contain any files relevant to the SRA document.
-
-`figma` will contain files related to design and wireframes
+`Documentation/` contains additional files and reference material, generated per the prerequisites of the course.  This includes the SRA, UMLs, and other files such as wireframes.
 
 
-## Best Practices 
+## Known Issues
 
-### General Git Stuff
-
-For more general info on git, see this [series on the basics](https://www.atlassian.com/git)
-
-### Git Flow
-
-We will use the git flow methodology to maintain our code and ensure we all stay in sync.  Here is some [good documentation on the git flow methodology](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) written by Atlassian. 
-
-It is reccomended that everyone install the git-flow package which adds a couple of helper commands that will make the gitflow methodology easier to follow.  
-
-On ubuntu you can install with `apt-get install git-flow` or on MacOS, use homebrew `brew install git-flow`
-
-Once the git-flow library is installed, you can reference the [git-flow docs](https://git-flow.readthedocs.io/en/latest/features.html#) for help.
-
-The project `main` and `develop` branches have already been configured.
+Within the app there are several known issues that we were unable to address given the time constraints associated with a term project.  We hope that one day we will have the time to revisit the following issues:
 
 
-## Working on a Feature
+- [ ] Links from schedule to Event Info page occasionally don’t load event info (needs further investigation)
 
-Before starting or finishing a feature please make sure your develop branch is up to date.
+- [ ] Account registration requires email verification, but UTA mail servers will block the verification email, meaning @mavs.uta.edu and @uta.edu emails will not work for registration.
 
-To start a new feature run `git flow feature start my-great-feature` where `my-great-feature` is the name of the feature you are working on. This should automatically create a new branch off of `develop` with the name `feature/my-great-feature` and move you into the new branch.  You can verify this by running `git branch` and noting which branch has the `*` next to it.
+- [ ] Fields on the Event Creation screen are not validated, which can cause unexpected behavior if the user leaves a field blank.
 
-A feature could be be a profile page, event card, or any self-contained piece of our app you wish to work on.  We'll want to make sure that two people aren't trying to work on the same feature. 
+- [ ] Images for event cards dynamically loaded on the feed sometimes don’t load right away.  They will load without issue after navigating away from the feed and then returning.
 
+- [ ] Keys for our database are set to be valid until 05/31/22.  Access after that will likely fail due to inability to load data from Firebase.
 
-## Relevant Documentation
-
-[Android Developer Reference](https://developer.android.com/)
-
-[Firebase Reference](https://firebase.google.com/docs)
-
-[User Authentication via Firebase Video Tutorial](https://www.youtube.com/watch?v=Z-RE1QuUWPg)
-
-[Github Docs](https://docs.github.com/en)
-
-[Git-Flow Library Docs](git-flow docs](https://git-flow.readthedocs.io/en/latest/features.html#)
+- [ ] Occasionally text will overflow in the event info description if you are the event organizer.  The addition of the “edit event” button causes the RSVP button to overlap the description field
 
 
-## To Do
 
-### Increment 1
-- [x] Finalize our main class diagram
-- [x] Create individual diagrams for each class
-- [x] Build out our document and begin inserting diagrams in where appropriate
-- [x] Submit Increment 1 - UML
-
-### Increment 2
-- [ ] Adjust UMLs where necesarry (add additional classes, refactor classes, etc.)
-- [ ] Insert all updated class diagrams into the word document
-- [ ] Complete requirements documents for each class
-- [ ] Other stuff...
-- [ ] Submit Increment 2 - SRA
 
